@@ -1,0 +1,172 @@
+[
+  {
+    "name": "John Doe",
+    "coordinates": [40.712776, -74.005974],
+    "radiusInKM": "10",
+    "bezirk": "Manhattan",
+    "kiez": "Chelsea",
+    "straße": "Broadway",
+    "hausnummer": 123,
+    "plz": 10001,
+    "preferredPaymentMethod": ["PayPal", "Mastercard"],
+    "paymentCache": [
+      {
+        "paymentMethod": "Paypal",
+        "userName": "johndoe@example.com"
+      },
+      {
+        "paymentMethod": "Mastercard",
+        "ccNumber": 5555555555554444,
+        "name": "John Doe",
+        "valid": [12, 25]
+      }
+    ],
+    "favOrgs": ["o987654321", "o456789012"],
+    "purchaseHistory": [
+      {
+        "purchaseID": "2023-07-01T15:22:10.123Z_u123456789",
+        "paymentMethod": "Paypal",
+        "priceInEuro": 42,
+        "purchasedProducts": [
+          {
+            "productID": "p456789012",
+            "amount": 2
+          },
+          {
+            "productID": "p789012345",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "purchaseID": "2023-07-02T09:45:32.789Z_u123456789",
+        "paymentMethod": "Mastercard",
+        "priceInEuro": 56,
+        "purchasedProducts": [
+          {
+            "productID": "p123456789",
+            "amount": 3
+          },
+          {
+            "productID": "p987654321",
+            "amount": 2
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "John Doe",
+    "coordinates": [40.712776, -74.005974],
+    "radiusInKM": "10",
+    "bezirk": "Manhattan",
+    "kiez": "Chelsea",
+    "straße": "Broadway",
+    "hausnummer": 123,
+    "plz": 10001,
+    "preferredPaymentMethod": ["PayPal", "Mastercard"],
+    "paymentCache": [
+      {
+        "paymentMethod": "Paypal",
+        "userName": "johndoe@example.com"
+      },
+      {
+        "paymentMethod": "Mastercard",
+        "ccNumber": 5555555555554444,
+        "name": "John Doe",
+        "valid": [12, 25]
+      }
+    ],
+    "favOrgs": ["o987654321", "o456789012"],
+    "purchaseHistory": [
+      {
+        "purchaseID": "2023-07-01T15:22:10.123Z_u123456789",
+        "paymentMethod": "Paypal",
+        "priceInEuro": 42,
+        "purchasedProducts": [
+          {
+            "productID": "p456789012",
+            "amount": 2
+          },
+          {
+            "productID": "p789012345",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "purchaseID": "2023-07-02T09:45:32.789Z_u123456789",
+        "paymentMethod": "Mastercard",
+        "priceInEuro": 56,
+        "purchasedProducts": [
+          {
+            "productID": "p123456789",
+            "amount": 3
+          },
+          {
+            "productID": "p987654321",
+            "amount": 2
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "Alice Johnson",
+    "coordinates": [37.7749, -122.4194],
+    "radiusInKM": "8",
+    "bezirk": "San Francisco",
+    "kiez": "",
+    "straße": "Market Street",
+    "hausnummer": 456,
+    "plz": 94102,
+    "preferredPaymentMethod": ["Credit Card", "Apple Pay"],
+    "paymentCache": [
+      {
+        "paymentMethod": "Credit Card",
+        "userName": "alice.johnson@example.com"
+      },
+      {
+        "paymentMethod": "Apple Pay",
+        "ccNumber": 9876543210123456,
+        "name": "Alice Johnson",
+        "valid": [9, 23]
+      }
+    ],
+    "favOrgs": ["o456789123"],
+    "purchaseHistory": [
+      {
+        "purchaseID": "2023-06-15T10:36:28.062Z_u456789123",
+        "paymentMethod": "Credit Card",
+        "priceInEuro": 27,
+        "purchasedProducts": [
+          {
+            "productID": "p123456789",
+            "amount": 4
+          },
+          {
+            "productID": "p987654321",
+            "amount": 1
+          }
+        ]
+      },
+      {
+        "purchaseID": "2023-06-15T11:59:07.539Z_u456789123",
+        "paymentMethod": "Apple Pay",
+        "priceInEuro": 15,
+        "purchasedProducts": [
+          {
+            "productID": "p543216789",
+            "amount": 3
+          },
+          {
+            "productID": "p987654321",
+            "amount": 2
+          }
+        ]
+      }
+    ]
+  }
+]
