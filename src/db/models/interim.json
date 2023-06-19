@@ -1,55 +1,112 @@
 [
   {
-    "name": "John Doe",
-    "coordinates": [40.712776, -74.005974],
+    "name": "John Smith",
+    "coordinates": [51.5074, -0.1278],
     "radiusInKM": "10",
-    "bezirk": "Manhattan",
-    "kiez": "Chelsea",
-    "straße": "Broadway",
+    "bezirk": "London",
+    "kiez": "",
+    "street": "Oxford Street",
     "hausnummer": 123,
-    "plz": 10001,
+    "plz": "W1D 1BS",
     "preferredPaymentMethod": ["PayPal", "Mastercard"],
     "paymentCache": [
       {
-        "paymentMethod": "Paypal",
-        "userName": "johndoe@example.com"
+        "paymentMethod": "PayPal",
+        "userName": "john.smith@example.com"
       },
       {
         "paymentMethod": "Mastercard",
-        "ccNumber": 5555555555554444,
-        "name": "John Doe",
-        "valid": [12, 25]
+        "ccNumber": 5123456789012345,
+        "name": "John Smith",
+        "valid": [5, 26]
       }
     ],
-    "favOrgs": ["o987654321", "o456789012"],
+    "favOrgs": ["o789123456"],
     "purchaseHistory": [
       {
-        "purchaseID": "2023-07-01T15:22:10.123Z_u123456789",
-        "paymentMethod": "Paypal",
+        "purchaseID": "2023-06-15T10:36:28.062Z_u789123456",
+        "paymentMethod": "PayPal",
         "priceInEuro": 42,
         "purchasedProducts": [
           {
-            "productID": "p456789012",
+            "productID": "p123456789",
             "amount": 2
           },
           {
-            "productID": "p789012345",
-            "amount": 1
+            "productID": "p543216789",
+            "amount": 5
           }
         ]
       },
       {
-        "purchaseID": "2023-07-02T09:45:32.789Z_u123456789",
+        "purchaseID": "2023-06-15T11:59:07.539Z_u789123456",
         "paymentMethod": "Mastercard",
-        "priceInEuro": 56,
+        "priceInEuro": 18,
+        "purchasedProducts": [
+          {
+            "productID": "p987654321",
+            "amount": 3
+          },
+          {
+            "productID": "p543216789",
+            "amount": 1
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "name": "Janina Schreiber",
+    "coordinates": [52.5527816, 13.4381079],
+    "radiusInKM": "5",
+    "bezirk": "Weißensee",
+    "kiez": "",
+    "street": "Friesickestraße",
+    "hausnummer": 15,
+    "plz": 13086,
+    "preferredPaymentMethod": ["PayPal", "Visa"],
+    "paymentCache": [
+      {
+        "paymentMethod": "Paypal",
+        "userName": "JSchreiber83@hotmail.com"
+      },
+      {
+        "paymentMethod": "Visa",
+        "ccNumber": 4249120083833971,
+        "name": "Janina Schreiber",
+        "valid": [11, 24]
+      }
+    ],
+    "favOrgs": ["o123456789"],
+    "purchaseHistory": [
+      {
+        "purchaseID": "2023-06-15T10:36:28.062Z_u123456789",
+        "paymentMethod": "Paypal",
+        "priceInEuro": 32,
         "purchasedProducts": [
           {
             "productID": "p123456789",
             "amount": 3
           },
           {
+            "productID": "p543216789",
+            "amount": 2
+          }
+        ]
+      },
+      {
+        "purchaseID": "2023-06-15T11:59:07.539Z_u123456789",
+        "paymentMethod": "Visa",
+        "priceInEuro": 24,
+        "purchasedProducts": [
+          {
             "productID": "p987654321",
             "amount": 2
+          },
+          {
+            "productID": "p543216789",
+            "amount": 4
           }
         ]
       }
@@ -62,7 +119,7 @@
     "radiusInKM": "10",
     "bezirk": "Manhattan",
     "kiez": "Chelsea",
-    "straße": "Broadway",
+    "street": "Broadway",
     "hausnummer": 123,
     "plz": 10001,
     "preferredPaymentMethod": ["PayPal", "Mastercard"],
@@ -119,7 +176,7 @@
     "radiusInKM": "8",
     "bezirk": "San Francisco",
     "kiez": "",
-    "straße": "Market Street",
+    "street": "Market Street",
     "hausnummer": 456,
     "plz": 94102,
     "preferredPaymentMethod": ["Credit Card", "Apple Pay"],

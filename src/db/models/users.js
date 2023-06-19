@@ -14,7 +14,7 @@ const usersSchema = new Schema({
   radiusInKM: { type: String, required: true },
   bezirk: { type: String, required: true },
   kiez: { type: String, required: false },
-  straße: { type: String, required: true },
+  street: { type: String, required: true },
   hausnummer: { type: Number, required: true },
   plz: { type: Number, required: true },
   preferredPaymentMethod: {

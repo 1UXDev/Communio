@@ -1,13 +1,26 @@
-import UserLocation from "./UserLocation";
-import Language from "./Language";
-import Filter from "./Filter";
+import UserLocation from "./HeaderComponents/UserLocation";
+import Language from "./HeaderComponents/Language";
+import Filter from "./HeaderComponents/Filter";
+import styled from "styled-components";
 
-export default function Header({ currentUser }) {
+const HeaderContainer = styled.div`
+  display: flex;
+  flex-flow: column;
+`;
+
+const HeaderSettings = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+`;
+
+export default function Header() {
   return (
-    <div className="headerContainer">
-      <UserLocation></UserLocation>
-      <Language></Language>
+    <HeaderContainer>
+      <HeaderSettings>
+        <UserLocation></UserLocation>
+        <Language></Language>
+      </HeaderSettings>
       <Filter></Filter>
-    </div>
+    </HeaderContainer>
   );
 }
