@@ -19,6 +19,7 @@ export default function App({ Component, pageProps }) {
 
   if (organizationsError || usersError) return <div>failed to load</div>;
   if (organizationsIsLoading || usersIsLoading) return <div>loading...</div>;
+  console.log(usersData);
 
   return (
     <SWRConfig
@@ -29,7 +30,7 @@ export default function App({ Component, pageProps }) {
     >
       <Component
         {...pageProps}
-        userData={usersData}
+        userData={usersData[0]}
         orgData={organizationsData}
       />
       <Nav></Nav>
