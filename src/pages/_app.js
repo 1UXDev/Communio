@@ -5,7 +5,6 @@ import useSWR, { SWRConfig } from "swr";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function App({ Component, pageProps }) {
-  //const { data, error, isLoading } = useSWR("/api/organizations", fetcher);
   const {
     data: organizationsData,
     error: organizationsError,
@@ -19,7 +18,6 @@ export default function App({ Component, pageProps }) {
 
   if (organizationsError || usersError) return <div>failed to load</div>;
   if (organizationsIsLoading || usersIsLoading) return <div>loading...</div>;
-  console.log(usersData);
 
   return (
     <SWRConfig
@@ -30,8 +28,8 @@ export default function App({ Component, pageProps }) {
     >
       <Component
         {...pageProps}
-        userData={usersData[0]}
-        orgData={organizationsData}
+        usersData={usersData}
+        organizationsData={organizationsData}
       />
       <Nav></Nav>
     </SWRConfig>

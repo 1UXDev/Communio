@@ -1,8 +1,16 @@
 import { create } from "zustand";
 
-const useStore = create((set) => ({
-  userData: {}, // Set your initial userData state here
-  setUserData: (newUserData) => set(() => ({ userData: newUserData })),
-}));
+export const useStore = create((set) => ({
+  // Globally Setting all-users object
+  allUserData: {},
+  setAllUserData: (newAllUserData) => set({ allUserData: newAllUserData }),
 
-export default useUserStore;
+  // Globally Setting all-organizations object
+  allOrganizationData: {},
+  setAllOrganizationData: (newOrganizationData) =>
+    set({ allOrganizationData: newOrganizationData }),
+
+  // Globally Setting current-user object
+  currentUserData: {},
+  setCurrentUserData: (newUserData) => set({ currentUserData: newUserData }),
+}));
