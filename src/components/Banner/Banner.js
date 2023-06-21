@@ -8,6 +8,7 @@ export default function Banner() {
     flex-flow: row wrap;
     gap: 24px;
     align-items: center;
+    margin-bottom: 24px;
 
     & span {
       font-size: 5em;
