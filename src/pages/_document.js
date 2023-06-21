@@ -12,6 +12,8 @@
 //   )
 // }
 
+// Code from Next.js GitRepo to use styled-components
+// refer to this article https://dev.to/rsanchezp/next-js-and-styled-components-style-loading-issue-3i68
 import Document from "next/document";
 import { ServerStyleSheet } from "styled-components";
 

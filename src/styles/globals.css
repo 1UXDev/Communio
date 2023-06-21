@@ -84,6 +84,7 @@ body {
   max-width: var(--max-width);
   margin: 0px auto;
   overflow-x: hidden;
+  margin-bottom: 96px;
 }
 
 body {

@@ -1,10 +1,18 @@
-export default function Profile({ userData }) {
+import useStore from "../globalstore";
+
+// -----------------------------------------------
+// !--- The Profile Page / Components does not work properly yet, its just a placeholder and Object to later development
+// -----------------------------------------------
+
+export default function Profile() {
+  const currentUser = useStore((state) => state.currentUser);
+
   return (
     <div className="ProfileWrapper">
-      <h1>Here will be the Profile of {userData.name}</h1>
+      <h1>Here will be the Profile of {currentUser.name}</h1>
       <h3>Dynamically generated Info about user:</h3>
       <ul>
-        <li>Location: {userData.street}</li>
+        <li>Location: {currentUser.street}</li>
       </ul>
 
       <br />
@@ -12,7 +20,7 @@ export default function Profile({ userData }) {
 
       <h3>Preferred Payment Methods</h3>
       <ul>
-        {userData.preferredPaymentMethod.map((method) => (
+        {currentUser.preferredPaymentMethod.map((method) => (
           <li>{method}</li>
         ))}
       </ul>
@@ -22,7 +30,7 @@ export default function Profile({ userData }) {
 
       <h3>Saved Payment Details</h3>
       <ul>
-        {userData.paymentCache.map((cache) => (
+        {currentUser.paymentCache.map((cache) => (
           <li>
             Payment Method: {cache.paymentMethod} ,
             {cache.userName ? `User Name: ${cache.userName} ` : null}
