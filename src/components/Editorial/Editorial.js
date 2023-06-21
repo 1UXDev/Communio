@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import useStore from "@/pages/globalstore";
 import Link from "next/link";
+import { uid } from "uid";
 import {
   CardWrapper,
   IMGwrapper,
@@ -8,13 +9,10 @@ import {
 } from "../CardBase/styledCardBase";
 
 const EditorialWrapper = styled.section``;
-const StyledLink = styled.a`
-  color: blue;
-  font-weight: bold;
-`;
 
 export default function Editorial() {
-  const allOrganizations = useStore((state) => state.allOrganizations);
+  const allOrganizations = useStore((state) => state.allOrganizations) || [];
+
   return (
     <EditorialWrapper>
       <Link href="/organizations">
@@ -23,10 +21,10 @@ export default function Editorial() {
       <CardWrapper>
         {allOrganizations.map((org) => {
           return (
-            <li key={org._id} className="large">
-              <Link href={`/organizations/${org.name}`}>
+            <li key={uid()} className="large">
+              <Link href={`/organizations/${org._id}`}>
                 <IMGwrapper>
-                  <img src={org.image}></img>
+                  <img src={org.image} alt="" />
                 </IMGwrapper>
                 <TEXTwrapper>
                   <h3>{org.name}</h3>
@@ -35,14 +33,10 @@ export default function Editorial() {
                     diam nonumy eirmod tempor invidunt ut labore et dolore magna
                     aliquyam erat, sed diam voluptua.
                   </p>
-                  <Link
-                    href={`/organizations/${org._id}`}
-                    passHref
-                    legacyBehavior
-                  >
-                    <StyledLink>mehr →</StyledLink>
-                  </Link>
                 </TEXTwrapper>
+              </Link>
+              <Link href={`/organizations/${org._id}`} passHref>
+                <span>mehr →</span>
               </Link>
             </li>
           );

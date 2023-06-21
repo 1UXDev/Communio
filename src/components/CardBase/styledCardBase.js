@@ -39,3 +39,38 @@ export const IMGwrapper = styled.div`
 export const TEXTwrapper = styled.div`
   padding: 6px;
 `;
+
+export const IMGoverlay = styled.div`
+  background-color: blue;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 20, 50, 1),
+    rgba(0, 20, 50, 0) 100%
+  );
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 12px;
+  color: white;
+
+  & img {
+    width: 20%;
+    height: 20%;
+  }
+  & h4 {
+    align-self: center;
+    text-align: right;
+    width: 70%;
+    font-size: 0.8em;
+  }
+  &.hero {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;

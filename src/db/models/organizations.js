@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 // define the Schema (according to the input data we got from project)
 const organizationSchema = new Schema({
-  _id: { type: Number, required: true },
+  _id: { type: Schema.Types.ObjectId, required: true },
   name: { type: String, required: true },
   image: { type: String, required: true },
   description: { type: String, required: false },
