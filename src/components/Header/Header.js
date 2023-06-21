@@ -3,9 +3,10 @@ import Language from "./HeaderComponents/Language";
 import Filter from "./HeaderComponents/Filter";
 import styled from "styled-components";
 
-const HeaderContainer = styled.div`
+const HeaderSection = styled.section`
   display: flex;
   flex-flow: column;
+  gap: 6px;
 `;
 
 const HeaderSettings = styled.div`
@@ -15,12 +16,12 @@ const HeaderSettings = styled.div`
 
 export default function Header() {
   return (
-    <HeaderContainer>
+    <HeaderSection>
       <HeaderSettings>
         <UserLocation></UserLocation>
         <Language></Language>
       </HeaderSettings>
       <Filter></Filter>
-    </HeaderContainer>
+    </HeaderSection>
   );
 }

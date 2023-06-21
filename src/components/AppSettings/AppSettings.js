@@ -7,10 +7,20 @@ import { uid } from "uid";
 // THis whole thing only exists to currently (for future test purposes) change the user
 // -------------------------
 
-const Select = styled.select`
+const SelectWrapper = styled.div`
   width: 100%;
-  margin-bottom: 24px;
-  padding: 12px;
+  background: linear-gradient(266.86deg, #43b4d8 8.28%, #7343d8 91.96%);
+  margin-bottom: 12px;
+  text-align: center;
+  padding-bottom: 12px;
+  h4 {
+    color: white;
+    padding: 4px;
+  }
+`;
+
+const Select = styled.select`
+  width: 80%;
 `;
 
 export default function AppSettings({ usersDataBackup }) {
@@ -27,7 +37,7 @@ export default function AppSettings({ usersDataBackup }) {
   }
 
   return (
-    <>
+    <SelectWrapper>
       <h4>Select the Mock-User</h4>
       <Select onChange={onSelect} value={currentUser._id}>
         {usersDataBackup.map((user) => {
@@ -38,6 +48,6 @@ export default function AppSettings({ usersDataBackup }) {
           );
         })}
       </Select>
-    </>
+    </SelectWrapper>
   );
 }

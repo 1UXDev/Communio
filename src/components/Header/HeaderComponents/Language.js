@@ -7,6 +7,11 @@ const LanguageWrapper = styled.div`
   width: 200px;
   justify-content: right;
   gap: 12px;
+  & * {
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+  }
 `;
 
 export default function Language() {
