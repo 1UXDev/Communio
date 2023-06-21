@@ -1,14 +1,22 @@
-import { useState } from "react";
-import { useStore } from "../globalstore";
+import { useState, useEffect } from "react";
+import useStore from "../globalstore";
+
+// -----------------------------------------------
+// !--- The Search Page / Components does not work properly yet, its just a placeholder and Object to later development
+// -----------------------------------------------
 
 export default function Search() {
-  const allOrganizationData = useStore((state) => state.allOrganizationData);
-  console.log(allOrganizationData);
+  const allOrganizations = useStore((state) => state.allOrganizations);
   const [searchTerm, setSearchTerm] = useState("");
 
   function findOrganizations(event) {
-    setSearchTerm(event.target.value);
+    setSearchTerm(event.target.value.toLowerCase());
   }
+
+  useEffect(() => {
+    console.log(allOrganizations);
+    console.log(allOrganizations.includes(searchTerm));
+  }, [searchTerm]);
 
   return (
     <div className="SearchWrapper">
@@ -26,14 +34,14 @@ export default function Search() {
         <button>Search</button>
       </section>
 
-      {/* <section>
+      <section>
         <h3>Your Search results</h3>
-        {allOrganizationData
-          .filter((org) => org.name === searchTerm)
+        {allOrganizations
+          .filter((org) => org.name.includes(searchTerm))
           .map((org) => {
-            return <li>{org.name}</li>;
+            return <li key={org.id}>{org.name}</li>;
           })}
-      </section> */}
+      </section>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import useStore from "../../../pages/globalstore";
 
 const LocationWrapper = styled.div`
   display: flex;
@@ -6,5 +7,7 @@ const LocationWrapper = styled.div`
 `;
 
 export default function UserLocation() {
-  return <LocationWrapper>UserLocation 🔻</LocationWrapper>;
+  const currentUser = useStore((state) => state.currentUser);
+
+  return <LocationWrapper>{currentUser.bezirk} 🔻</LocationWrapper>;
 }
