@@ -17,7 +17,6 @@ export default async function handler(request, response) {
     }
 
     // successfully loaded?
-    console.log("success!");
     return response.status(200).json(organization);
   }
 }

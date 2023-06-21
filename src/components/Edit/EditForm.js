@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { uid } from "uid";
 
 const Form = styled.form`
   display: flex;
@@ -31,6 +32,7 @@ export default function EditForm({ object, onEditFormSubmit }) {
               placeholder={`${attribute[0]} - ${attribute[1]}`}
               type={typeof attribute[1]}
               defaultValue={attribute[1]}
+              key={uid()}
             />
           ) : null;
         })}
