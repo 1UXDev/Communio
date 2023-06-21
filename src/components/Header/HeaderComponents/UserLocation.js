@@ -9,5 +9,9 @@ const LocationWrapper = styled.div`
 export default function UserLocation() {
   const currentUser = useStore((state) => state.currentUser);
 
-  return <LocationWrapper>{currentUser.bezirk} 🔻</LocationWrapper>;
+  return (
+    <LocationWrapper>
+      {currentUser.street}, {currentUser.hausnummer} ✏️
+    </LocationWrapper>
+  );
 }

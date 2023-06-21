@@ -7,13 +7,16 @@ const NavContainer = styled.div`
   bottom: 0px;
   width: 100%;
   max-width: 660px;
-  background: gray;
+  background: white;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
+  padding: 16px 0px;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.12);
   & * {
     display: flex;
     flex-flow: column wrap;
+    gap: 6px;
     align-items: center;
   }
 `;

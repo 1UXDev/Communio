@@ -7,14 +7,18 @@ const FilterWrapper = styled.div`
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
   padding: 6px 0px;
+  margin-right: -24px;
 
   & button {
-    flex: 0 0 30%;
-    padding: 2px 24px;
-    border-radius: 12px;
-    box-shadow: 3px 3px 8px rgba(0, 0, 0, 12%);
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    border-radius: 24px;
+    border: unset;
+    // box-shadow: 2px 2px 6px rgba(0, 0, 0, 12%);
     scroll-snap-align: start;
     transition: all 0.3s;
+    background-color: rgb(70, 180, 220);
+    color: white;
   }
 `;
 

@@ -7,6 +7,7 @@ const { Schema } = mongoose;
 const organizationSchema = new Schema({
   _id: { type: Number, required: true },
   name: { type: String, required: true },
+  image: { type: String, required: true },
   description: { type: String, required: false },
   coordinates: {
     type: [Number], // think about working with 2dSphere here for later map-integrations
