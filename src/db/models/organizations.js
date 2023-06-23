@@ -45,15 +45,10 @@ const organizationSchema = new Schema({
   products: {
     type: [
       {
-        productId: { type: String, required: true },
-        name: { type: String, required: true },
-        productImage: { type: String, required: true },
+        productId: { type: Schema.Types.ObjectId, required: true },
         amountNeeded: { type: Number, required: false },
         amountSold: { type: Number, required: false },
         priority1to10: { type: Number, required: false },
-        pricePerPieceEuro: { type: Number, required: true },
-        weightSize: { type: Number, required: true },
-        unit: { type: String, required: true },
         isDisplayed: { type: Boolean, required: true },
       },
     ],

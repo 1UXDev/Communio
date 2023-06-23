@@ -6,9 +6,7 @@ const LocationWrapper = styled.div`
   flex: 2 1 auto;
 `;
 
-export default function UserLocation() {
-  const currentUser = useStore((state) => state.currentUser);
-
+export default function UserLocation({ currentUser }) {
   return (
     <LocationWrapper>
       {currentUser.street}, {currentUser.hausnummer} ✏️

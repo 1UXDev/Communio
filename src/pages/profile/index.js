@@ -6,18 +6,18 @@ import { uid } from "uid";
 // -----------------------------------------------
 
 export default function Profile() {
-  const currentUser = useStore((state) => state.currentUser) || [];
+  const usersData = useStore((state) => state.usersData) || [];
 
-  if (!currentUser) {
-    return "Loading ...";
+  if (!usersData || usersData.length < 3) {
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="ProfileWrapper">
-      <h1>Here will be the Profile of {currentUser.name}</h1>
+      <h1>Here will be the Profile of {usersData[0].name}</h1>
       <h3>Dynamically generated Info about user:</h3>
       <ul>
-        <li>Location: {currentUser.street}</li>
+        <li>Location: {usersData[0].street}</li>
       </ul>
 
       <br />
@@ -25,7 +25,7 @@ export default function Profile() {
 
       <h3>Preferred Payment Methods</h3>
       <ul>
-        {currentUser.preferredPaymentMethod.map((method) => (
+        {usersData[0].preferredPaymentMethod.map((method) => (
           <li key={uid()}>{method}</li>
         ))}
       </ul>
@@ -35,7 +35,7 @@ export default function Profile() {
 
       <h3>Saved Payment Details</h3>
       <ul>
-        {currentUser.paymentCache.map((cache) => (
+        {usersData[0].paymentCache.map((cache) => (
           <li key={uid()}>
             Payment Method: {cache.paymentMethod} ,
             {cache.userName ? `User Name: ${cache.userName} ` : null}

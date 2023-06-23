@@ -5,7 +5,6 @@ const { Schema } = mongoose;
 
 const usersSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, required: true },
-  userID: { type: String, required: true },
   name: { type: String, required: true },
   coordinates: {
     type: [Number],
@@ -15,7 +14,7 @@ const usersSchema = new Schema({
   bezirk: { type: String, required: true },
   kiez: { type: String, required: false },
   street: { type: String, required: true },
-  hausnummer: { type: Number, required: true },
+  streetNumber: { type: Number, required: true },
   plz: { type: Number, required: true },
   preferredPaymentMethod: {
     type: [String],
@@ -31,14 +30,18 @@ const usersSchema = new Schema({
     },
   ],
   favOrgs: { type: [String], required: true },
+  favProducts: [
+    [{ type: Schema.Types.ObjectId }, { type: Schema.Types.ObjectId }],
+  ],
   purchaseHistory: [
     {
-      purchaseID: { type: String, required: true },
+      purchaseId: { type: String, required: true },
       paymentMethod: { type: String, required: true },
       priceInEuro: { type: Number, required: true },
       purchasedProducts: [
         {
-          productID: { type: String, required: true },
+          productId: { type: String, required: true },
+          organizationId: { type: String, required: true },
           amount: { type: Number, required: true },
         },
       ],

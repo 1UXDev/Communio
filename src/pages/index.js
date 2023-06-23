@@ -4,7 +4,7 @@ import AppSettings from "@/components/AppSettings/AppSettings";
 export default function Home({ usersData }) {
   return (
     <>
-      <AppSettings usersDataBackup={usersData}></AppSettings>
+      {/* <AppSettings></AppSettings> */}
       <Layout></Layout>
     </>
   );

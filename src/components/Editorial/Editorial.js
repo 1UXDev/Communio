@@ -11,7 +11,11 @@ import {
 const EditorialWrapper = styled.section``;
 
 export default function Editorial() {
-  const allOrganizations = useStore((state) => state.allOrganizations) || [];
+  const usersData = useStore((state) => state.usersData) || [];
+
+  if (!usersData || usersData.length < 3) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <EditorialWrapper>
@@ -19,7 +23,7 @@ export default function Editorial() {
         <h2>➡️ Get to know the Organizations</h2>
       </Link>
       <CardWrapper>
-        {allOrganizations.map((org) => {
+        {usersData[1].map((org) => {
           return (
             <li key={uid()} className="large">
               <Link href={`/organizations/${org._id}`}>

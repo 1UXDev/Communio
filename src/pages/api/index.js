@@ -1,10 +1,8 @@
 // --- import the Schema & Connection Function---
 import dbConnect from "@/db/connect";
 import Organizations from "@/db/models/organizations";
-
-//-----------------
-// This route is to get All the Organizations
-//-----------------
+import Users from "@/db/models/users";
+import Products from "@/db/models/products";
 
 export default async function handler(request, response) {
   // connect to DB
@@ -12,7 +10,14 @@ export default async function handler(request, response) {
 
   // --- Defining GET APIroute  ---
   if (request.method === "GET") {
-    const organization = await Organizations.find();
+    const userID = request.cookies.userID;
+    const specificUser = await Users.findById(userID).exec();
+
+    const organization = await Organizations.find({
+      bezirk: specificUser.bezirk,
+    });
+
+    const products = await Products.find();
 
     // nothing loaded?
     if (!organization || !products || !specificUser) {
@@ -20,6 +25,6 @@ export default async function handler(request, response) {
     }
 
     // successfully loaded?
-    return response.status(200).json([organization]);
+    return response.status(200).json([specificUser, organization, products]);
   }
 }

@@ -24,6 +24,7 @@ export default function EditForm({ object, onEditFormSubmit }) {
       <h3>Change Data!</h3>
       <br></br>
       <Form onSubmit={handleSubmit}>
+        {console.log("EditForm", objectArray)}
         {objectArray.map((attribute) => {
           return typeof attribute[1] !== "object" ? (
             <input
@@ -34,7 +35,34 @@ export default function EditForm({ object, onEditFormSubmit }) {
               defaultValue={attribute[1]}
               key={uid()}
             />
-          ) : null;
+          ) : (
+            <ul>
+              {" "}
+              {/* {Hier passt irgendwas noch nicht um die Products und Cooredinates zu verändern} */}
+              <h4>{attribute[0]}</h4>
+              {attribute[1].map((object) =>
+                attribute[0] === "products" ? (
+                  <input
+                    id={object._id}
+                    name={object._id}
+                    placeholder={`${object.productId}`}
+                    type={typeof object.productId}
+                    defaultValue={object.productId}
+                    key={uid()}
+                  />
+                ) : (
+                  <input
+                    id={object}
+                    name={object}
+                    placeholder={`${object}`}
+                    type={typeof object}
+                    defaultValue={object}
+                    key={uid()}
+                  />
+                )
+              )}
+            </ul>
+          );
         })}
         <button type="submit">Submit Changes</button>
       </Form>

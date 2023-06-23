@@ -14,7 +14,7 @@ const LanguageWrapper = styled.div`
   }
 `;
 
-export default function Language() {
+export default function Language({ currentUser }) {
   return (
     <LanguageWrapper>
       <button>DE</button> <span>|</span> <button>EN</button>

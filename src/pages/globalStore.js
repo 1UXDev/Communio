@@ -9,6 +9,9 @@ const useStore = create((set) => ({
   usersData: [],
   allOrganizations: [],
   currentOrganizations: [],
+  userOrganizationsWithProducts: [],
+  setUserOrganizationsWithProducts: (orgproducts) =>
+    set({ userOrganizationsWithProducts: orgproducts }),
   setCurrentUserID: (id) => set({ currentUserID: id }), // setting the current userID, will be done by cookies in future
   setCurrentUser: (user) => set({ currentUser: user }), // just current user
   setUsersData: (users) => set({ usersData: users }), // all Users
