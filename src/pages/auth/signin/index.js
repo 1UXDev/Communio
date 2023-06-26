@@ -4,10 +4,9 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import styled from "styled-components";
 import TypeIt from "typeit-react";
 
-const AuthWrapper = styled.body`
+const AuthWrapper = styled.section`
   width: 100%;
   height: 100vh;
-  margin-bottom: unset;
   margin: 0px auto;
   display: flex;
   flex-flow: column;
@@ -16,6 +15,7 @@ const AuthWrapper = styled.body`
   gap: 24px;
 
   text-align: center;
+  font-family: var(--font-inter);
 
   color: white;
   background-color: #5c4ad1;
@@ -34,7 +34,7 @@ const AuthWrapper = styled.body`
     border-radius: 8px;
     border: none;
     font-size: 1.4em;
-    margin: 12px;
+    margin: 6px;
   }
   h1 {
     font-size: 3.5em;
