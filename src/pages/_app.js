@@ -1,9 +1,11 @@
 import "@/styles/globals.css";
-import Nav from "@/components/Nav/Nav";
 import useSWR, { SWRConfig } from "swr";
 import { useEffect, useState } from "react";
 import useStore from "./globalstore";
 import { SessionProvider } from "next-auth/react";
+import { createGlobalStyle } from "styled-components";
+import "typeface-inter";
+import "typeface-roboto";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -38,9 +40,19 @@ export default function App({ Component, pageProps, session }) {
           refreshInterval: 1000,
         }}
       >
+        <GlobalStyles />
         <Component {...pageProps} />
-        <Nav></Nav>
       </SWRConfig>
     </SessionProvider>
   );
 }
+
+const GlobalStyles = createGlobalStyle`
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+  }
+`;

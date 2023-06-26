@@ -3,8 +3,8 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
 // // adapter
-// import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-// import clientPromise from "@/lib/mongoose";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+import clientPromise from "@/lib/mongoose";
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -19,7 +19,10 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-  //adapter: MongoDBAdapter(clientPromise),
+  adapter: MongoDBAdapter(clientPromise),
+  pages: {
+    signIn: "/auth/signin",
+  },
 };
 
 export default NextAuth(authOptions);
