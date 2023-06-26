@@ -1,17 +1,3 @@
-// import { Html, Head, Main, NextScript } from 'next/document'
-
-// export default function Document() {
-//   return (
-//     <Html lang="en">
-//       <Head />
-//       <body>
-//         <Main />
-//         <NextScript />
-//       </body>
-//     </Html>
-//   )
-// }
-
 // Code from Next.js GitRepo to use styled-components
 // refer to this article https://dev.to/rsanchezp/next-js-and-styled-components-style-loading-issue-3i68
 import Document from "next/document";

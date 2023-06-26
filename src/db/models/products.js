@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 // define the Schema (according to the input data we got from project)
 const productsSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, required: true },
+  _id: { type: Schema.Types.ObjectId, ref: "Organizations", required: true },
   name: { type: String, required: true },
   productImage: { type: String, required: true },
   pricePerPieceEuro: { type: Number, required: true },

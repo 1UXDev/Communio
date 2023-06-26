@@ -42,17 +42,19 @@ const organizationSchema = new Schema({
   klarnaToken: { type: String, required: false },
   paybackpayToken: { type: String, required: false },
   // --- products ---
-  products: {
-    type: [
-      {
-        productId: { type: Schema.Types.ObjectId, required: true },
-        amountNeeded: { type: Number, required: false },
-        amountSold: { type: Number, required: false },
-        priority1to10: { type: Number, required: false },
-        isDisplayed: { type: Boolean, required: true },
+  products: [
+    {
+      productId: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
       },
-    ],
-  },
+      amountNeeded: { type: Number, required: false },
+      amountSold: { type: Number, required: false },
+      priority1to10: { type: Number, required: false },
+      isDisplayed: { type: Boolean, required: true },
+    },
+  ],
 });
 
 // define Organizations with Organizations if exist already, otherwise organizationsSchema

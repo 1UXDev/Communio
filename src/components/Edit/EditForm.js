@@ -24,7 +24,6 @@ export default function EditForm({ object, onEditFormSubmit }) {
       <h3>Change Data!</h3>
       <br></br>
       <Form onSubmit={handleSubmit}>
-        {console.log("EditForm", objectArray)}
         {objectArray.map((attribute) => {
           return typeof attribute[1] !== "object" ? (
             <input

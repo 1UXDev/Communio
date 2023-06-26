@@ -25,10 +25,10 @@ export default function Header() {
   return (
     <HeaderSection>
       <HeaderSettings>
-        <UserLocation currentUser={usersData[0]}></UserLocation>
-        <Language currentUser={usersData[0]}></Language>
+        <UserLocation currentUser={usersData}></UserLocation>
+        <Language currentUser={usersData}></Language>
       </HeaderSettings>
-      <Filter currentUser={usersData[0]}></Filter>
+      <Filter currentUser={usersData}></Filter>
     </HeaderSection>
   );
 }
