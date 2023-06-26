@@ -25,12 +25,12 @@ export default async function handler(request, response) {
 
   // --- Defining PATCH APIroute ---
   if (request.method === "PATCH") {
-    // Update the corresponding item
-    console.log("Patch-ID = ", id);
-    console.log("Patch re body", request.body);
+    // Update the corresponding org
     const organizationUpdate = await Organizations.findByIdAndUpdate(id, {
       $set: request.body,
     });
+
+    console.log("orgUpdate", organizationUpdate);
 
     return response.status(200).json(organizationUpdate);
   }

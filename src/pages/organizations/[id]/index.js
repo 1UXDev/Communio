@@ -19,7 +19,9 @@ export default function OrgDetailPage() {
     data: organization,
     isLoading,
     error,
-  } = useSWR(`/api/organizations/${id}`);
+  } = useSWR(`/api/organizations/${id}`, {
+    refreshInterval: 0,
+  });
 
   //-----------------------------
   // --- Code until if-statements is to edit data of Orgnaization
@@ -37,7 +39,6 @@ export default function OrgDetailPage() {
   );
   // define content to give to API route as wrapperfunction for fetch
   async function sendRequest(url, { arg }) {
-    console.log({ arg });
     const response = await fetch(url, {
       method: "PATCH",
       body: JSON.stringify(arg),
@@ -63,9 +64,7 @@ export default function OrgDetailPage() {
 
   return (
     <>
-      <Link href={"/"} passHref legacyBehavior>
-        ← back
-      </Link>
+      <button onClick={() => router.back()}>← back</button>
       <section>
         <IMGwrapper>
           <img src={organization.image} alt={organization.name} />

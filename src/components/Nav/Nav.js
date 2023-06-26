@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
+import useStore from "@/pages/globalstore";
 
 const NavContainer = styled.div`
   position: fixed;
@@ -22,6 +23,7 @@ const NavContainer = styled.div`
 `;
 
 export default function Nav() {
+  const usersData = useStore((state) => state.usersData);
   return (
     <NavContainer>
       <Link href="/" alt="Link to Home">
@@ -60,7 +62,7 @@ export default function Nav() {
         ></Image>
         <span>Search</span>
       </Link>
-      <Link href="/profile" alt="Link to your Profile">
+      <Link href={`/profile/${usersData._id}`} alt="Link to your Profile">
         <Image
           src="https://static.thenounproject.com/png/780226-200.png"
           width="30"
