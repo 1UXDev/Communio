@@ -77,56 +77,65 @@ export default function Profile() {
     return <h1>Submitting your changes...</h1>;
   }
 
-  return (
-    <Layout>
-      <div className="ProfileWrapper">
-        <h1>Here will be the Profile of {data.name}</h1>
-        <p>
-          <img
-            src={session.user.image}
-            style={{ width: "100px", borderRadius: "50%" }}
-          />
-          Signed in as {session.user.name}
-        </p>
-        <button onClick={() => signOut()}>Sign out</button>
-        <h3>Dynamically generated Info about user:</h3>
-        <ul>
-          <li>Location: {data.bezirk}</li>
-          <li>
-            Address: {data.street}, {data.streetNumber}
-          </li>
-        </ul>
-
-        <br />
-        <br />
-
-        <h3>Preferred Payment Methods</h3>
-        <ul>
-          {data.preferredPaymentMethod.map((method) => (
-            <li key={uid()}>{method}</li>
-          ))}
-        </ul>
-
-        <br />
-        <br />
-
-        <h3>Saved Payment Details</h3>
-        <ul>
-          {data.paymentCache.map((cache) => (
-            <li key={uid()}>
-              Payment Method: {cache.paymentMethod} ,
-              {cache.userName ? `User Name: ${cache.userName} ` : null}
-              {cache.ccNumber ? `Credit Card Number: ${cache.ccNumber} ` : null}
-              {cache.name ? `Name on Card: ${cache.name} ` : null}
-              {cache.valid.length > 1
-                ? `Valid until: ${cache.valid.join("/")}`
-                : null}
+  if (session) {
+    return (
+      <Layout>
+        <div className="ProfileWrapper">
+          <h1>Here will be the Profile of {data.name}</h1>
+          <p>
+            <img
+              src={session.user.image}
+              style={{ width: "100px", borderRadius: "50%" }}
+            />
+            Signed in as {session.user.name}
+          </p>
+          <button onClick={signOut}>Sign out</button>
+          <h3>Dynamically generated Info about user:</h3>
+          <ul>
+            <li>Location: {data.bezirk}</li>
+            <li>
+              Address: {data.street}, {data.streetNumber}
             </li>
-          ))}
-        </ul>
-        <br></br>
-        <EditForm object={data} onEditFormSubmit={onEditFormSubmit}></EditForm>
-      </div>
-    </Layout>
-  );
+          </ul>
+
+          <br />
+          <br />
+
+          <h3>Preferred Payment Methods</h3>
+          <ul>
+            {data.preferredPaymentMethod.map((method) => (
+              <li key={uid()}>{method}</li>
+            ))}
+          </ul>
+
+          <br />
+          <br />
+
+          <h3>Saved Payment Details</h3>
+          <ul>
+            {data.paymentCache.map((cache) => (
+              <li key={uid()}>
+                Payment Method: {cache.paymentMethod} ,
+                {cache.userName ? `User Name: ${cache.userName} ` : null}
+                {cache.ccNumber
+                  ? `Credit Card Number: ${cache.ccNumber} `
+                  : null}
+                {cache.name ? `Name on Card: ${cache.name} ` : null}
+                {cache.valid.length > 1
+                  ? `Valid until: ${cache.valid.join("/")}`
+                  : null}
+              </li>
+            ))}
+          </ul>
+          <br></br>
+          <EditForm
+            object={data}
+            onEditFormSubmit={onEditFormSubmit}
+          ></EditForm>
+        </div>
+      </Layout>
+    );
+  } else {
+    router.push("/");
+  }
 }
