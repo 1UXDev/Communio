@@ -1,15 +1,10 @@
-import Header from "../Header/Header";
-import CardCarousel from "../CardCarousel/CardCarousel";
-import Editorial from "../Editorial/Editorial";
-import Banner from "../Banner/Banner";
+import Nav from "../Nav/Nav";
 
-export default function Layout() {
+export default function Layout({ children }) {
   return (
     <>
-      <Header></Header>
-      <CardCarousel></CardCarousel>
-      <Banner></Banner>
-      <Editorial></Editorial>
+      <main>{children}</main>
+      <Nav></Nav>
     </>
   );
 }
