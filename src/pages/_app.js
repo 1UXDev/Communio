@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import useSWR, { SWRConfig } from "swr";
 import { useEffect, useState } from "react";
-import useStore from "./globalstore";
+import useStore from "./globalstores";
 import { SessionProvider } from "next-auth/react";
 import { createGlobalStyle } from "styled-components";
 import "typeface-inter";

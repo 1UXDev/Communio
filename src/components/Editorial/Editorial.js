@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useStore from "@/pages/globalstore";
+import useStore from "@/pages/globalstores";
 import Link from "next/link";
 import { uid } from "uid";
 import {

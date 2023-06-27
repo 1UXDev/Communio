@@ -2,7 +2,7 @@ import UserLocation from "./HeaderComponents/UserLocation";
 import Language from "./HeaderComponents/Language";
 import Filter from "./HeaderComponents/Filter";
 import styled from "styled-components";
-import useStore from "@/pages/globalstore";
+import useStore from "@/pages/globalstores";
 
 const HeaderSection = styled.section`
   display: flex;

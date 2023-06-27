@@ -1,4 +1,4 @@
-import useStore from "@/pages/globalstore";
+import useStore from "@/pages/globalstores";
 import { uid } from "uid";
 import { useRouter } from "next/router";
 import useSWR from "swr";

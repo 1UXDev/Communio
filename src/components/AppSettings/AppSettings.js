@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useStore from "../../pages/globalstore";
+import useStore from "../../pages/globalstores";
 import { useEffect } from "react";
 import { uid } from "uid";
 
