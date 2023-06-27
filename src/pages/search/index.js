@@ -4,6 +4,7 @@ import Link from "next/link";
 import { uid } from "uid";
 import styled from "styled-components";
 import Layout from "@/components/Layout/Layout";
+import Image from "next/image";
 
 const SearchResults = styled.ul`
   padding-top: 24px;
@@ -53,12 +54,12 @@ export default function Search() {
                 return (
                   <li key={uid()}>
                     <Link href={`/organizations/${org._id}`}>
-                      <img
+                      <Image
                         src={org.image}
                         alt={`image of ${org.name}`}
                         width="50px"
                         height="50px"
-                      ></img>
+                      ></Image>
                       <div>
                         <h2>{org.name}</h2>
                         <p>{org.bezirk}</p>

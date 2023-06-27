@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { useEffect } from "react";
 import Layout from "@/components/Layout/Layout";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 //--- for the data editing // Patching
 import useSWRMutation from "swr/mutation";
 import EditForm from "@/components/Edit/EditForm";
@@ -82,9 +83,10 @@ export default function Profile() {
         <div className="ProfileWrapper">
           <h1>Here will be the Profile of {data.name}</h1>
           <p>
-            <img
+            <Image
               src={session.user.image}
               style={{ width: "100px", borderRadius: "50%" }}
+              alt="your profile picture"
             />
             Signed in as {session.user.name}
           </p>
