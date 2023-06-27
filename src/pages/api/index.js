@@ -33,9 +33,7 @@ export default async function handler(request, response) {
           const filteredProducts = products.find((product) => {
             return product._id.equals(orgProduct.productId);
           });
-          // console.log("FilteredProducts", filteredProducts);
 
-          //console.log("orgProduct: ", orgProduct);
           return {
             ...orgProduct.toObject(),
             name: filteredProducts.name,
@@ -51,11 +49,6 @@ export default async function handler(request, response) {
           products: mappedProducts,
         };
       });
-
-      console.log(
-        "the cleanOrganizations product after the map",
-        OrganizationWithProducts[0].products
-      );
 
       // nothing loaded?
       if (!organizations || !products || !specificUser) {

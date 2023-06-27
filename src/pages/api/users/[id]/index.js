@@ -29,8 +29,6 @@ export default async function handler(request, response) {
       $set: request.body,
     });
 
-    console.log("userUpdate", userUpdate);
-
     return response.status(200).json(userUpdate);
   }
 }

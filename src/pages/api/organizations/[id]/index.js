@@ -30,8 +30,6 @@ export default async function handler(request, response) {
       $set: request.body,
     });
 
-    console.log("orgUpdate", organizationUpdate);
-
     return response.status(200).json(organizationUpdate);
   }
 }

@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { IMGwrapper, IMGoverlay } from "@/components/CardBase/styledCardBase";
 import Link from "next/link";
 import CardCarousel from "@/components/CardCarousel/CardCarousel";
+import Image from "next/image";
 
 //--- for the data editing // Patching
 import useSWRMutation from "swr/mutation";
@@ -67,7 +68,7 @@ export default function OrgDetailPage() {
       <button onClick={() => router.back()}>← back</button>
       <section>
         <IMGwrapper>
-          <img src={organization.image} alt={organization.name} />
+          <Image src={organization.image} alt={organization.name} />
           <IMGoverlay className="hero">
             <p>📍 #{organization.bezirk}</p>
             <h2>{organization.name}</h2>
@@ -77,11 +78,9 @@ export default function OrgDetailPage() {
           <p>{organization.description}</p>
         </article>
         <article>
-          <CardCarousel organization={[organization]}></CardCarousel>
-          {/* The CardCarousel expects an array, thus we wrap organization into one */}
+          <CardCarousel></CardCarousel>
         </article>
       </section>
-      // Edit the orgs data
       <EditForm
         object={organization}
         onEditFormSubmit={onEditFormSubmit}

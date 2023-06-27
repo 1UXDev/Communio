@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useStore from "@/pages/globalstore";
+import useStore from "@/pages/globalstores";
 import Link from "next/link";
 import { uid } from "uid";
 import {
@@ -29,7 +29,7 @@ export default function Editorial() {
             <li key={uid()} className="large">
               <Link href={`/organizations/${org._id}`}>
                 <IMGwrapper>
-                  <img src={org.image} alt="" />
+                  <img src={org.image} alt="image of orgnaization" />
                 </IMGwrapper>
                 <TEXTwrapper>
                   <h3>{org.name}</h3>

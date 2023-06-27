@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useStore from "../../../pages/globalstore";
+import useStore from "../../../pages/globalstores";
 import { uid } from "uid";
 import { useEffect, useState } from "react";
 
@@ -56,7 +56,7 @@ export default function UserLocation({ currentUser }) {
             <option
               value={bezirk}
               key={uid()}
-              selected={bezirk === selectedBezirk}
+              defaultValue={bezirk === selectedBezirk}
             >
               {bezirk}
             </option>

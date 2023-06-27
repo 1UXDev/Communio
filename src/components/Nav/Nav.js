@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
-import useStore from "@/pages/globalstore";
+import useStore from "@/pages/globalstores";
 
 const NavContainer = styled.div`
   position: fixed;
