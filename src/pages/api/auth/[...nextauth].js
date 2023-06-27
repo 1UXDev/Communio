@@ -27,3 +27,30 @@ export const authOptions = {
 };
 
 export default NextAuth(authOptions);
+
+//   callbacks: {
+//     async signIn(user, account, profile) {
+//       // users first singin?
+//       if (account.provider === ("github" || "google") && user.sub) {
+//         // create user in "users"-collection
+//         await createUser({
+//           id: user.id,
+//           name: user.name,
+//           email: user.email, //new!
+//           image: user.image, //new!
+//           // coordinates: [],
+//           // radiusInKM: null,
+//           // bezirk: "",
+//           // kiez: "",
+//           // street: "",
+//           // streetNumber: null,
+//           // plz: null,
+//           // preferredPaymentMethod: [],
+//           // paymentCache: [],
+//           // favOrgs: [],
+//           // purchaseHistory: [],
+//         });
+//       }
+//     },
+//   },
+// };
