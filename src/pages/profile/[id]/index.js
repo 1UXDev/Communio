@@ -37,7 +37,6 @@ export default function Profile() {
   async function onEditFormSubmit(data, event) {
     event.preventDefault();
     await trigger(data);
-    console.log("onEditFormSubmit", data);
     //router.push("/");
   }
 

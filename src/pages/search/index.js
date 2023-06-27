@@ -3,6 +3,7 @@ import useStore from "../globalstore";
 import Link from "next/link";
 import { uid } from "uid";
 import styled from "styled-components";
+import Layout from "@/components/Layout/Layout";
 
 const SearchResults = styled.ul`
   padding-top: 24px;
@@ -18,7 +19,8 @@ const SearchResults = styled.ul`
 `;
 
 export default function Search() {
-  const allOrganizations = useStore((state) => state.allOrganizations) || [];
+  const currentOrganizations =
+    useStore((state) => state.currentOrganizations) || [];
   const [searchTerm, setSearchTerm] = useState("");
 
   function findOrganizations(event) {
@@ -26,9 +28,9 @@ export default function Search() {
   }
 
   return (
-    <section>
+    <Layout>
       <div className="SearchWrapper">
-        <h1>Search for Purpose</h1>
+        <h1>Find Opportunities to help</h1>
         <section>
           <label htmlFor="site-search">
             Explore Organizations and Donations:
@@ -45,7 +47,7 @@ export default function Search() {
         <section>
           <h3>Your Search results</h3>
           <SearchResults>
-            {allOrganizations
+            {currentOrganizations
               .filter((org) => org.name.toLowerCase().includes(searchTerm))
               .map((org) => {
                 return (
@@ -68,6 +70,6 @@ export default function Search() {
           </SearchResults>
         </section>
       </div>
-    </section>
+    </Layout>
   );
 }

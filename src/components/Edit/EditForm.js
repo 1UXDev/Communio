@@ -36,30 +36,42 @@ export default function EditForm({ object, onEditFormSubmit }) {
             />
           ) : (
             <ul key={uid()}>
-              {" "}
-              {/* {Hier passt irgendwas noch nicht um die Products und Cooredinates zu verändern} */}
-              <h4>{attribute[0]}</h4>
-              {attribute[1].map((object) =>
-                attribute[0] === "products" ? (
-                  <input
-                    id={object._id}
-                    name={object._id}
-                    placeholder={`${object.productId}`}
-                    type={typeof object.productId}
-                    defaultValue={object.productId}
-                    key={uid()}
-                  />
+              {attribute.map((arrayAttribute) => {
+                return typeof arrayAttribute === "string" ? (
+                  <h4 key={uid()}>{arrayAttribute}</h4>
                 ) : (
-                  <input
-                    id={object}
-                    name={object}
-                    placeholder={`${object}`}
-                    type={typeof object}
-                    defaultValue={object}
-                    key={uid()}
-                  />
-                )
-              )}
+                  arrayAttribute.map((item, i) => {
+                    if (typeof item !== "object") {
+                      return (
+                        <input
+                          id={`${attribute[0]}[${i}]`}
+                          name={`${attribute[0]}[${i}]`}
+                          placeholder={item}
+                          type={typeof item}
+                          defaultValue={item}
+                          key={uid()}
+                        />
+                      );
+                    } else {
+                      console.log(item);
+                      return (
+                        <div key={uid()}>
+                          <h5>{item.paymentMethod}</h5>
+                          {Object.keys(item).map((key) => (
+                            <input
+                              id={`${attribute[0]}[${i}].${key}`}
+                              name={`${attribute[0]}[${i}].${key}`}
+                              type="text"
+                              defaultValue={item[key]}
+                              key={uid()}
+                            />
+                          ))}
+                        </div>
+                      );
+                    }
+                  })
+                );
+              })}
             </ul>
           );
         })}

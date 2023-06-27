@@ -25,7 +25,6 @@ export default function App({ Component, pageProps, session }) {
       setUsersData(data[0]);
       setCurrentOrganizations(data[1]);
       setAllProducts(data[2]);
-      console.log(data);
     }
   }, [data, currentLocation]);
 
