@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+//
 // Globally Storing some Objects, this will be reduced once development progresses.
 // e.g. the usersData, which holds all users data is currently only needed for the User-Selection in the App-Settings Component
 
