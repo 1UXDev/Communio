@@ -35,7 +35,7 @@ export default function EditForm({ object, onEditFormSubmit }) {
               key={uid()}
             />
           ) : (
-            <ul>
+            <ul key={uid()}>
               {" "}
               {/* {Hier passt irgendwas noch nicht um die Products und Cooredinates zu verändern} */}
               <h4>{attribute[0]}</h4>

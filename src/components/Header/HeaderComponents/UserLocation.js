@@ -56,7 +56,7 @@ export default function UserLocation({ currentUser }) {
             <option
               value={bezirk}
               key={uid()}
-              selected={bezirk === selectedBezirk}
+              defaultValue={bezirk === selectedBezirk}
             >
               {bezirk}
             </option>

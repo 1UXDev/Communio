@@ -21,7 +21,7 @@ export const authOptions = {
   ],
   adapter: MongoDBAdapter(clientPromise),
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/",
   },
 };
 
