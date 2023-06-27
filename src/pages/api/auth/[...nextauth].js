@@ -8,6 +8,7 @@ import clientPromise from "@/lib/mongoose";
 
 export const authOptions = {
   // Configure one or more authentication providers
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,
