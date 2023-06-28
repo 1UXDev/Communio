@@ -31,7 +31,7 @@ export default function Cart() {
                 (sum, oneProduct) => sum + oneProduct.counter,
                 0
               ) === 0 ? (
-                <h2>"your cart is currently empty"</h2>
+                <h2>your cart is currently empty</h2>
               ) : (
                 // if yes: map it!
                 productCounter.map((selectedProduct) => {
