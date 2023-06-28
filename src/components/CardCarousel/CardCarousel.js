@@ -34,6 +34,7 @@ export default function CardCarousel() {
       let newProductCounter = currentOrganizations.flatMap((org) =>
         org.products.map((product) => ({
           id: product.productId + ";;" + org.name,
+          org: org.name,
           count: 0,
         }))
       );
