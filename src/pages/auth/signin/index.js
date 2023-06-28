@@ -13,36 +13,52 @@ const AuthWrapper = styled.section`
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  padding-top: 24px;
 
   text-align: center;
   font-family: var(--font-inter);
 
   color: white;
   background-color: #5c4ad1;
-  background: linear-gradient(266.86deg, #43b4d8 8.28%, #7343d8 91.96%);
+  background: linear-gradient(220deg, #43b4d8 25%, #7343d8 90%);
   background-image: linear-gradient(
-    266.86deg,
-    rgb(67, 180, 216) 8.28%,
-    rgb(115, 67, 216) 91.96%
+    220deg,
+    rgb(67, 180, 216) 25%,
+    rgb(115, 67, 216) 90%
   );
   & article {
-    padding: 96px 12px;
+    padding: 48px 12px;
   }
   & button {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
     padding: 12px 48px;
     border-radius: 8px;
     border: none;
-    font-size: 1.4em;
+    font-size: 1.2em;
     margin: 6px;
+    cursor: pointer;
+    transition: 0.25s ease-in;
+  }
+  & button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.08);
+  }
+  & .inverse {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+  }
+  & .inverse:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.08);
   }
   h1 {
     font-size: 3.5em;
-    padding-bottom: 48px;
+    padding-bottom: 36px;
   }
   p,
   span {
-    font-size: 1.8em;
+    font-size: 1.6em;
   }
 `;
 // animate text later-on? https://tobiasahlin.com/moving-letters/#11
@@ -73,9 +89,14 @@ export default function SignIn({ providers }) {
         />
       </article>
       <article>
-        {Object.values(providers).map((provider) => (
+        <h4>Sign-in to support your Kiez</h4>
+        <br></br>
+        {Object.values(providers).map((provider, i) => (
           <div key={provider.name}>
-            <button onClick={() => signIn(provider.id)}>
+            <button
+              onClick={() => signIn(provider.id)}
+              className={i === 1 ? "inverse" : null}
+            >
               Sign in with {provider.name}
             </button>
           </div>

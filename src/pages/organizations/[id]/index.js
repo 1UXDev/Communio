@@ -68,7 +68,7 @@ export default function OrgDetailPage() {
       <button onClick={() => router.back()}>← back</button>
       <section>
         <IMGwrapper>
-          <Image src={organization.image} alt={organization.name} />
+          <img src={organization.image} alt={organization.name} />
           <IMGoverlay className="hero">
             <p>📍 #{organization.bezirk}</p>
             <h2>{organization.name}</h2>

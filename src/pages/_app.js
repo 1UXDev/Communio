@@ -15,7 +15,6 @@ export default function App({ Component, pageProps, session }) {
     (state) => state.setCurrentOrganizations
   );
   const currentLocation = useStore((state) => state.currentLocation);
-  const currentOrganizations = useStore((state) => state.currentOrganizations);
   const setAllProducts = useStore((state) => state.setAllProducts);
 
   const { data, error, isLoading } = useSWR("/api/", fetcher);

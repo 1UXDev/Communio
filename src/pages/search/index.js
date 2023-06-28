@@ -54,12 +54,12 @@ export default function Search() {
                 return (
                   <li key={uid()}>
                     <Link href={`/organizations/${org._id}`}>
-                      <Image
+                      <img
                         src={org.image}
                         alt={`image of ${org.name}`}
                         width="50px"
                         height="50px"
-                      ></Image>
+                      ></img>
                       <div>
                         <h2>{org.name}</h2>
                         <p>{org.bezirk}</p>

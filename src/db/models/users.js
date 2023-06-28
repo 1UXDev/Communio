@@ -4,49 +4,52 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const usersSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, required: true },
   name: { type: String, required: true },
+  email: { type: String, required: true },
+  providerAccountId: { type: String },
+  image: { type: String, required: false },
   coordinates: {
     type: [Number],
-    required: true,
+    required: false,
   },
-  radiusInKM: { type: String, required: true },
-  bezirk: { type: String, required: true },
+  radiusInKM: { type: String, required: false },
+  bezirk: { type: String, required: false },
   kiez: { type: String, required: false },
-  street: { type: String, required: true },
-  streetNumber: { type: Number, required: true },
-  plz: { type: Number, required: true },
+  street: { type: String, required: false },
+  streetNumber: { type: Number, required: false },
+  plz: { type: Number, required: false },
   preferredPaymentMethod: {
     type: [String],
-    required: true,
+    required: false,
   },
   paymentCache: [
     {
-      paymentMethod: { type: String, required: true },
+      paymentMethod: { type: String, required: false },
       userName: { type: String, required: false },
       ccNumber: { type: Number, required: false },
       name: { type: String, required: false },
       valid: { type: [Number], required: false },
     },
   ],
-  favOrgs: { type: [String], required: true },
+  favOrgs: { type: [String], required: false },
   favProducts: [
     [{ type: Schema.Types.ObjectId }, { type: Schema.Types.ObjectId }],
   ],
   purchaseHistory: [
     {
-      purchaseId: { type: String, required: true },
-      paymentMethod: { type: String, required: true },
-      priceInEuro: { type: Number, required: true },
+      purchaseId: { type: String, required: false },
+      paymentMethod: { type: String, required: false },
+      priceInEuro: { type: Number, required: false },
       purchasedProducts: [
         {
-          productId: { type: String, required: true },
-          organizationId: { type: String, required: true },
-          amount: { type: Number, required: true },
+          productId: { type: String, required: false },
+          organizationId: { type: String, required: false },
+          amount: { type: Number, required: false },
         },
       ],
     },
   ],
+  favoriteIceCream: { type: String },
 });
 
 const Users = mongoose.models.Users || mongoose.model("Users", usersSchema);

@@ -83,7 +83,7 @@ export default function Profile() {
         <div className="ProfileWrapper">
           <h1>Here will be the Profile of {data.name}</h1>
           <p>
-            <Image
+            <img
               src={session.user.image}
               style={{ width: "100px", borderRadius: "50%" }}
               alt="your profile picture"
