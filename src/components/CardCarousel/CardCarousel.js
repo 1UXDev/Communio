@@ -39,59 +39,36 @@ export default function CardCarousel() {
   useEffect(() => {
     if (!productCounter || productCounter.length === 0) {
       let newProductCounter = currentOrganizations.flatMap((org) =>
-        // org.products.map((product) => (product.id = product._id))
         org.products.map((product) => ({
-          id: product._id,
+          id: product.productId + org.name,
           count: 0,
         }))
       );
       setProductCounter(newProductCounter);
-      console.log("productCounter is now set", productCounter);
     } else {
-      console.log("productCounter exists already", productCounter);
+      null;
     }
   }, [currentOrganizations, productCounter]);
 
-  // useEffect(() => {
-  //   if (!productCounter || productCounter.length === 0) {
-  //     let newProductCounter = currentOrganizations.flatMap((org) =>
-  //       org.products.map((product) => ({
-  //         id: product._id,
-  //         count: 0,
-  //       }))
-  //     );
-  //     setProductCounter(newProductCounter);
-  //     console.log("productCounter is now set", productCounter);
-  //   } else {
-  //     console.log("productCounter exists already");
-  //   }
-  // }, [currentOrganizations, setProductCounter]);
-
+  // note: the clickedId is a combination of a static product-identifier(productId) + the name of the organization, since multiple orgs can have the same product-need
   function incrementCounter(clickedId) {
+    console.log(productCounter);
     const updatedProductCounter = productCounter.map((product) =>
       product.id === clickedId
         ? { ...product, count: product.count + 1 }
         : product
     );
-    console.log(updatedProductCounter);
     setProductCounter(updatedProductCounter);
   }
 
-  // function incrementCounter(clickedId) {
-  //   setProductCounter((prevProductCounter) =>
-  //     prevProductCounter.map((product) =>
-  //       product.id === clickedId
-  //         ? { ...product, count: product.count + 1 }
-  //         : product
-  //     )
-  //   );
-  // }
-
-  const decrementCounter = (clickedId) => {};
-
-  // useEffect(() => {
-  //   console.log(productCounter);
-  // }, [productCounter]);
+  function decrementCounter(clickedId) {
+    const updatedProductCounter = productCounter.map((product) =>
+      product.id === clickedId && product.count > 0
+        ? { ...product, count: product.count - 1 }
+        : product
+    );
+    setProductCounter(updatedProductCounter);
+  }
 
   return (
     <ExploreSection>
@@ -111,12 +88,15 @@ export default function CardCarousel() {
                         alt="remove one from cart"
                         width="50px"
                         id={product._id}
-                        onClick={() => decrementCounter(product._id)}
+                        onClick={() =>
+                          decrementCounter(product.productId + org.name)
+                        }
                       ></img>
                       <span id="counter">
                         {productCounter[0]
                           ? productCounter.find(
-                              (arrayProduct) => arrayProduct.id === product._id
+                              (arrayProduct) =>
+                                arrayProduct.id === product.productId + org.name
                             ).count
                           : 0}
                       </span>
@@ -125,7 +105,9 @@ export default function CardCarousel() {
                         alt="add one to cart"
                         width="50px"
                         id={product._id}
-                        onClick={() => incrementCounter(product._id)}
+                        onClick={() =>
+                          incrementCounter(product.productId + org.name)
+                        }
                       ></img>
                     </ClickerWrapper>
                     <h4>{org.name}</h4>

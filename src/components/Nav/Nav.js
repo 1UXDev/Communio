@@ -22,8 +22,29 @@ const NavContainer = styled.div`
   }
 `;
 
+const Badge = styled.div`
+  background-color: rgb(60, 190, 200);
+  position: absolute;
+  margin-left: 16px;
+  color: white;
+  padding: 2px;
+  width: 16px;
+  height: 16px;
+  font-size: 0.7em;
+  font-weight: bold;
+  border-radius: 99px;
+  z-index: 99;
+`;
+
 export default function Nav() {
   const usersData = useStore((state) => state.usersData);
+  const productCounter = useStore((state) => state.productCounter);
+
+  const productAmount = productCounter.reduce(
+    (accumulator, product) => accumulator + product.count,
+    0
+  );
+
   return (
     <NavContainer>
       <Link href="/" alt="Link to Home">
@@ -52,6 +73,7 @@ export default function Nav() {
           alt="Icon Cart"
         ></Image>
         <span>Cart</span>
+        {!productAmount < 1 && <Badge>{productAmount}</Badge>}
       </Link>
       <Link href="/search" alt="Link to Search">
         <Image
