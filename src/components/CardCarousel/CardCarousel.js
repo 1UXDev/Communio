@@ -33,7 +33,7 @@ export default function CardCarousel() {
     if (!productCounter || productCounter.length === 0) {
       let newProductCounter = currentOrganizations.flatMap((org) =>
         org.products.map((product) => ({
-          id: product.productId + org.name,
+          id: product.productId + ";;" + org.name,
           count: 0,
         }))
       );
@@ -51,7 +51,7 @@ export default function CardCarousel() {
     return <div>Loading...</div>;
   }
 
-  // note: the clickedId is a combination of a static product-identifier(productId) + the name of the organization, since multiple orgs can have the same product-need
+  // note: the clickedId is a combination of a static product-identifier(productId) + ; + the name of the organization, since multiple orgs can have the same product-need and we need to be able to split it again (thus the ";;")
   function incrementCounter(clickedId) {
     console.log(productCounter);
     const updatedProductCounter = productCounter.map((product) =>
@@ -90,14 +90,15 @@ export default function CardCarousel() {
                         width="50px"
                         id={product._id}
                         onClick={() =>
-                          decrementCounter(product.productId + org.name)
+                          decrementCounter(product.productId + ";;" + org.name)
                         }
                       ></img>
                       <span id="counter">
                         {productCounter[0]
                           ? productCounter.find(
                               (arrayProduct) =>
-                                arrayProduct.id === product.productId + org.name
+                                arrayProduct.id ===
+                                product.productId + ";;" + org.name
                             ).count
                           : 0}
                       </span>
@@ -107,7 +108,7 @@ export default function CardCarousel() {
                         width="50px"
                         id={product._id}
                         onClick={() =>
-                          incrementCounter(product.productId + org.name)
+                          incrementCounter(product.productId + ";;" + org.name)
                         }
                       ></img>
                     </ClickerWrapper>
