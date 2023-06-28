@@ -29,13 +29,6 @@ export default function CardCarousel() {
   const productCounter = useStore((state) => state.productCounter) || [];
   const setProductCounter = useStore((state) => state.setProductCounter) || [];
 
-  if (!currentOrganizations || currentOrganizations.length < 1) {
-    return <div>Loading...</div>;
-  }
-  if (!usersData || usersData.length < 1) {
-    return <div>Loading...</div>;
-  }
-
   useEffect(() => {
     if (!productCounter || productCounter.length === 0) {
       let newProductCounter = currentOrganizations.flatMap((org) =>
@@ -49,6 +42,14 @@ export default function CardCarousel() {
       null;
     }
   }, [currentOrganizations, productCounter]);
+
+  if (!currentOrganizations || currentOrganizations.length < 1) {
+    return <div>Loading...</div>;
+  }
+
+  if (!usersData || usersData.length < 1) {
+    return <div>Loading...</div>;
+  }
 
   // note: the clickedId is a combination of a static product-identifier(productId) + the name of the organization, since multiple orgs can have the same product-need
   function incrementCounter(clickedId) {
