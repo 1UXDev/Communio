@@ -10,10 +10,13 @@ import {
 } from "../CardBase/styledCardBase";
 import { uid } from "uid";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const ExploreSection = styled.section``;
 
 export default function CardCarousel() {
+  const { data: session } = useSession();
+
   const currentOrganizations =
     useStore((state) => state.currentOrganizations) || [];
   const usersData = useStore((state) => state.usersData);
@@ -34,50 +37,54 @@ export default function CardCarousel() {
       : setLikedProducts([...likedProducts, { id: id, org: org }]);
   }
 
-  // // ------- The likes currently only work locally, the connection to the server did not work, will find out tomorrow why...
-  // useEffect(() => {
-  //   updateLikesOnServer();
-  // }, [likedProducts]);
-  // async function updateLikesOnServer() {
-  //   try {
-  //     const method = likedProducts.length > 0 ? "PATCH" : "POST";
-
-  //     console.log("serverfunct", likedProducts);
-  //     const response = await fetch("/api/likes", {
-  //       method,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(likedProducts),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log("yay :)");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
   // ____ Stuff for the counters ____
+
+  // initiales laden der currentOrganizations
   useEffect(() => {
-    if (!productCounter || productCounter.length === 0) {
-      let newProductCounter = currentOrganizations.flatMap((org) =>
-        org.products.map((product) => ({
-          id: product.productId + ";;" + org.name,
-          org: org.name,
-          count: 0,
-        }))
-      );
-      setProductCounter(newProductCounter);
+    if (!usersData.productCounter || usersData.productCounter.length === 0) {
+      if (productCounter.length === 0) {
+        let newProductCounter = currentOrganizations.flatMap((org) =>
+          org.products.map((product) => ({
+            id: product.productId + ";;" + org.name,
+            org: org.name,
+            count: 0,
+          }))
+        );
+        setProductCounter(newProductCounter);
+      }
     } else {
-      null;
+      setProductCounter(usersData.productCounter);
     }
-  }, [currentOrganizations, productCounter]);
+  }, [currentOrganizations]);
+
+  useEffect(() => {
+    console.log(productCounter);
+    async function updateCountsOnServer() {
+      console.log("test");
+      try {
+        const method = "PATCH";
+
+        console.log("serverfunct", productCounter);
+        const response = await fetch(`/api/users/${session?.user._id}`, {
+          method,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productCounter }),
+        });
+
+        if (response.ok) {
+          console.log("yay :)");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    productCounter.length > 0 && updateCountsOnServer();
+  }, [productCounter]);
 
   // note: the clickedId is a combination of a static product-identifier(productId) + ; + the name of the organization, since multiple orgs can have the same product-need and we need to be able to split it again (thus the ";;")
   function incrementCounter(clickedId) {
-    console.log(productCounter);
     const updatedProductCounter = productCounter.map((product) =>
       product.id === clickedId
         ? { ...product, count: product.count + 1 }

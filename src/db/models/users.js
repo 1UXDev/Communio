@@ -10,6 +10,9 @@ const usersSchema = new Schema({
   providerAccountId: { type: String },
   image: { type: String, required: false },
   liked: { type: [String] },
+  productCounter: [
+    { id: { type: String }, org: { type: String }, count: { type: Number } },
+  ],
   coordinates: {
     type: [Number],
     required: false,
