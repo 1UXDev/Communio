@@ -1,5 +1,4 @@
 import Layout from "@/components/Layout/Layout";
-import AppSettings from "@/components/AppSettings/AppSettings";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import Header from "@/components/Header/Header";
@@ -9,6 +8,7 @@ import Banner from "@/components/Banner/Banner";
 
 export default function Home() {
   const { data: session } = useSession();
+
   const router = useRouter();
 
   if (session) {

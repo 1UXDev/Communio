@@ -1,33 +1,35 @@
 import { create } from "zustand";
+import produce from "immer";
 
 // Globally Storing some Objects, this will be reduced once development progresses.
 // e.g. the usersData, which holds all users data is currently only needed for the User-Selection in the App-Settings Component
 
 const useStore = create((set) => ({
-  //currentUserID: "",
-  //currentUser: [],
+  // ---------- The current user ----------
   usersData: [],
-  allOrganizations: [],
+  setUsersData: (users) => set({ usersData: users }),
+
+  bezirk: "",
+  setBezirk: (bezirk) => set({ bezirk: bezirk }),
+
+  // ---------- The Orgs around the users location ----------
   currentOrganizations: [],
-  productCounter: [],
-  allProducts: [],
-  setAllProducts: (products) => set({ allProducts: products }),
-  //userOrganizationsWithProducts: [],
-  //setUserOrganizationsWithProducts: (orgproducts) =>
-  //set({ userOrganizationsWithProducts: orgproducts }),
-  //setCurrentUserID: (id) => set({ currentUserID: id }), // setting the current userID, will be done by cookies in future
-  //setCurrentUser: (user) => set({ currentUser: user }), // just current user
-  setUsersData: (users) => set({ usersData: users }), // all Users
   setCurrentOrganizations: (organizations) =>
     set({ currentOrganizations: organizations }),
+
+  allOrganizations: [],
   setAllOrganizations: (organizations) =>
     set({ allOrganizations: organizations }),
+
+  allProducts: [],
+  setAllProducts: (products) => set({ allProducts: products }),
+
+  // ---------- Stuff for the Cards ----------
+  productCounter: [],
   setProductCounter: (count) => set({ productCounter: count }),
 
-  // -- I think it would be smarter to do this with the Location selection as a form, that sends a request body
-  // -- These can still be useful, to show on custom selection "Donations around {currentLocation}"
-  // currentLocation: "",
-  // setCurrentLocation: (location) => set({ currentLocation: location }),
+  likedProducts: [],
+  setLikedProducts: (likes) => set({ likedProducts: likes }),
 }));
 
 export default useStore;

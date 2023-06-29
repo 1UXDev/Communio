@@ -6,29 +6,60 @@ import {
   IMGwrapper,
   TEXTwrapper,
   IMGoverlay,
+  ClickerWrapper,
 } from "../CardBase/styledCardBase";
 import { uid } from "uid";
 import { useEffect, useState } from "react";
 
 const ExploreSection = styled.section``;
-const ClickerWrapper = styled.div`
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-  align-items: center;
-  & span {
-    color: white;
-    font-weight: bold;
-  }
-`;
 
 export default function CardCarousel() {
   const currentOrganizations =
     useStore((state) => state.currentOrganizations) || [];
   const usersData = useStore((state) => state.usersData);
+
+  // Counter
   const productCounter = useStore((state) => state.productCounter) || [];
   const setProductCounter = useStore((state) => state.setProductCounter) || [];
 
+  // ____ Likes Stuff ____
+  const likedProducts = useStore((state) => state.likedProducts) || [];
+  const setLikedProducts = useStore((state) => state.setLikedProducts) || [];
+
+  function onLike(id, org) {
+    likedProducts.find((product) => product.id === id)
+      ? setLikedProducts(
+          likedProducts.filter((likedProduct) => likedProduct.id !== id)
+        )
+      : setLikedProducts([...likedProducts, { id: id, org: org }]);
+  }
+
+  // // ------- The likes currently only work locally, the connection to the server did not work, will find out tomorrow why...
+  // useEffect(() => {
+  //   updateLikesOnServer();
+  // }, [likedProducts]);
+  // async function updateLikesOnServer() {
+  //   try {
+  //     const method = likedProducts.length > 0 ? "PATCH" : "POST";
+
+  //     console.log("serverfunct", likedProducts);
+  //     const response = await fetch("/api/likes", {
+  //       method,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(likedProducts),
+  //     });
+
+  //     if (response.ok) {
+  //       console.log("yay :)");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  // ____ Stuff for the counters ____
   useEffect(() => {
     if (!productCounter || productCounter.length === 0) {
       let newProductCounter = currentOrganizations.flatMap((org) =>
@@ -43,14 +74,6 @@ export default function CardCarousel() {
       null;
     }
   }, [currentOrganizations, productCounter]);
-
-  if (!currentOrganizations || currentOrganizations.length < 1) {
-    return <div>Loading...</div>;
-  }
-
-  if (!usersData || usersData.length < 1) {
-    return <div>Loading...</div>;
-  }
 
   // note: the clickedId is a combination of a static product-identifier(productId) + ; + the name of the organization, since multiple orgs can have the same product-need and we need to be able to split it again (thus the ";;")
   function incrementCounter(clickedId) {
@@ -72,6 +95,16 @@ export default function CardCarousel() {
     setProductCounter(updatedProductCounter);
   }
 
+  // ____ General Stuff _____
+
+  if (!currentOrganizations || currentOrganizations.length < 1) {
+    return <div>Loading...</div>;
+  }
+
+  if (!usersData || usersData.length < 1) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <ExploreSection>
       <h2>➡️ Discover All Donations</h2>
@@ -84,6 +117,14 @@ export default function CardCarousel() {
                 <IMGwrapper>
                   <img src={product.productImage} alt={product.name} />
                   <IMGoverlay>
+                    <button onClick={() => onLike(product.productId, org.name)}>
+                      {likedProducts &&
+                      likedProducts.find(
+                        (entry) => product.productId === entry.id
+                      )
+                        ? "❤️"
+                        : "🖤"}
+                    </button>
                     <ClickerWrapper className="">
                       <img
                         src="/plus.png"

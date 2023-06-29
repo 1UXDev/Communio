@@ -74,3 +74,14 @@ export const IMGoverlay = styled.div`
     align-items: flex-start;
   }
 `;
+
+export const ClickerWrapper = styled.div`
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  & span {
+    color: white;
+    font-weight: bold;
+  }
+`;

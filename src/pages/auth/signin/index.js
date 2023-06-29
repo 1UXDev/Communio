@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import styled from "styled-components";
 import TypeIt from "typeit-react";
+import StyledButton from "@/components/StyledButton/StyledButton";
 
 const AuthWrapper = styled.section`
   width: 100%;
@@ -28,29 +29,6 @@ const AuthWrapper = styled.section`
   );
   & article {
     padding: 48px 12px;
-  }
-  & button {
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(8px);
-    padding: 12px 48px;
-    border-radius: 8px;
-    border: none;
-    font-size: 1.2em;
-    margin: 6px;
-    cursor: pointer;
-    transition: 0.25s ease-in;
-  }
-  & button:hover {
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.08);
-  }
-  & .inverse {
-    background-color: rgba(0, 0, 0, 0.4);
-    color: white;
-  }
-  & .inverse:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.08);
   }
   h1 {
     font-size: 3.5em;
@@ -93,12 +71,12 @@ export default function SignIn({ providers }) {
         <br></br>
         {Object.values(providers).map((provider, i) => (
           <div key={provider.name}>
-            <button
+            <StyledButton
               onClick={() => signIn(provider.id)}
               className={i === 1 ? "inverse" : null}
             >
               Sign in with {provider.name}
-            </button>
+            </StyledButton>
           </div>
         ))}
       </article>

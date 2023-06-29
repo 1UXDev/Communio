@@ -16,8 +16,8 @@ export default async function handler(request, response) {
 
     // --- Defining GET APIroute  ---
     if (request.method === "GET") {
-      const userID = "649406cbffa4deb8476cb99a";
-      const specificUser = await Users.findById(userID).exec();
+      // const userID = "649406cbffa4deb8476cb99a";
+      const specificUser = await Users.findById(session.user._id).exec();
 
       const organizations = await Organizations.find({
         bezirk: specificUser.bezirk,

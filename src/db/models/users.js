@@ -4,10 +4,12 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const usersSchema = new Schema({
+  _id: { type: Schema.Types.ObjectId, required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
   providerAccountId: { type: String },
   image: { type: String, required: false },
+  liked: { type: [String] },
   coordinates: {
     type: [Number],
     required: false,

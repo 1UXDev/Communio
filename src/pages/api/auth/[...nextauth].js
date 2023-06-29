@@ -17,6 +17,14 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      // Maybe change this later
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
     // ...add more providers here
   ],
@@ -24,7 +32,15 @@ export const authOptions = {
   pages: {
     signIn: "/",
   },
-  callbacks: {},
+  callbacks: {
+    async session({ session, user }) {
+      session.user._id = user.id;
+      return session;
+    },
+    async redirect({ url, baseUrl }) {
+      return "/hello";
+    },
+  },
 };
 
 export default NextAuth(authOptions);
