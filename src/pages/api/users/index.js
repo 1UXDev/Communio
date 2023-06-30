@@ -32,7 +32,6 @@ export default async function handler(request, response) {
     const userUpdate = await Users.findByIdAndUpdate(id, {
       $set: request.body,
     });
-    console.log(request.body);
 
     return response.status(200).json(userUpdate);
   }

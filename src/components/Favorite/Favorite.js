@@ -15,18 +15,10 @@ export default function Favorite({ product, org, usersData, organizations }) {
 
   // --- initiales laden der organizations > check ob fav-array mit diesen Produkten bereits existiert
   useEffect(() => {
-    if (!usersData.favorites || usersData.favorites.length === 0) {
-      if (favorites.length === 0) {
-        let newFavorites = organizations.flatMap((org) =>
-          org.products.map((product) => ({
-            id: product.productId + ";;" + org.name,
-            org: org.name,
-          }))
-        );
-        setFavorites(newFavorites);
-      }
-    } else {
+    if (usersData.favorites || usersData.favorites.length !== 0) {
       setFavorites(usersData.favorites);
+    } else {
+      null;
     }
   }, []);
 
