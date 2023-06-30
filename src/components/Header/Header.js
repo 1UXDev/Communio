@@ -1,8 +1,8 @@
-import UserLocation from "./HeaderComponents/UserLocation";
 import Language from "./HeaderComponents/Language";
 import Filter from "./HeaderComponents/Filter";
 import styled from "styled-components";
 import useStore from "@/pages/globalstores";
+import UserLocation from "../UserLocation";
 
 const HeaderSection = styled.section`
   display: flex;
@@ -25,7 +25,11 @@ export default function Header() {
   return (
     <HeaderSection>
       <HeaderSettings>
-        <UserLocation currentUser={usersData}></UserLocation>
+        <UserLocation
+          pushLinkLocation={null}
+          includeButton={false}
+          initialBezirk={usersData.bezirk}
+        ></UserLocation>
         <Language currentUser={usersData}></Language>
       </HeaderSettings>
       <Filter currentUser={usersData}></Filter>

@@ -1,11 +1,6 @@
 import styled from "styled-components";
-import useStore from "../globalstores";
 import { useSession } from "next-auth/react";
-import { uid } from "uid";
-import { useEffect } from "react";
-import { StyledButton } from "@/components/StyledButton/StyledButton";
-import { useRouter } from "next/router";
-import useSWRMutation from "swr/mutation";
+import UserLocation from "@/components/Header/HeaderComponents/UserLocation";
 
 const HelloWrapper = styled.section`
   display: flex;
@@ -31,77 +26,8 @@ const HelloWrapper = styled.section`
   }
 `;
 
-const Select = styled.select`
-  width: 80%;
-  max-width: 250px;
-`;
-
 export default function Hello() {
   const { data: session } = useSession();
-  const bezirk = useStore((state) => state.bezirk);
-  const setBezirk = useStore((state) => state.setBezirk);
-  const router = useRouter();
-
-  const hardCodedBezirke = [
-    "Charlottenburg",
-    "Friedrichshain",
-    "Köpenick",
-    "Kreuzberg",
-    "Lichtenberg",
-    "Mariendorf",
-    "Mitte",
-    "Moabit",
-    "Neukölln",
-    "Pankow",
-    "Prenzlauer Berg",
-    "Schöneberg",
-    "Steglitz",
-    "Tempelhof",
-    "Tiergarten",
-    "Treptow",
-    "Wedding",
-    "Weißensee",
-    "Wilmersdorf",
-    "Zehlendorf",
-  ];
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-
-    await trigger(data);
-    router.push("/");
-  }
-
-  // destructure SWR Mutation into trigger for function above
-  const { trigger, isMutating } = useSWRMutation(
-    `/api/users/${session?.user._id}`,
-    sendRequest
-  );
-
-  // define content to give to API route as wrapperfunction for fetch
-  async function sendRequest(url, { arg }) {
-    const response = await fetch(url, {
-      method: "PATCH",
-      body: JSON.stringify(arg),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    // check response
-    if (response.ok) {
-      await response.json();
-      // mutate(); // Change the data to the update
-    } else {
-      console.error(`Error: ${response.status}`);
-    }
-  }
-
-  function bezirkChange(event) {
-    setBezirk(event.target.value);
-  }
 
   return (
     <HelloWrapper>
@@ -113,28 +39,7 @@ export default function Hello() {
         connect you with the charity organizations, we need to know your
         approximate location.
       </p>
-      <form onSubmit={handleSubmit}>
-        <Select
-          onChange={bezirkChange}
-          value={bezirk}
-          name="bezirk"
-          id="bezirk"
-        >
-          {hardCodedBezirke.map((hardCodedBezirk) => {
-            return (
-              <option value={hardCodedBezirk} key={uid()}>
-                {hardCodedBezirk}
-              </option>
-            );
-          })}
-        </Select>
-        <StyledButton disabled={!bezirk} type="submit">
-          Let's go!
-        </StyledButton>
-        <span id="hinttext" style={{ display: "none" }}>
-          Please select a location from the dropdown first
-        </span>
-      </form>
+      <UserLocation pushLinkLocation={"/"} includeButton={true}></UserLocation>
     </HelloWrapper>
   );
 }

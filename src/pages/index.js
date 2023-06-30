@@ -5,9 +5,12 @@ import Header from "@/components/Header/Header";
 import CardCarousel from "@/components/CardCarousel/CardCarousel";
 import Editorial from "@/components/Editorial/Editorial";
 import Banner from "@/components/Banner/Banner";
+import useStore from "./globalstores";
 
 export default function Home() {
   const { data: session } = useSession();
+  const currentOrganizations =
+    useStore((state) => state.currentOrganizations) || [];
 
   const router = useRouter();
 
@@ -15,7 +18,7 @@ export default function Home() {
     return (
       <Layout>
         <Header></Header>
-        <CardCarousel></CardCarousel>
+        <CardCarousel organizations={currentOrganizations}></CardCarousel>
         <Banner></Banner>
         <Editorial></Editorial>
       </Layout>

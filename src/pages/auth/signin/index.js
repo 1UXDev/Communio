@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import styled from "styled-components";
 import TypeIt from "typeit-react";
-import StyledButton from "@/components/StyledButton/StyledButton";
+import { StyledButton } from "@/components/StyledButton/StyledButton";
 
 const AuthWrapper = styled.section`
   width: 100%;

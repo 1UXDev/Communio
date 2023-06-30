@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Organizations from "./organizations";
 
 // destructure the Schema Object from mongoose
 const { Schema } = mongoose;

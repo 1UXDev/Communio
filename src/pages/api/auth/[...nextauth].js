@@ -6,6 +6,8 @@ import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongoose";
 
+let redirectNewUser = "";
+
 export const authOptions = {
   // Configure one or more authentication providers
   secret: process.env.NEXTAUTH_SECRET,
@@ -38,8 +40,17 @@ export const authOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      return "/hello";
+      return `/`;
     },
+    // async signIn({ user, account, profile, isNewUser }) {
+    //   if (isNewUser) {
+    //     // Redirect new users to onboarding page
+    //     return "/hello";
+    //   } else {
+    //     // Redirect recurring users to default index page
+    //     return "/";
+    //   }
+    // },
   },
 };
 

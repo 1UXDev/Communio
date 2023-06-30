@@ -23,57 +23,64 @@ export default function EditForm({ object, onEditFormSubmit }) {
       <br></br>
       <h3>Change Data!</h3>
       <br></br>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} key={uid()}>
         {objectArray.map((attribute) => {
-          return typeof attribute[1] !== "object" ? (
-            <input
-              id={attribute[0]}
-              name={attribute[0]}
-              placeholder={`${attribute[0]} - ${attribute[1]}`}
-              type={typeof attribute[1]}
-              defaultValue={attribute[1]}
-              key={uid()}
-            />
-          ) : (
-            <ul key={uid()}>
-              {attribute.map((arrayAttribute) => {
-                return typeof arrayAttribute === "string" ? (
-                  <h4 key={uid()}>{arrayAttribute}</h4>
-                ) : (
-                  arrayAttribute.map((item, i) => {
+          const [key, value] = attribute;
+          if (typeof value !== "object") {
+            return (
+              <input
+                id={key}
+                name={key}
+                placeholder={`${key} - ${value}`}
+                type={typeof value}
+                defaultValue={value}
+                key={uid()}
+              />
+            );
+          } else {
+            return (
+              <ul key={uid()}>
+                <h4 key={uid()}>{key}:</h4>
+                {value &&
+                  value.map((item, i) => {
                     if (typeof item !== "object") {
                       return (
-                        <input
-                          id={`${attribute[0]}[${i}]`}
-                          name={`${attribute[0]}[${i}]`}
-                          placeholder={item}
-                          type={typeof item}
-                          defaultValue={item}
-                          key={uid()}
-                        />
+                        <>
+                          <input
+                            id={`${attribute[0]}[${i}]`}
+                            name={`${attribute[0]}[${i}]`}
+                            placeholder={item}
+                            type={typeof item}
+                            defaultValue={item}
+                            key={uid()}
+                          />
+                          <br />
+                        </>
                       );
                     } else {
-                      console.log(item);
-                      return (
-                        <div key={uid()}>
-                          <h5>{item.paymentMethod}</h5>
-                          {Object.keys(item).map((key) => (
+                      const itemArray = Object.entries(item);
+
+                      return itemArray.map((itemArrayItem) => {
+                        const [itemKey, itemValue] = itemArrayItem;
+                        return (
+                          <>
                             <input
-                              id={`${attribute[0]}[${i}].${key}`}
-                              name={`${attribute[0]}[${i}].${key}`}
-                              type="text"
-                              defaultValue={item[key]}
+                              id={`${attribute[0]}[${i}].${itemKey}`}
+                              name={`${attribute[0]}[${i}].${itemKey}`}
+                              placeholder={itemKey}
+                              type={typeof itemValue}
+                              defaultValue={itemValue}
                               key={uid()}
                             />
-                          ))}
-                        </div>
-                      );
+                            <br />
+                          </>
+                        );
+                      });
                     }
-                  })
-                );
-              })}
-            </ul>
-          );
+                  })}
+              </ul>
+            );
+          }
         })}
         <button type="submit">Submit Changes</button>
       </Form>

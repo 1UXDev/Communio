@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Products from "./products";
 
 // destructure the Schema Object from mongoose
 const { Schema } = mongoose;
@@ -9,9 +10,15 @@ const usersSchema = new Schema({
   email: { type: String, required: true },
   providerAccountId: { type: String },
   image: { type: String, required: false },
-  liked: { type: [String] },
-  productCounter: [
+  favorites: [
     { id: { type: String }, org: { type: String }, count: { type: Number } },
+  ],
+  productCounter: [
+    {
+      id: { type: Schema.Types.ObjectId, ref: "Products" },
+      org: { type: String },
+      count: { type: Number },
+    },
   ],
   coordinates: {
     type: [Number],
