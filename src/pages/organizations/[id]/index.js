@@ -4,6 +4,7 @@ import { IMGwrapper, IMGoverlay } from "@/components/CardBase/styledCardBase";
 import Link from "next/link";
 import CardCarousel from "@/components/CardCarousel/CardCarousel";
 import Image from "next/image";
+import Layout from "@/components/Layout/Layout";
 
 //--- for the data editing // Patching
 import useSWRMutation from "swr/mutation";
@@ -64,7 +65,7 @@ export default function OrgDetailPage() {
   }
 
   return (
-    <>
+    <Layout>
       <button onClick={() => router.back()}>← back</button>
       <section>
         <IMGwrapper>
@@ -78,13 +79,13 @@ export default function OrgDetailPage() {
           <p>{organization.description}</p>
         </article>
         <article>
-          <CardCarousel></CardCarousel>
+          <CardCarousel organizations={[organization]}></CardCarousel>
         </article>
       </section>
       <EditForm
         object={organization}
         onEditFormSubmit={onEditFormSubmit}
       ></EditForm>
-    </>
+    </Layout>
   );
 }

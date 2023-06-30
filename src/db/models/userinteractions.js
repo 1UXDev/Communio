@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
-import Organizations from "./organizations";
 
 // destructure the Schema Object from mongoose
 const { Schema } = mongoose;
 
 // define the Schema (according to the input data we got from project)
-const productsSchema = new Schema({
+const userinteractionsSchema = new Schema({
   _id: { type: Schema.Types.ObjectId, ref: "Organizations", required: true },
   name: { type: String, required: true },
   productImage: { type: String, required: true },
@@ -14,7 +13,8 @@ const productsSchema = new Schema({
   unit: { type: String, required: true },
 });
 
-const Products =
-  mongoose.models.Products || mongoose.model("Products", productsSchema);
+const UserInteractions =
+  mongoose.models.UserInteractions ||
+  mongoose.model("UserInteractions", userinteractionsSchema);
 
-export default Products;
+export default UserInteractions;

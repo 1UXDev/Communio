@@ -71,7 +71,6 @@ export default function Profile() {
   }
 
   // Loading States
-  // sollte btw auch noch da bleiben wenn die Edit Funkt ausgebaut wird
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
   if (isMutating) {
     return <h1>Submitting your changes...</h1>;
@@ -81,7 +80,6 @@ export default function Profile() {
     return (
       <Layout>
         <div className="ProfileWrapper">
-          <h1>Here will be the Profile of {data.name}</h1>
           <p>
             <img
               src={session.user.image}
@@ -93,41 +91,12 @@ export default function Profile() {
           <button onClick={signOut}>Sign out</button>
           <h3>Dynamically generated Info about user:</h3>
           <ul>
-            <li>Location: {data.bezirk}</li>
-            <li>
-              Address: {data.street}, {data.streetNumber}
-            </li>
+            <li>Your Default Location: {data.bezirk}</li>
           </ul>
 
           <br />
           <br />
 
-          <h3>Preferred Payment Methods</h3>
-          <ul>
-            {data.preferredPaymentMethod.map((method) => (
-              <li key={uid()}>{method}</li>
-            ))}
-          </ul>
-
-          <br />
-          <br />
-
-          <h3>Saved Payment Details</h3>
-          <ul>
-            {data.paymentCache.map((cache) => (
-              <li key={uid()}>
-                Payment Method: {cache.paymentMethod} ,
-                {cache.userName ? `User Name: ${cache.userName} ` : null}
-                {cache.ccNumber
-                  ? `Credit Card Number: ${cache.ccNumber} `
-                  : null}
-                {cache.name ? `Name on Card: ${cache.name} ` : null}
-                {cache.valid.length > 1
-                  ? `Valid until: ${cache.valid.join("/")}`
-                  : null}
-              </li>
-            ))}
-          </ul>
           <br></br>
           <EditForm
             object={data}

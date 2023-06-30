@@ -14,7 +14,7 @@ export default function App({ Component, pageProps, session }) {
   const setCurrentOrganizations = useStore(
     (state) => state.setCurrentOrganizations
   );
-  const currentLocation = useStore((state) => state.currentLocation);
+  const bezirk = useStore((state) => state.bezirk);
   const setAllProducts = useStore((state) => state.setAllProducts);
 
   const { data, error, isLoading } = useSWR("/api/", fetcher);
@@ -25,7 +25,7 @@ export default function App({ Component, pageProps, session }) {
       setCurrentOrganizations(data[1]);
       setAllProducts(data[2]);
     }
-  }, [data, currentLocation]);
+  }, [data, bezirk]);
 
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;

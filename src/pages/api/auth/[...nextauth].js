@@ -6,6 +6,8 @@ import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongoose";
 
+let redirectNewUser = "";
+
 export const authOptions = {
   // Configure one or more authentication providers
   secret: process.env.NEXTAUTH_SECRET,
@@ -17,6 +19,14 @@ export const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      // Maybe change this later
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
     // ...add more providers here
   ],
@@ -24,7 +34,24 @@ export const authOptions = {
   pages: {
     signIn: "/",
   },
-  callbacks: {},
+  callbacks: {
+    async session({ session, user }) {
+      session.user._id = user.id;
+      return session;
+    },
+    async redirect({ url, baseUrl }) {
+      return `/`;
+    },
+    // async signIn({ user, account, profile, isNewUser }) {
+    //   if (isNewUser) {
+    //     // Redirect new users to onboarding page
+    //     return "/hello";
+    //   } else {
+    //     // Redirect recurring users to default index page
+    //     return "/";
+    //   }
+    // },
+  },
 };
 
 export default NextAuth(authOptions);

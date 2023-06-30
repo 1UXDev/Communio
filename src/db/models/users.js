@@ -1,13 +1,23 @@
 import mongoose from "mongoose";
+import Products from "./products";
 
 // destructure the Schema Object from mongoose
 const { Schema } = mongoose;
 
 const usersSchema = new Schema({
+  _id: { type: Schema.Types.ObjectId, required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
   providerAccountId: { type: String },
   image: { type: String, required: false },
+  favorites: [{ id: { type: String }, org: { type: String } }],
+  productCounter: [
+    {
+      id: { type: String, ref: "Products" },
+      org: { type: String },
+      count: { type: Number },
+    },
+  ],
   coordinates: {
     type: [Number],
     required: false,
