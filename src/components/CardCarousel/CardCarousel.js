@@ -7,7 +7,6 @@ import {
   IMGoverlay,
 } from "../CardBase/styledCardBase";
 import { uid } from "uid";
-import { useSession } from "next-auth/react";
 import Counter from "../Counter/Counter";
 import Favorite from "../Favorite/Favorite";
 
@@ -37,7 +36,12 @@ export default function CardCarousel({ organizations }) {
                 <IMGwrapper>
                   <img src={product.productImage} alt={product.name} />
                   <IMGoverlay>
-                    <Favorite product={product}></Favorite>
+                    <Favorite
+                      product={product}
+                      org={org}
+                      usersData={usersData}
+                      organizations={organizations}
+                    ></Favorite>
                     <Counter
                       organizations={organizations}
                       usersData={usersData}

@@ -9,17 +9,26 @@ const FavWrapper = styled.div`
   align-items: center;
 `;
 
-export default function Favorite({ organizations, usersData, product, org }) {
-  const likedProducts = useStore((state) => state.likedProducts) || [];
-  const setLikedProducts = useStore((state) => state.setLikedProducts) || [];
+export default function Favorite({ product, org, usersData, organizations }) {
+  const favorites = useStore((state) => state.favorites) || [];
+  const setFavorites = useStore((state) => state.setFavorites) || [];
 
-  // function onLike(id, org) {
-  //   likedProducts.find((product) => product.id === id)
-  //     ? setLikedProducts(
-  //         likedProducts.filter((likedProduct) => likedProduct.id !== id)
-  //       )
-  //     : setLikedProducts([...likedProducts, { id: id, org: org }]);
-  // }
+  // --- initiales laden der organizations > check ob fav-array mit diesen Produkten bereits existiert
+  useEffect(() => {
+    if (!usersData.favorites || usersData.favorites.length === 0) {
+      if (favorites.length === 0) {
+        let newFavorites = organizations.flatMap((org) =>
+          org.products.map((product) => ({
+            id: product.productId + ";;" + org.name,
+            org: org.name,
+          }))
+        );
+        setFavorites(newFavorites);
+      }
+    } else {
+      setFavorites(usersData.favorites);
+    }
+  }, []);
 
   // --- Wenn likedProducts existiert bzw sich ändert > DB
   useEffect(() => {
@@ -32,7 +41,7 @@ export default function Favorite({ organizations, usersData, product, org }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ favorites: likedProducts }),
+          body: JSON.stringify({ favorites }),
         });
 
         if (response.ok) {
@@ -41,26 +50,27 @@ export default function Favorite({ organizations, usersData, product, org }) {
         console.error(error);
       }
     }
-    likedProducts.length > 0 && updateFavoritesOnServer();
-  }, [likedProducts]);
+    favorites.length > 0 && updateFavoritesOnServer();
+  }, [favorites]);
 
-  // --- Working with the actual click-event
-  function onLike(id) {
-    likedProducts.find((alreadyLiked) => alreadyLiked === id)
-      ? setLikedProducts(
-          likedProducts.filter((alreadyLiked) => alreadyLiked !== id)
-        )
-      : setLikedProducts([...likedProducts, id]);
-  }
-
-  if (!likedProducts) {
+  if (!favorites || !org || !product) {
     return "loading";
   }
 
+  // --- Working with the actual click-event
+  function onLike(id) {
+    favorites.find((favorite) => favorite.id === id)
+      ? setFavorites(favorites.filter((likedProduct) => likedProduct.id !== id))
+      : setFavorites([...favorites, { id: id, org: org.name }]);
+  }
+
   return (
-    <FavWrapper className="">
-      <button onClick={() => onLike(product._id)}>
-        {likedProducts && likedProducts.find((entry) => product._id === entry)
+    <FavWrapper>
+      <button onClick={() => onLike(product.productId + ";;" + org.name)}>
+        {favorites &&
+        favorites.find(
+          (entry) => product.productId + ";;" + org.name === entry.id
+        )
           ? "❤️"
           : "🖤"}
       </button>

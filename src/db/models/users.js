@@ -10,12 +10,10 @@ const usersSchema = new Schema({
   email: { type: String, required: true },
   providerAccountId: { type: String },
   image: { type: String, required: false },
-  favorites: [
-    { id: { type: String }, org: { type: String }, count: { type: Number } },
-  ],
+  favorites: [{ id: { type: String }, org: { type: String } }],
   productCounter: [
     {
-      id: { type: Schema.Types.ObjectId, ref: "Products" },
+      id: { type: String, ref: "Products" },
       org: { type: String },
       count: { type: Number },
     },

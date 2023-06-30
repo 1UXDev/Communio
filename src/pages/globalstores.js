@@ -28,8 +28,8 @@ const useStore = create((set) => ({
   productCounter: [],
   setProductCounter: (count) => set({ productCounter: count }),
 
-  likedProducts: [],
-  setLikedProducts: (likes) => set({ likedProducts: likes }),
+  favorites: [],
+  setFavorites: (like) => set({ favorites: like }),
 }));
 
 export default useStore;
