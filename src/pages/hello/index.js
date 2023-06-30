@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
-import UserLocation from "@/components/Header/HeaderComponents/UserLocation";
+import UserLocation from "@/components/UserLocation";
 
 const HelloWrapper = styled.section`
   display: flex;
