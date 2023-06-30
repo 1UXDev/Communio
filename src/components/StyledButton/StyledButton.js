@@ -15,11 +15,11 @@ export const StyledButton = styled.button`
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.08);
   }
-  & .inverse {
+  &.inverse {
     background-color: rgba(0, 0, 0, 0.4);
     color: white;
   }
-  & .inverse:hover {
+  &.inverse:hover {
     background-color: rgba(0, 0, 0, 0.5);
     box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.08);
   }`;
