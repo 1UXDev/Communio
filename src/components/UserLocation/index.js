@@ -106,7 +106,7 @@ export default function UserLocation({
       {includeButton && (
         <>
           <StyledButton disabled={!bezirk} type="submit">
-            Let's go!
+            Let&apos;s go!
           </StyledButton>
           <span id="hinttext" style={{ display: "none" }}>
             Please select a location from the dropdown first

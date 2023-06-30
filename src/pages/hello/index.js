@@ -31,7 +31,7 @@ export default function Hello() {
 
   return (
     <HelloWrapper>
-      <img src={session?.user.image}></img>
+      <img src={session?.user.image} alt="your profile picture"></img>
       <h1>Hi {session?.user.name} 👋</h1>
       <h2>Welcome to Communio</h2>
       <p>
