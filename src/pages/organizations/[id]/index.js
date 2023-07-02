@@ -25,44 +25,8 @@ export default function OrgDetailPage() {
     refreshInterval: 0,
   });
 
-  //-----------------------------
-  // --- Code until if-statements is to edit data of Orgnaization
-  //-----------------------------
-  async function onEditFormSubmit(organization, event) {
-    event.preventDefault();
-    await trigger(organization);
-    //router.push("/");
-  }
-
-  // destructure SWR Mutation into trigger for function above
-  const { trigger, isMutating } = useSWRMutation(
-    `/api/organizations/${id}`,
-    sendRequest
-  );
-  // define content to give to API route as wrapperfunction for fetch
-  async function sendRequest(url, { arg }) {
-    const response = await fetch(url, {
-      method: "PATCH",
-      body: JSON.stringify(arg),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    // check response
-    if (response.ok) {
-      await response.json();
-    } else {
-      console.error(`Error: ${response.status}`);
-    }
-  }
-
   // Loading States
-  // sollte btw auch noch da bleiben wenn die Edit Funkt ausgebaut wird
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
-  if (isMutating) {
-    return <h1>Submitting your changes...</h1>;
-  }
 
   return (
     <Layout>
@@ -82,10 +46,6 @@ export default function OrgDetailPage() {
           <CardCarousel organizations={[organization]}></CardCarousel>
         </article>
       </section>
-      <EditForm
-        object={organization}
-        onEditFormSubmit={onEditFormSubmit}
-      ></EditForm>
     </Layout>
   );
 }

@@ -11,17 +11,22 @@ export default function Home() {
   const { data: session } = useSession();
   const currentOrganizations =
     useStore((state) => state.currentOrganizations) || [];
+  const usersData = useStore((state) => state.usersData) || [];
 
   const router = useRouter();
 
   if (session) {
-    return (
-      <Layout>
-        <Header></Header>
-        <CardCarousel organizations={currentOrganizations}></CardCarousel>
-        <Banner></Banner>
-        <Editorial></Editorial>
-      </Layout>
-    );
+    if (usersData.isRecurring) {
+      return (
+        <Layout>
+          <Header></Header>
+          <CardCarousel organizations={currentOrganizations}></CardCarousel>
+          <Banner></Banner>
+          <Editorial></Editorial>
+        </Layout>
+      );
+    } else {
+      router.push("/hello");
+    }
   } else router.push("/auth/signin");
 }
