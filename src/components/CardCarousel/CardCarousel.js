@@ -12,12 +12,14 @@ import Favorite from "../Favorite/Favorite";
 
 const ExploreSection = styled.section``;
 
-export default function CardCarousel({ organizations }) {
+export default function CardCarousel() {
   const usersData = useStore((state) => state.usersData);
+  const currentOrganizations =
+    useStore((state) => state.currentOrganizations) || [];
 
   // ____ General Stuff _____
 
-  if (!organizations || organizations.length < 1) {
+  if (!currentOrganizations || currentOrganizations.length < 1) {
     return <div>Loading...</div>;
   }
 
@@ -29,7 +31,7 @@ export default function CardCarousel({ organizations }) {
     <ExploreSection>
       <h2>➡️ Discover All Donations</h2>
       <CardWrapper>
-        {organizations.map((org) => {
+        {currentOrganizations.map((org) => {
           return org.products.map((product) => {
             return (
               <li key={uid()} className="small">
@@ -40,10 +42,10 @@ export default function CardCarousel({ organizations }) {
                       product={product}
                       org={org}
                       usersData={usersData}
-                      organizations={organizations}
+                      organizations={currentOrganizations}
                     ></Favorite>
                     <Counter
-                      organizations={organizations}
+                      organizations={currentOrganizations}
                       usersData={usersData}
                       product={product}
                       org={org}

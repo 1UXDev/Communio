@@ -26,8 +26,6 @@
     "react-dom": "18.2.0",
     "styled-components": "^5.3.6",
     "swr": "^2.1.5",
-    "typeface-inter": "^3.18.1",
-    "typeface-roboto": "^1.1.13",
     "typeit-react": "^2.6.4",
     "uid": "^2.0.2",
     "zustand": "^4.3.8"

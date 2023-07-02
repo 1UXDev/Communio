@@ -7,6 +7,8 @@ const HelloWrapper = styled.section`
   flex-flow: column;
   gap: 24px;
   align-items: center;
+  justify-content: space-between;
+  text-align: center;
   width: 100%;
   height: 100vh;
   margin: 0px auto;
@@ -20,9 +22,31 @@ const HelloWrapper = styled.section`
   );
   padding: 24px;
 
+  & article.helloUser {
+    padding: 24px;
+    flex-grow: 3;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    max-width: 420px;
+  }
+  & h1 {
+    font-size: 2em;
+    padding-bottom: 24px;
+  }
   & img {
-    width: 50%;
+    max-width: 200px;
     border-radius: 200px;
+  }
+
+  & .selectionWrapper {
+    flex-grow: 2;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -31,15 +55,23 @@ export default function Hello() {
 
   return (
     <HelloWrapper>
-      <img src={session?.user.image} alt="your profile picture"></img>
-      <h1>Hi {session?.user.name} 👋</h1>
-      <h2>Welcome to Communio</h2>
-      <p>
-        Communio is the platform to support charity in your local area. To
-        connect you with the charity organizations, we need to know your
-        approximate location.
-      </p>
-      <UserLocation includeButton={true}></UserLocation>
+      <article class="helloUser">
+        <img src={session?.user.image} alt="your profile picture"></img>
+        <h1>Hi {session?.user.name} 👋</h1>
+
+        <h3>Welcome to Communio</h3>
+        <p>
+          Communio is the platform to support charity in your local area. To
+          start sharing, select your current location.
+        </p>
+      </article>
+
+      <div className="selectionWrapper">
+        <UserLocation
+          includeButton={true}
+          includeSupportText={true}
+        ></UserLocation>
+      </div>
     </HelloWrapper>
   );
 }

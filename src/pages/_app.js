@@ -1,11 +1,10 @@
 import "@/styles/globals.css";
+import { roboto_condensed, raleway } from "@/styles/fonts";
 import useSWR, { SWRConfig } from "swr";
 import { useEffect, useState } from "react";
 import useStore from "./globalstores";
 import { SessionProvider } from "next-auth/react";
 import { createGlobalStyle } from "styled-components";
-import "typeface-inter";
-import "typeface-roboto";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -46,11 +45,12 @@ export default function App({ Component, pageProps, session }) {
 }
 
 const GlobalStyles = createGlobalStyle`
-  body {
-    font-family: 'Inter', sans-serif;
+  body, button, select {
+    font-family: ${raleway.style.fontFamily};
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto', sans-serif;
+    font-family: ${roboto_condensed.style.fontFamily};
+    font-weight: "700";
   }
 `;

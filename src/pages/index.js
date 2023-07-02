@@ -9,8 +9,6 @@ import useStore from "./globalstores";
 
 export default function Home() {
   const { data: session } = useSession();
-  const currentOrganizations =
-    useStore((state) => state.currentOrganizations) || [];
   const usersData = useStore((state) => state.usersData) || [];
 
   const router = useRouter();
@@ -20,7 +18,7 @@ export default function Home() {
       return (
         <Layout>
           <Header></Header>
-          <CardCarousel organizations={currentOrganizations}></CardCarousel>
+          <CardCarousel></CardCarousel>
           <Banner></Banner>
           <Editorial></Editorial>
         </Layout>

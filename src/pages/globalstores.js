@@ -25,8 +25,8 @@ const useStore = create((set) => ({
   setAllProducts: (products) => set({ allProducts: products }),
 
   // ---------- Stuff for the Cards ----------
-  productCounter: [],
-  setProductCounter: (count) => set({ productCounter: count }),
+  globalProductCounter: [],
+  setGlobalProductCounter: (count) => set({ globalProductCounter: count }),
 
   favorites: [],
   setFavorites: (like) => set({ favorites: like }),
