@@ -1,6 +1,9 @@
 import EditForm from "@/components/Edit/EditForm";
 import { SessionProvider } from "next-auth/react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import styled from "styled-components";
+
+const AdminWrapper = styled.section``;
 
 export default function AdminOrganization() {
   const { data: session } = useSession();
