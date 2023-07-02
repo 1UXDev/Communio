@@ -13,12 +13,8 @@ const ClickerWrapper = styled.div`
     font-weight: bold;
   }
 `;
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Counter({ product, org }) {
-  //Counter
-  // const globalProductCounter =
-  //   useStore((state) => state.globalProductCounter) || [];
   const setGlobalProductCounter =
     useStore((state) => state.setGlobalProductCounter) || [];
 
@@ -59,6 +55,8 @@ export default function Counter({ product, org }) {
   // --- Working with the actual click-event
   function incrementCounter() {
     const updatedProductCounter = productCounter.map((item) => {
+      console.log(product.productId, item.id);
+      console.log(product);
       if (item.id === product.productId + ";;" + org.name) {
         return { ...item, count: item.count + 1 };
       } else {
