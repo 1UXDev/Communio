@@ -5,6 +5,7 @@ import styled from "styled-components";
 import TypeIt from "typeit-react";
 import { StyledButton } from "@/components/StyledButton/StyledButton";
 import { useState } from "react";
+import { roboto_condensed } from "@/styles/fonts";
 
 const AuthWrapper = styled.section`
   width: 100%;
@@ -15,10 +16,9 @@ const AuthWrapper = styled.section`
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding-top: 24px;
+  padding: 24px;
 
   text-align: center;
-  font-family: var(--font-inter);
 
   color: white;
   background-color: #5c4ad1;
@@ -31,21 +31,33 @@ const AuthWrapper = styled.section`
   & article {
     padding: 48px 12px;
   }
+  & .hero {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+  }
   h1 {
-    font-size: 3.5em;
+    font-size: 4.5em;
     padding-bottom: 36px;
   }
   p,
   span {
     font-size: 1.6em;
   }
+
+  p.small {
+    font-size: 1em;
+  }
 `;
+
 // animate text later-on? https://tobiasahlin.com/moving-letters/#11
 export default function SignIn({ providers }) {
   const [isUserOrOrganization, setIsUserOrOrganization] = useState("user");
   return (
     <AuthWrapper>
-      <article>
+      <article className="hero">
         <h1>Communio</h1>
         <p>Donations made</p>
         <TypeIt
@@ -70,7 +82,7 @@ export default function SignIn({ providers }) {
       </article>
       {isUserOrOrganization === "user" ? (
         <article>
-          <h4>Sign-in to support your Kiez</h4>
+          <p className="small">Sign-in to support your Kiez</p>
           <br></br>
           {Object.values(providers).map(
             (provider, i) =>
@@ -86,13 +98,15 @@ export default function SignIn({ providers }) {
               )
           )}
           <br></br>
-          <h6
+          <br></br>
+          <p
+            className="small"
             onClick={() => {
               setIsUserOrOrganization("organization");
             }}
           >
             <u>Are you an Organization?</u>
-          </h6>
+          </p>
         </article>
       ) : (
         <article>

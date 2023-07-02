@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import useStore from "@/pages/globalstores";
 import { useEffect } from "react";
+import useSWR from "swr";
 
 const FavWrapper = styled.div`
   display: flex;
@@ -9,26 +10,25 @@ const FavWrapper = styled.div`
   align-items: center;
 `;
 
-export default function Favorite({ product, org, usersData, organizations }) {
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+export default function Favorite({ product, org }) {
   const favorites = useStore((state) => state.favorites) || [];
   const setFavorites = useStore((state) => state.setFavorites) || [];
 
-  // --- initiales laden der organizations > check ob fav-array mit diesen Produkten bereits existiert
-  useEffect(() => {
-    if (usersData.favorites || usersData.favorites.length !== 0) {
-      setFavorites(usersData.favorites);
-    } else {
-      null;
-    }
-  }, []);
+  const { data: usersData, mutate } = useSWR("/api/users", fetcher);
 
-  // --- Wenn likedProducts existiert bzw sich ändert > DB
+  useEffect(() => {
+    if (usersData && usersData.favorites && usersData.favorites.length !== 0) {
+      setFavorites(usersData.favorites);
+    }
+  }, [usersData]);
+
   useEffect(() => {
     async function updateFavoritesOnServer() {
       try {
         const method = "PATCH";
-
-        const response = await fetch(`/api/users/`, {
+        const response = await fetch("/api/users", {
           method,
           headers: {
             "Content-Type": "application/json",
@@ -37,31 +37,34 @@ export default function Favorite({ product, org, usersData, organizations }) {
         });
 
         if (response.ok) {
+          // Favorites updated successfully
+        } else {
+          console.error(`Error: ${response.status}`);
         }
       } catch (error) {
         console.error(error);
       }
     }
+
     favorites.length > 0 && updateFavoritesOnServer();
   }, [favorites]);
 
   if (!favorites || !org || !product) {
-    return "loading";
+    return "Loading";
   }
 
-  // --- Working with the actual click-event
   function onLike(id) {
     favorites.find((favorite) => favorite.id === id)
       ? setFavorites(favorites.filter((likedProduct) => likedProduct.id !== id))
       : setFavorites([...favorites, { id: id, org: org.name }]);
+    console.log(favorites);
   }
 
   return (
     <FavWrapper>
       <button onClick={() => onLike(product.productId + ";;" + org.name)}>
-        {favorites &&
-        favorites.find(
-          (entry) => product.productId + ";;" + org.name === entry.id
+        {favorites.find(
+          (entry) => entry.id === product.productId + ";;" + org.name
         )
           ? "❤️"
           : "🖤"}

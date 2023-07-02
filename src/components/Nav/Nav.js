@@ -2,10 +2,22 @@ import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
 import useStore from "@/pages/globalstores";
+import { useRouter } from "next/router";
+
+// Icons
+import Explore from "public/Explore.svg";
+import Favorite from "public/Favorite.svg";
+import Cart from "public/Cart.svg";
+import Profile from "public/Profile.svg";
+import Explore_Active from "public/Explore_Active.svg";
+import Favorite_Active from "public/Favorite_Active.svg";
+import Cart_Active from "public/Cart_Active.svg";
+import Profile_Active from "public/Profile_Active.svg";
+import { useEffect, useState } from "react";
 
 const NavContainer = styled.div`
   position: fixed;
-  bottom: 0px;
+  bottom: -5px;
   width: 100%;
   max-width: 660px;
   background: white;
@@ -14,6 +26,7 @@ const NavContainer = styled.div`
   justify-content: space-around;
   padding: 16px 0px;
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.12);
+  font-size: 0.75em;
   & * {
     display: flex;
     flex-flow: column wrap;
@@ -23,14 +36,15 @@ const NavContainer = styled.div`
 `;
 
 const Badge = styled.div`
-  background-color: rgb(60, 190, 200);
+  background-color: rgb(50, 160, 240);
+  border: 1px solid white;
   position: absolute;
-  margin-left: 16px;
+  margin-left: 18px;
   color: white;
   padding: 2px;
-  width: 16px;
-  height: 16px;
-  font-size: 0.7em;
+  width: 18px;
+  height: 18px;
+  font-size: 0.8em;
   font-weight: bold;
   border-radius: 99px;
   z-index: 99;
@@ -38,30 +52,29 @@ const Badge = styled.div`
 
 export default function Nav() {
   const usersData = useStore((state) => state.usersData);
-  const productCounter = useStore((state) => state.productCounter);
+  const globalProductCounter = useStore((state) => state.globalProductCounter);
 
-  const productAmount = productCounter.reduce(
-    (accumulator, product) => accumulator + product.count,
-    0
-  );
+  const [productAmount, setProductAmount] = useState();
 
-  // ---- An approach with useEffect ... are there big advantages here?
-  // const [productAmount, setProductAmount] = useState(null);
+  useEffect(() => {
+    globalProductCounter.length > 0
+      ? setProductAmount(
+          globalProductCounter.reduce(
+            (accumulator, product) => accumulator + product.count,
+            0
+          )
+        )
+      : "loading";
+  }, [globalProductCounter]);
 
-  // useEffect(() => {
-  //   setProductAmount(
-  //     productCounter.reduce(
-  //       (accumulator, product) => accumulator + product.count,
-  //       0
-  //     )
-  //   );
-  // }, []);
+  const router = useRouter();
+  const currentSite = router.pathname;
 
   return (
     <NavContainer>
       <Link href="/" alt="Link to Home">
         <Image
-          src="https://static.thenounproject.com/png/780226-200.png"
+          src={currentSite === "/" ? Explore_Active : Explore}
           width="30"
           height="30"
           alt="Icon Home"
@@ -70,7 +83,7 @@ export default function Nav() {
       </Link>
       <Link href="/favorites" alt="Link to Favorites">
         <Image
-          src="https://static.thenounproject.com/png/780226-200.png"
+          src={currentSite === "/favorites" ? Favorite_Active : Favorite}
           width="30"
           height="30"
           alt="Icon Favorites"
@@ -79,13 +92,13 @@ export default function Nav() {
       </Link>
       <Link href="/cart" alt="Link to Cart">
         <Image
-          src="https://static.thenounproject.com/png/780226-200.png"
+          src={currentSite === "/cart" ? Cart_Active : Cart}
           width="30"
           height="30"
           alt="Icon Cart"
         ></Image>
         <span>Cart</span>
-        {!productAmount < 1 && <Badge>{productAmount}</Badge>}
+        {productAmount > 0 && <Badge>{productAmount}</Badge>}
       </Link>
       {/* <Link href="/search" alt="Link to Search">
         <Image
@@ -98,7 +111,7 @@ export default function Nav() {
       </Link> */}
       <Link href={`/profile/${usersData._id}`} alt="Link to your Profile">
         <Image
-          src="https://static.thenounproject.com/png/780226-200.png"
+          src={currentSite.includes("/profile/") ? Profile_Active : Profile}
           width="30"
           height="30"
           alt="Icon Profile"

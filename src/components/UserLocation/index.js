@@ -7,16 +7,35 @@ import styled from "styled-components";
 import { useSession } from "next-auth/react";
 import { useRef } from "react";
 
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
 const Select = styled.select`
-  width: 80%;
   max-width: 250px;
+  font-weight: bold;
+
+  border: none;
+
+  &.light {
+    background-color: transparent;
+    color: white;
+    font-size: 1em;
+  }
 `;
 
 // This component accepts
-// - different Links to navigate to after submission
+
 // - button or not button
 // - the initially selected bezirk from the user
-export default function UserLocation({ includeButton, initialBezirk }) {
+// - a text which Bezirk you want to support, for the "hello" onboarding screen
+export default function UserLocation({
+  includeButton,
+  initialBezirk,
+  includeSupportText,
+}) {
   const bezirk = useStore((state) => state.bezirk);
   const setBezirk = useStore((state) => state.setBezirk);
   const router = useRouter();
@@ -88,24 +107,28 @@ export default function UserLocation({ includeButton, initialBezirk }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} ref={formRef}>
-      <Select
-        onChange={(event) => {
-          bezirkChange(event);
-          handleSubmit(event);
-        }}
-        value={!bezirk ? initialBezirk : bezirk}
-        name="bezirk"
-        id="bezirk"
-      >
-        {hardCodedBezirke.map((hardCodedBezirk) => {
-          return (
-            <option value={hardCodedBezirk} key={uid()}>
-              {hardCodedBezirk}
-            </option>
-          );
-        })}
-      </Select>
+    <Form onSubmit={handleSubmit} ref={formRef}>
+      <div>
+        {includeSupportText && <span className="supportText">I support</span>}
+        <Select
+          onChange={(event) => {
+            bezirkChange(event);
+            handleSubmit(event);
+          }}
+          value={!bezirk ? initialBezirk : bezirk}
+          name="bezirk"
+          id="bezirk"
+          className={includeSupportText && "light"}
+        >
+          {hardCodedBezirke.map((hardCodedBezirk) => {
+            return (
+              <option value={hardCodedBezirk} key={uid()}>
+                {hardCodedBezirk}
+              </option>
+            );
+          })}
+        </Select>
+      </div>
       {includeButton && (
         <>
           <StyledButton
@@ -120,6 +143,6 @@ export default function UserLocation({ includeButton, initialBezirk }) {
           </span>{" "}
         </>
       )}
-    </form>
+    </Form>
   );
 }

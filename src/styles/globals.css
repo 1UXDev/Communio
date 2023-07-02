@@ -19,6 +19,7 @@ a {
 section {
   padding: 12px 12px 12px 12px;
 }
+
 section h2:not(div > h2) {
   text-align: right;
   font-size: 1em;
