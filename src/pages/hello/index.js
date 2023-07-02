@@ -39,7 +39,7 @@ export default function Hello() {
         connect you with the charity organizations, we need to know your
         approximate location.
       </p>
-      <UserLocation pushLinkLocation={"/"} includeButton={true}></UserLocation>
+      <UserLocation includeButton={true}></UserLocation>
     </HelloWrapper>
   );
 }

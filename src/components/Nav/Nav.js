@@ -45,6 +45,18 @@ export default function Nav() {
     0
   );
 
+  // ---- An approach with useEffect ... are there big advantages here?
+  // const [productAmount, setProductAmount] = useState(null);
+
+  // useEffect(() => {
+  //   setProductAmount(
+  //     productCounter.reduce(
+  //       (accumulator, product) => accumulator + product.count,
+  //       0
+  //     )
+  //   );
+  // }, []);
+
   return (
     <NavContainer>
       <Link href="/" alt="Link to Home">
@@ -75,7 +87,7 @@ export default function Nav() {
         <span>Cart</span>
         {!productAmount < 1 && <Badge>{productAmount}</Badge>}
       </Link>
-      <Link href="/search" alt="Link to Search">
+      {/* <Link href="/search" alt="Link to Search">
         <Image
           src="https://static.thenounproject.com/png/780226-200.png"
           width="30"
@@ -83,7 +95,7 @@ export default function Nav() {
           alt="Icon Search"
         ></Image>
         <span>Search</span>
-      </Link>
+      </Link> */}
       <Link href={`/profile/${usersData._id}`} alt="Link to your Profile">
         <Image
           src="https://static.thenounproject.com/png/780226-200.png"

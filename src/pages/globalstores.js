@@ -30,6 +30,10 @@ const useStore = create((set) => ({
 
   favorites: [],
   setFavorites: (like) => set({ favorites: like }),
+
+  // ---------- CheckOut Stuff -----------
+  amountToPay: [],
+  setAmountToPay: (amount) => set({ amountToPay: amount }),
 }));
 
 export default useStore;

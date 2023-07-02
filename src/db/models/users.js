@@ -10,6 +10,7 @@ const usersSchema = new Schema({
   email: { type: String, required: true },
   providerAccountId: { type: String },
   image: { type: String, required: false },
+  isRecurring: { type: Boolean },
   favorites: [{ id: { type: String }, org: { type: String } }],
   productCounter: [
     {

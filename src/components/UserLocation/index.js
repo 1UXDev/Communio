@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import useSWRMutation from "swr/mutation";
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
+import { useRef } from "react";
 
 const Select = styled.select`
   width: 80%;
@@ -15,15 +16,12 @@ const Select = styled.select`
 // - different Links to navigate to after submission
 // - button or not button
 // - the initially selected bezirk from the user
-export default function UserLocation({
-  pushLinkLocation,
-  includeButton,
-  initialBezirk,
-}) {
+export default function UserLocation({ includeButton, initialBezirk }) {
   const bezirk = useStore((state) => state.bezirk);
   const setBezirk = useStore((state) => state.setBezirk);
   const router = useRouter();
   const { data: session } = useSession();
+  const formRef = useRef(null);
 
   const hardCodedBezirke = [
     "Charlottenburg",
@@ -48,18 +46,24 @@ export default function UserLocation({
     "Zehlendorf",
   ];
 
+  // Since we do not always have a submit button for this component, the selection of an option triggers Submit
+  function bezirkChange(event) {
+    setBezirk(event.target.value);
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData);
 
-    await trigger(data);
-    pushLinkLocation && router.push(pushLinkLocation);
+    const extendedData = { ...data, isRecurring: true };
+
+    await trigger(extendedData);
   }
 
   // destructure SWR Mutation into trigger for function above
   const { trigger, isMutating } = useSWRMutation(
-    `../pages/api/users/${session?.user._id}`,
+    `/api/users/${session?.user._id}`,
     sendRequest
   );
 
@@ -83,14 +87,13 @@ export default function UserLocation({
     }
   }
 
-  function bezirkChange(event) {
-    setBezirk(event.target.value);
-  }
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} ref={formRef}>
       <Select
-        onChange={bezirkChange}
+        onChange={(event) => {
+          bezirkChange(event);
+          handleSubmit(event);
+        }}
         value={!bezirk ? initialBezirk : bezirk}
         name="bezirk"
         id="bezirk"
@@ -105,7 +108,11 @@ export default function UserLocation({
       </Select>
       {includeButton && (
         <>
-          <StyledButton disabled={!bezirk} type="submit">
+          <StyledButton
+            disabled={!bezirk}
+            type="button"
+            onClick={() => router.push("/")}
+          >
             Let&apos;s go!
           </StyledButton>
           <span id="hinttext" style={{ display: "none" }}>
