@@ -26,10 +26,6 @@ export default function Cart() {
     globalProductCounter.forEach((selectedProduct) => {
       const selectedProductId = selectedProduct.id.split(";;")[0];
       const selectedProductOrg = selectedProduct.id.split(";;")[1];
-      const updatedSelectedProduct = {
-        ...selectedProduct,
-        productId: selectedProduct.id,
-      };
 
       const product = allProducts.find(
         (product) => product._id === selectedProductId

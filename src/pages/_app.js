@@ -26,7 +26,7 @@ export default function App({ Component, pageProps, session }) {
       setUsersData(data[0]);
       setCurrentOrganizations(data[1]);
       setAllProducts(data[2]);
-      setGlobalProductCounter(data[0].productCounter);
+      data[0] && setGlobalProductCounter(data[0].productCounter);
     }
   }, [data, bezirk]);
 
