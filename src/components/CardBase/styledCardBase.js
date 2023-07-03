@@ -20,9 +20,6 @@ export const CardWrapper = styled.ul`
     flex: 0 0 84%;
     max-width: 300px;
   }
-  & span {
-    color: grey;
-  }
 `;
 
 export const IMGwrapper = styled.div`
@@ -38,10 +35,13 @@ export const IMGwrapper = styled.div`
 
 export const TEXTwrapper = styled.div`
   padding: 6px;
+  & span {
+    color: grey;
+  }
 `;
 
 export const IMGoverlay = styled.div`
-  background-color: blue;
+  width: 100%;
   background: linear-gradient(
     0deg,
     rgba(0, 20, 50, 1),
@@ -50,20 +50,15 @@ export const IMGoverlay = styled.div`
   position: absolute;
   bottom: 0px;
   display: flex;
-  flex-flow: row;
+  gap: 4px;
+  flex-flow: column;
   align-items: flex-end;
   justify-content: space-between;
   padding: 8px;
   border-radius: 12px;
   color: white;
 
-  & img {
-    width: 20%;
-    height: 20%;
-  }
   & h4 {
-    align-self: center;
-    text-align: right;
     width: 70%;
     font-size: 0.8em;
   }
@@ -72,5 +67,12 @@ export const IMGoverlay = styled.div`
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
+  }
+  & .textContainer {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
   }
 `;

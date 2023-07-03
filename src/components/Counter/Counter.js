@@ -1,20 +1,38 @@
 import styled from "styled-components";
 import useStore from "@/pages/globalstores";
 import useSWR from "swr";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const ClickerWrapper = styled.div`
   display: flex;
   flex-flow: row;
+  gap: 6px;
   justify-content: space-between;
   align-items: center;
+  width: 50%;
+  align-self: start;
+  transition: all 0.5s ease;
   & span {
-    color: white;
+    color: grey;
     font-weight: bold;
+    background: white;
+    padding: 4px 12px;
+    font-size: 0.8em;
+    border-radius: 6px;
+  }
+  & img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  &:not(.expanded) img:first-child,
+  &:not(.expanded) span {
+    display: none;
   }
 `;
 
 export default function Counter({ product, org }) {
+  const [expanded, setExpanded] = useState(false);
   const setGlobalProductCounter =
     useStore((state) => state.setGlobalProductCounter) || [];
 
@@ -81,6 +99,8 @@ export default function Counter({ product, org }) {
     mutate({ productCounter: updatedProductCounter }, false);
 
     sendRequest("/api/users", { productCounter: updatedProductCounter });
+
+    setExpanded(true);
   }
 
   function decrementCounter() {
@@ -96,32 +116,34 @@ export default function Counter({ product, org }) {
     sendRequest("/api/users", { productCounter: updatedProductCounter });
   }
 
+  function thisProductCount() {
+    return productCounter.length > 0
+      ? productCounter.find(
+          (arrayProduct) =>
+            arrayProduct.id === product.productId + ";;" + org.name
+        )?.count
+        ? productCounter.find(
+            (arrayProduct) =>
+              arrayProduct.id === product.productId + ";;" + org.name
+          )?.count
+        : 0
+      : 0;
+  }
+
   return (
-    <ClickerWrapper className="">
+    <ClickerWrapper
+      className={`clicker-wrapper${thisProductCount() ? " expanded" : ""}`}
+    >
       <img
         src="/minus.svg"
         alt="remove one from cart"
-        width="50px"
         id={product._id}
         onClick={decrementCounter}
       ></img>
-      <span id="counter">
-        {productCounter.length > 0
-          ? productCounter.find(
-              (arrayProduct) =>
-                arrayProduct.id === product.productId + ";;" + org.name
-            )?.count
-            ? productCounter.find(
-                (arrayProduct) =>
-                  arrayProduct.id === product.productId + ";;" + org.name
-              )?.count
-            : 0
-          : 0}
-      </span>
+      <span id="counter">{thisProductCount()}</span>
       <img
         src="/plus.svg"
         alt="add one to cart"
-        width="50px"
         id={product._id}
         onClick={incrementCounter}
       ></img>

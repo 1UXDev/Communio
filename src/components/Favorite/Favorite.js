@@ -8,6 +8,14 @@ const FavWrapper = styled.div`
   flex-flow: row;
   justify-content: space-between;
   align-items: center;
+
+  button {
+    background: white;
+    border-radius: 8px;
+    border: none;
+    width: 25px;
+    height: 25px;
+  }
 `;
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
