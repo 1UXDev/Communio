@@ -4,8 +4,6 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import styled from "styled-components";
 import TypeIt from "typeit-react";
 import { StyledButton } from "@/components/StyledButton/StyledButton";
-import { useState } from "react";
-import { roboto_condensed } from "@/styles/fonts";
 
 const AuthWrapper = styled.section`
   width: 100%;
@@ -54,7 +52,6 @@ const AuthWrapper = styled.section`
 
 // animate text later-on? https://tobiasahlin.com/moving-letters/#11
 export default function SignIn({ providers }) {
-  const [isUserOrOrganization, setIsUserOrOrganization] = useState("user");
   return (
     <AuthWrapper>
       <article className="hero">

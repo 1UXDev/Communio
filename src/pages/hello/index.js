@@ -58,6 +58,11 @@ export default function Hello() {
   const { data: session } = useSession();
   const router = useRouter();
 
+  function handleButtonClick() {
+    console.log("I was clicked");
+    router.push("/");
+  }
+
   return (
     <HelloWrapper>
       <article className="helloUser">
@@ -80,7 +85,7 @@ export default function Hello() {
           <StyledButton
             disabled={!bezirk}
             type="button"
-            onClick={() => router.push("/")}
+            onClick={handleButtonClick}
           >
             Let&apos;s go!
           </StyledButton>

@@ -13,16 +13,10 @@ import { Suspense } from "react";
 
 const ExploreSection = styled.section``;
 
-export default function CardCarousel() {
+export default function CardCarousel({ currentOrganizations }) {
   const usersData = useStore((state) => state.usersData);
-  const currentOrganizations =
-    useStore((state) => state.currentOrganizations) || [];
 
   // ____ General Stuff _____
-
-  if (!currentOrganizations || currentOrganizations.length < 1) {
-    return <div>Loading...</div>;
-  }
 
   if (!usersData || usersData.length < 1) {
     return <div>Loading...</div>;
@@ -53,6 +47,7 @@ export default function CardCarousel() {
                           org={org}
                           usersData={usersData}
                           organizations={currentOrganizations}
+                          favorites={usersData.favorites}
                         ></Favorite>
                       </div>
                     </IMGoverlay>

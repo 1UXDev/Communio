@@ -244,7 +244,7 @@ export default function Cart() {
   }
   return (
     <Layout>
-      <section className="FavoritesWrapper">
+      <section className="CartWrapper">
         {/* <h1>What are you sharing today?</h1> */}
         <article>
           <StyledList>
@@ -267,7 +267,10 @@ export default function Cart() {
                   selectedProduct.count > 0 && (
                     <StyledListItem key={uid()}>
                       <StyledListItemInfos>
-                        <img src={product.productImage}></img>
+                        <img
+                          src={product.productImage}
+                          alt="image of the product"
+                        ></img>
                         <StyledListItemTexts>
                           <h4>{product.name}</h4>
                           <p>{selectedProductOrg}</p>
@@ -332,7 +335,6 @@ export default function Cart() {
         0
       ) !== 0 && (
         <FloatyCheckOut className={!combinedData && "invisible"}>
-          {console.log("combinedData", combinedData)}
           <img src="/give_white.svg" alt="icon symbolizing a donation"></img>
           <div className="amountToPay"> Checkout for {amountToPay}€</div>
         </FloatyCheckOut>

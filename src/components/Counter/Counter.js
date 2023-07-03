@@ -73,8 +73,6 @@ export default function Counter({ product, org }) {
   // --- Working with the actual click-event
   function incrementCounter() {
     const updatedProductCounter = productCounter.map((item) => {
-      console.log(product.productId, item.id);
-      console.log(product);
       if (item.id === product.productId + ";;" + org.name) {
         return { ...item, count: item.count + 1 };
       } else {
@@ -90,7 +88,7 @@ export default function Counter({ product, org }) {
     if (isNewProduct) {
       updatedProductCounter.push({
         id: product.productId + ";;" + org.name,
-        org: org,
+        org: org.name,
         count: 1,
       });
     }
@@ -101,6 +99,7 @@ export default function Counter({ product, org }) {
     sendRequest("/api/users", { productCounter: updatedProductCounter });
 
     setExpanded(true);
+    //console.log(updatedProductCounter);
   }
 
   function decrementCounter() {

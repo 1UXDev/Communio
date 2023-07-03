@@ -99,7 +99,6 @@ export default function UserLocation({
     if (response.ok) {
       await response.json();
       // mutate(); // Change the data to the update
-      console.log("worked");
     } else {
       console.error(`Error: ${response.status}`);
     }
