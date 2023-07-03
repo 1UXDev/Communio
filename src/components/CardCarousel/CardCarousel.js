@@ -10,6 +10,7 @@ import { uid } from "uid";
 import Counter from "../Counter/Counter";
 import Favorite from "../Favorite/Favorite";
 import { Suspense } from "react";
+import Loader from "@/components/Loader/Loader";
 
 const ExploreSection = styled.section``;
 
@@ -19,7 +20,7 @@ export default function CardCarousel({ currentOrganizations }) {
   // ____ General Stuff _____
 
   if (!usersData || usersData.length < 1) {
-    return <div>Loading...</div>;
+    return "Loading";
   }
 
   return (

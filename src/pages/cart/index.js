@@ -4,6 +4,8 @@ import useSWR from "swr";
 import React, { useEffect, useState } from "react";
 import { uid } from "uid";
 import styled from "styled-components";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const StyledList = styled.ul`
   list-style-type: none;
@@ -134,6 +136,9 @@ export default function Cart() {
   // this is just for the MVP, the iteration will have a more elegant solution ;)
   const { data, isLoading, error, mutate } = useSWR(`/api/users/`);
 
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
   useEffect(() => {
     if (data) {
       // Set the global product counter to the retrieved data on page load
@@ -242,103 +247,110 @@ export default function Cart() {
 
     sendRequest("/api/users", { productCounter: updatedProductCounter });
   }
-  return (
-    <Layout>
-      <section className="CartWrapper">
-        {/* <h1>What are you sharing today?</h1> */}
-        <article>
-          <StyledList>
-            {combinedData.reduce(
-              (accumulator, { selectedProduct, product }) =>
-                accumulator + product.pricePerPieceEuro * selectedProduct.count,
-              0
-            ) === 0 ? (
-              <EmptyCart>
-                <img
-                  src="/emptyCart_blue.svg"
-                  alt="image of an empty box"
-                ></img>
-                <h1>Your cart is currently empty</h1>
-                <p>Why don&apos;t you add something?</p>
-              </EmptyCart>
-            ) : (
-              combinedData.map(
-                ({ selectedProduct, product, selectedProductOrg }) =>
-                  selectedProduct.count > 0 && (
-                    <StyledListItem key={uid()}>
-                      <StyledListItemInfos>
-                        <img
-                          src={product.productImage}
-                          alt="image of the product"
-                        ></img>
-                        <StyledListItemTexts>
-                          <h4>{product.name}</h4>
-                          <p>{selectedProductOrg}</p>
-                          <p>
-                            {product.pricePerPieceEuro}€ for{" "}
-                            {product.weightSize}
-                            {product.unit}
-                          </p>
-                        </StyledListItemTexts>
-                      </StyledListItemInfos>
-                      <StyledListItemInteractions>
-                        <img
-                          src="/minus.svg"
-                          className="icon"
-                          alt="remove one from cart"
-                          width="24px"
-                          id={product._id}
-                          onClick={() =>
-                            decrementCounter(selectedProduct.productId)
-                          }
-                        ></img>
-                        <span id="counter">
-                          {productCounter.length > 0
-                            ? productCounter.find(
-                                (arrayProduct) =>
-                                  arrayProduct.id === selectedProduct.productId
-                              )?.count
+
+  if (status === "authenticated") {
+    return (
+      <Layout>
+        <section className="CartWrapper">
+          {/* <h1>What are you sharing today?</h1> */}
+          <article>
+            <StyledList>
+              {combinedData.reduce(
+                (accumulator, { selectedProduct, product }) =>
+                  accumulator +
+                  product.pricePerPieceEuro * selectedProduct.count,
+                0
+              ) === 0 ? (
+                <EmptyCart>
+                  <img
+                    src="/emptyCart_blue.svg"
+                    alt="image of an empty box"
+                  ></img>
+                  <h1>Your cart is currently empty</h1>
+                  <p>Why don&apos;t you add something?</p>
+                </EmptyCart>
+              ) : (
+                combinedData.map(
+                  ({ selectedProduct, product, selectedProductOrg }) =>
+                    selectedProduct.count > 0 && (
+                      <StyledListItem key={uid()}>
+                        <StyledListItemInfos>
+                          <img
+                            src={product.productImage}
+                            alt="image of the product"
+                          ></img>
+                          <StyledListItemTexts>
+                            <h4>{product.name}</h4>
+                            <p>{selectedProductOrg}</p>
+                            <p>
+                              {product.pricePerPieceEuro}€ for{" "}
+                              {product.weightSize}
+                              {product.unit}
+                            </p>
+                          </StyledListItemTexts>
+                        </StyledListItemInfos>
+                        <StyledListItemInteractions>
+                          <img
+                            src="/minus.svg"
+                            className="icon"
+                            alt="remove one from cart"
+                            width="24px"
+                            id={product._id}
+                            onClick={() =>
+                              decrementCounter(selectedProduct.productId)
+                            }
+                          ></img>
+                          <span id="counter">
+                            {productCounter.length > 0
                               ? productCounter.find(
                                   (arrayProduct) =>
                                     arrayProduct.id ===
                                     selectedProduct.productId
                                 )?.count
-                              : 0
-                            : 0}
-                        </span>
-                        <img
-                          src="/plus.svg"
-                          className="icon"
-                          alt="add one to cart"
-                          width="24px"
-                          id={product._id}
-                          onClick={() =>
-                            incrementCounter(selectedProduct.productId)
-                          }
-                        ></img>
-                        {/* <button
+                                ? productCounter.find(
+                                    (arrayProduct) =>
+                                      arrayProduct.id ===
+                                      selectedProduct.productId
+                                  )?.count
+                                : 0
+                              : 0}
+                          </span>
+                          <img
+                            src="/plus.svg"
+                            className="icon"
+                            alt="add one to cart"
+                            width="24px"
+                            id={product._id}
+                            onClick={() =>
+                              incrementCounter(selectedProduct.productId)
+                            }
+                          ></img>
+                          {/* <button
                           onClick={() => removeItem(selectedProduct.productId)}
                         >
                           remove
                         </button> */}
-                      </StyledListItemInteractions>
-                    </StyledListItem>
-                  )
-              )
-            )}
-          </StyledList>
-        </article>
-      </section>
-      {combinedData.reduce(
-        (accumulator, { selectedProduct, product }) =>
-          accumulator + product.pricePerPieceEuro * selectedProduct.count,
-        0
-      ) !== 0 && (
-        <FloatyCheckOut className={!combinedData && "invisible"}>
-          <img src="/give_white.svg" alt="icon symbolizing a donation"></img>
-          <div className="amountToPay"> Checkout for {amountToPay}€</div>
-        </FloatyCheckOut>
-      )}
-    </Layout>
-  );
+                        </StyledListItemInteractions>
+                      </StyledListItem>
+                    )
+                )
+              )}
+            </StyledList>
+          </article>
+        </section>
+        {combinedData.reduce(
+          (accumulator, { selectedProduct, product }) =>
+            accumulator + product.pricePerPieceEuro * selectedProduct.count,
+          0
+        ) !== 0 && (
+          <FloatyCheckOut className={!combinedData && "invisible"}>
+            <img src="/give_white.svg" alt="icon symbolizing a donation"></img>
+            <div className="amountToPay"> Checkout for {amountToPay}€</div>
+          </FloatyCheckOut>
+        )}
+      </Layout>
+    );
+  } else {
+    router.push("/auth/signin");
+  }
 }

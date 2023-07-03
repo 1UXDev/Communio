@@ -8,6 +8,7 @@ import clientPromise from "@/lib/mongoose";
 
 export const authOptions = {
   // Configure one or more authentication providers
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,
@@ -21,7 +22,7 @@ export const authOptions = {
   ],
   adapter: MongoDBAdapter(clientPromise),
   pages: {
-    signIn: "/",
+    signIn: "/auth/signin",
   },
   callbacks: {
     async session({ session, user }) {
@@ -29,7 +30,7 @@ export const authOptions = {
       return session;
     },
     async redirect({ url, baseUrl }) {
-      return `/`;
+      return `/auth/signin`;
     },
   },
 };

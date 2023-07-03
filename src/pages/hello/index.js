@@ -4,6 +4,7 @@ import UserLocation from "@/components/UserLocation";
 import { StyledButton } from "@/components/StyledButton/StyledButton";
 import useStore from "@/pages/globalstores";
 import { useRouter } from "next/router";
+import Loader from "@/components/Loader/Loader";
 
 const HelloWrapper = styled.section`
   display: flex;
@@ -60,7 +61,6 @@ export default function Hello() {
 
   function handleButtonClick() {
     console.log("I was clicked");
-    router.push("/");
   }
 
   return (
@@ -84,7 +84,7 @@ export default function Hello() {
         <>
           <StyledButton
             disabled={!bezirk}
-            type="button"
+            type="submit"
             onClick={handleButtonClick}
           >
             Let&apos;s go!
