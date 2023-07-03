@@ -259,7 +259,7 @@ export default function Cart() {
                   alt="image of an empty box"
                 ></img>
                 <h1>Your cart is currently empty</h1>
-                <p>Why don't you add something?</p>
+                <p>Why don&apos;t you add something?</p>
               </EmptyCart>
             ) : (
               combinedData.map(
@@ -333,7 +333,7 @@ export default function Cart() {
       ) !== 0 && (
         <FloatyCheckOut className={!combinedData && "invisible"}>
           {console.log("combinedData", combinedData)}
-          <img src="/give_white.svg"></img>
+          <img src="/give_white.svg" alt="icon symbolizing a donation"></img>
           <div className="amountToPay"> Checkout for {amountToPay}€</div>
         </FloatyCheckOut>
       )}
