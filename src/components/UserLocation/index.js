@@ -1,6 +1,5 @@
 import useStore from "@/pages/globalstores";
 import { uid } from "uid";
-import { StyledButton } from "@/components/StyledButton/StyledButton";
 import { useRouter } from "next/router";
 import useSWRMutation from "swr/mutation";
 import styled from "styled-components";
@@ -129,20 +128,6 @@ export default function UserLocation({
           })}
         </Select>
       </div>
-      {includeButton && (
-        <>
-          <StyledButton
-            disabled={!bezirk}
-            type="button"
-            onClick={() => router.push("/")}
-          >
-            Let&apos;s go!
-          </StyledButton>
-          <span id="hinttext" style={{ display: "none" }}>
-            Please select a location from the dropdown first
-          </span>{" "}
-        </>
-      )}
     </Form>
   );
 }

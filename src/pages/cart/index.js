@@ -3,8 +3,118 @@ import useStore from "../globalstores";
 import useSWR from "swr";
 import React, { useEffect, useState } from "react";
 import { uid } from "uid";
-import { StyledButton } from "@/components/StyledButton/StyledButton";
-import Counter from "@/components/Counter/Counter";
+import styled from "styled-components";
+
+const StyledList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const StyledListItem = styled.li`
+  display: flex;
+  flex-direction: row wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 16px;
+  padding: 12px 0px;
+  border-bottom: 1px solid #e5e5e5;
+`;
+
+const StyledListItemInfos = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 3;
+  gap: 4px;
+
+  img {
+    width: 75px;
+    height: 75px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 8px;
+  }
+`;
+
+const StyledListItemTexts = styled.div`
+  display: flex;
+  flex-flow: column;
+  padding: 6px 0px;
+
+  justify-content: space-between;
+
+  h4 {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  p,
+  span {
+    margin: 0;
+    font-size: 0.8em;
+  }
+`;
+
+const StyledListItemInteractions = styled.div`
+  display: flex;
+  flex-flow: row-wrap;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  font-weight: bold;
+  border-radius: 99px;
+  padding: 4px;
+  background-color: rgb(50, 160, 240);
+`;
+
+const FloatyCheckOut = styled.div`
+  position: fixed;
+  bottom: 100px;
+  margin: 0% 5%;
+  width: 90%;
+  max-width: 540px;
+  background: rgba(50, 160, 240, 0.7);
+  backdrop-filter: blur(8px);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  flex-flow: row wrap;
+  gap: 24px;
+  align-items: center;
+  padding: 8px 12px;
+
+  img {
+    width: 36px;
+  }
+
+  & .amountToPay {
+    justify-self: end;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  &.invisible {
+    display: none;
+  }
+`;
+
+const EmptyCart = styled.div`
+  margin: 48px;
+  padding-top: 48px;
+  text-align: center;
+
+  h1 {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  & * {
+    margin-bottom: 12px;
+  }
+`;
 
 export default function Cart() {
   const setGlobalProductCounter =
@@ -19,6 +129,37 @@ export default function Cart() {
 
   // combining the data of productCounter and Products
   const [combinedData, setCombinedData] = useState([]) || [];
+
+  // The whole solution of using swr + custom code again instead of a component is not ideal
+  // this is just for the MVP, the iteration will have a more elegant solution ;)
+  const { data, isLoading, error, mutate } = useSWR(`/api/users/`);
+
+  useEffect(() => {
+    if (data) {
+      // Set the global product counter to the retrieved data on page load
+      setGlobalProductCounter(data.productCounter);
+    }
+  }, [data]);
+
+  // define content to give to API route as wrapperfunction for fetch
+  async function sendRequest(url, data) {
+    const response = await fetch(url, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      // Data updated successfully?
+      const updatedProductCounter = data.productCounter;
+
+      setGlobalProductCounter(updatedProductCounter);
+    } else {
+      console.error(`Error: ${response.status}`);
+    }
+  }
 
   useEffect(() => {
     let interimStorage = [];
@@ -55,50 +196,147 @@ export default function Cart() {
     setAmountToPay(totalSum.toFixed(2));
   }, [globalProductCounter, allProducts]);
 
+  if (isLoading) {
+    return "Loading";
+  }
+  const productCounter = data.productCounter;
+
+  function incrementCounter(clickedId) {
+    console.log("increment", productCounter);
+    const updatedProductCounter = productCounter.map((item) => {
+      if (item.id === clickedId) {
+        return { ...item, count: item.count + 1 };
+      } else {
+        return item;
+      }
+    });
+    // Optimistic update
+    mutate({ productCounter: updatedProductCounter }, false);
+
+    sendRequest("/api/users", { productCounter: updatedProductCounter });
+  }
+  function decrementCounter(clickedId) {
+    const updatedProductCounter = productCounter.map((item) => {
+      if (item.id === clickedId && item.count > 0) {
+        return { ...item, count: item.count - 1 };
+      } else {
+        return item;
+      }
+    });
+    // Optimistic update
+    mutate({ productCounter: updatedProductCounter }, false);
+
+    sendRequest("/api/users", { productCounter: updatedProductCounter });
+  }
+
+  function removeItem(clickedId) {
+    const updatedProductCounter = productCounter.map((item) => {
+      if (item.id === clickedId) {
+        return { ...item, count: (item.count = 0) };
+      } else {
+        return item;
+      }
+    });
+    // Optimistic update
+    mutate({ productCounter: updatedProductCounter }, false);
+
+    sendRequest("/api/users", { productCounter: updatedProductCounter });
+  }
   return (
     <Layout>
       <section className="FavoritesWrapper">
-        <h1>Here will be the Cart</h1>
+        {/* <h1>What are you sharing today?</h1> */}
         <article>
-          <ul>
-            {console.log(combinedData)}
-            {combinedData.length === 0 ? (
-              <h2>Your cart is currently empty</h2>
+          <StyledList>
+            {combinedData.reduce(
+              (accumulator, { selectedProduct, product }) =>
+                accumulator + product.pricePerPieceEuro * selectedProduct.count,
+              0
+            ) === 0 ? (
+              <EmptyCart>
+                <img
+                  src="/emptyCart_blue.svg"
+                  alt="image of an empty box"
+                ></img>
+                <h1>Your cart is currently empty</h1>
+                <p>Why don't you add something?</p>
+              </EmptyCart>
             ) : (
               combinedData.map(
                 ({ selectedProduct, product, selectedProductOrg }) =>
                   selectedProduct.count > 0 && (
-                    <li key={uid()}>
-                      <img src={product.productImage} width="100"></img>
-                      <h4>
-                        {selectedProduct.count}x {product.name}{" "}
-                        {product.weightSize}
-                        {product.unit}
-                      </h4>
-                      <p>{selectedProductOrg}</p>
-                      <span></span>
-                      <p>{product.pricePerPieceEuro}€</p>
-                      <div style={{ backgroundColor: "#000" }}>
-                        <Counter
-                          product={selectedProduct}
-                          org={selectedProductOrg}
-                        ></Counter>
-                      </div>
-                    </li>
+                    <StyledListItem key={uid()}>
+                      <StyledListItemInfos>
+                        <img src={product.productImage}></img>
+                        <StyledListItemTexts>
+                          <h4>{product.name}</h4>
+                          <p>{selectedProductOrg}</p>
+                          <p>
+                            {product.pricePerPieceEuro}€ for{" "}
+                            {product.weightSize}
+                            {product.unit}
+                          </p>
+                        </StyledListItemTexts>
+                      </StyledListItemInfos>
+                      <StyledListItemInteractions>
+                        <img
+                          src="/minus.svg"
+                          className="icon"
+                          alt="remove one from cart"
+                          width="24px"
+                          id={product._id}
+                          onClick={() =>
+                            decrementCounter(selectedProduct.productId)
+                          }
+                        ></img>
+                        <span id="counter">
+                          {productCounter.length > 0
+                            ? productCounter.find(
+                                (arrayProduct) =>
+                                  arrayProduct.id === selectedProduct.productId
+                              )?.count
+                              ? productCounter.find(
+                                  (arrayProduct) =>
+                                    arrayProduct.id ===
+                                    selectedProduct.productId
+                                )?.count
+                              : 0
+                            : 0}
+                        </span>
+                        <img
+                          src="/plus.svg"
+                          className="icon"
+                          alt="add one to cart"
+                          width="24px"
+                          id={product._id}
+                          onClick={() =>
+                            incrementCounter(selectedProduct.productId)
+                          }
+                        ></img>
+                        {/* <button
+                          onClick={() => removeItem(selectedProduct.productId)}
+                        >
+                          remove
+                        </button> */}
+                      </StyledListItemInteractions>
+                    </StyledListItem>
                   )
               )
             )}
-          </ul>
-        </article>
-        <article>
-          <br></br>
-          <div>
-            <h2>Sum</h2>
-            {amountToPay}€
-          </div>
+          </StyledList>
         </article>
       </section>
-      <StyledButton className="inverse">Checkout</StyledButton>
+      {combinedData.reduce(
+        (accumulator, { selectedProduct, product }) =>
+          accumulator + product.pricePerPieceEuro * selectedProduct.count,
+        0
+      ) !== 0 && (
+        <FloatyCheckOut className={!combinedData && "invisible"}>
+          {console.log("combinedData", combinedData)}
+          <img src="/give_white.svg"></img>
+          <div className="amountToPay"> Checkout for {amountToPay}€</div>
+        </FloatyCheckOut>
+      )}
     </Layout>
   );
 }

@@ -26,3 +26,7 @@ section h2:not(div > h2) {
   margin-block-start: unset;
   margin-block-end: 6px;
 }
+/* 
+section h1 {
+  padding-top: 24px;
+} */
