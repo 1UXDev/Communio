@@ -80,61 +80,30 @@ export default function SignIn({ providers }) {
           }}
         />
       </article>
-      {isUserOrOrganization === "user" ? (
-        <article>
-          <p className="small">Sign-in to support your Kiez</p>
-          <br></br>
-          {Object.values(providers).map(
-            (provider, i) =>
-              provider.type !== "credentials" && (
-                <div key={provider.name}>
-                  <StyledButton
-                    onClick={() => signIn(provider.id)}
-                    className={i === 1 ? "inverse" : null}
-                  >
-                    Sign in with {provider.name}
-                  </StyledButton>
-                </div>
-              )
-          )}
-          <br></br>
-          <br></br>
-          <p
-            className="small"
-            onClick={() => {
-              setIsUserOrOrganization("organization");
-            }}
-          >
-            <u>Are you an Organization?</u>
-          </p>
-        </article>
-      ) : (
-        <article>
-          <h4>Sign-in to your Organization Account</h4>
-          <br></br>
-          {Object.values(providers).map(
-            (provider, i) =>
-              provider.type === "credentials" && (
-                <div key={provider.name}>
-                  <StyledButton
-                    onClick={() => signIn(provider.id)}
-                    className={i === 1 ? "inverse" : null}
-                  >
-                    Sign in with {provider.name}
-                  </StyledButton>
-                </div>
-              )
-          )}
-          <br></br>
-          <h6
-            onClick={() => {
-              setIsUserOrOrganization("user");
-            }}
-          >
-            <u>Are you a User?</u>
-          </h6>
-        </article>
-      )}
+      <article>
+        <p className="small">Sign-in to support your Kiez</p>
+        <br></br>
+        {Object.values(providers).map((provider, i) => (
+          <div key={provider.name}>
+            <StyledButton
+              onClick={() => signIn(provider.id)}
+              className={i === 1 ? "inverse" : null}
+            >
+              Sign in with {provider.name}
+            </StyledButton>
+          </div>
+        ))}
+        <br></br>
+        <br></br>
+        <p
+          className="small"
+          onClick={() => {
+            setIsUserOrOrganization("organization");
+          }}
+        >
+          {/* <u>Are you an Organization?</u> */}
+        </p>
+      </article>
     </AuthWrapper>
   );
 }

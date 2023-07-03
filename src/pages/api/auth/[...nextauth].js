@@ -32,41 +32,41 @@ export const authOptions = {
         },
       },
     }),
-    CredentialsProvider({
-      // The name to display on the sign-in form (e.g., 'Email')
-      name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        // this was inspired by https://github.com/AhmedAlqurafi/next-auth-credentials/
-        await dbConnect();
+    // CredentialsProvider({
+    //   // The name to display on the sign-in form (e.g., 'Email')
+    //   name: "Credentials",
+    //   credentials: {
+    //     username: { label: "Username", type: "text" },
+    //     password: { label: "Password", type: "password" },
+    //   },
+    //   async authorize(credentials) {
+    //     // this was inspired by https://github.com/AhmedAlqurafi/next-auth-credentials/
+    //     await dbConnect();
 
-        const user = await Users.findOne({ name: credentials.username });
-        console.log(user);
+    //     const user = await Users.findOne({ name: credentials.username });
+    //     console.log(user);
 
-        // Check if user exists
-        if (!user) {
-          return null;
-        }
+    //     // Check if user exists
+    //     if (!user) {
+    //       return null;
+    //     }
 
-        // Validate password
-        const isPasswordMatch = await isPasswordValid(
-          credentials.password,
-          user.password
-        );
+    //     // Validate password
+    //     const isPasswordMatch = await isPasswordValid(
+    //       credentials.password,
+    //       user.password
+    //     );
 
-        if (!isPasswordMatch) {
-          return null;
-        }
+    //     if (!isPasswordMatch) {
+    //       return null;
+    //     }
 
-        return {
-          name: user.name,
-          email: user.email,
-        };
-      },
-    }),
+    //     return {
+    //       name: user.name,
+    //       email: user.email,
+    //     };
+    //   },
+    // }),
     // ...add more providers here
   ],
   adapter: MongoDBAdapter(clientPromise),
