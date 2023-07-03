@@ -44,6 +44,7 @@ export default async function handler(request, response) {
     }
 
     // successfully loaded?
+
     return response.status(200).json(OrganizationWithProducts);
   }
 

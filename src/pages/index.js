@@ -1,30 +1,32 @@
-import Layout from "@/components/Layout/Layout";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import useStore from "./globalstores";
+import { useEffect, useState } from "react";
+// Layout & Content
+import Layout from "@/components/Layout/Layout";
 import Header from "@/components/Header/Header";
 import CardCarousel from "@/components/CardCarousel/CardCarousel";
 import Editorial from "@/components/Editorial/Editorial";
 import Banner from "@/components/Banner/Banner";
-import useStore from "./globalstores";
+import Hello from "./hello";
 
 export default function Home() {
-  const { data: session } = useSession();
-  const usersData = useStore((state) => state.usersData) || [];
+  const bezirk = useStore((state) => state.bezirk) || [];
+  const currentOrganizations =
+    useStore((state) => state.currentOrganizations) || [];
 
-  const router = useRouter();
-
-  if (session) {
-    if (usersData.isRecurring) {
-      return (
-        <Layout>
-          <Header></Header>
-          <CardCarousel></CardCarousel>
-          <Banner></Banner>
-          <Editorial></Editorial>
-        </Layout>
-      );
-    } else {
-      router.push("/hello");
-    }
-  } else router.push("/auth/signin");
+  if (bezirk.length > 0) {
+    return (
+      <Layout>
+        <Header></Header>
+        <CardCarousel
+          currentOrganizations={currentOrganizations}
+        ></CardCarousel>
+        <Banner></Banner>
+        <Editorial></Editorial>
+      </Layout>
+    );
+  } else {
+    return <Hello></Hello>;
+  }
 }

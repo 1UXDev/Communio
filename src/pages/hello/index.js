@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
 import UserLocation from "@/components/UserLocation";
+import { StyledButton } from "@/components/StyledButton/StyledButton";
+import useStore from "@/pages/globalstores";
+import { useRouter } from "next/router";
+import Loader from "@/components/Loader/Loader";
 
 const HelloWrapper = styled.section`
   display: flex;
@@ -51,11 +55,17 @@ const HelloWrapper = styled.section`
 `;
 
 export default function Hello() {
+  const bezirk = useStore((state) => state.bezirk);
   const { data: session } = useSession();
+  const router = useRouter();
+
+  function handleButtonClick() {
+    console.log("I was clicked");
+  }
 
   return (
     <HelloWrapper>
-      <article class="helloUser">
+      <article className="helloUser">
         <img src={session?.user.image} alt="your profile picture"></img>
         <h1>Hi {session?.user.name} 👋</h1>
 
@@ -71,6 +81,18 @@ export default function Hello() {
           includeButton={true}
           includeSupportText={true}
         ></UserLocation>
+        <>
+          <StyledButton
+            disabled={!bezirk}
+            type="submit"
+            onClick={handleButtonClick}
+          >
+            Let&apos;s go!
+          </StyledButton>
+          <span id="hinttext" style={{ display: "none" }}>
+            Please select a location from the dropdown first
+          </span>{" "}
+        </>
       </div>
     </HelloWrapper>
   );

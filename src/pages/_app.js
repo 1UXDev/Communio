@@ -5,29 +5,45 @@ import { useEffect, useState } from "react";
 import useStore from "./globalstores";
 import { SessionProvider } from "next-auth/react";
 import { createGlobalStyle } from "styled-components";
+import Loader from "@/components/Loader/Loader";
+import { useRouter } from "next/router";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function App({ Component, pageProps, session }) {
+export default function App({ Component, pageProps, session, status }) {
   const setUsersData = useStore((state) => state.setUsersData);
   const setCurrentOrganizations = useStore(
     (state) => state.setCurrentOrganizations
   );
   const bezirk = useStore((state) => state.bezirk);
   const setAllProducts = useStore((state) => state.setAllProducts);
+  const setGlobalProductCounter = useStore(
+    (state) => state.setGlobalProductCounter
+  );
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status !== "authenticated") {
+      // Redirect to signin
+      router.push("/auth/signin");
+    }
+  }, []);
 
   const { data, error, isLoading } = useSWR("/api/", fetcher);
 
   useEffect(() => {
+    console.log(bezirk);
     if (data) {
       setUsersData(data[0]);
       setCurrentOrganizations(data[1]);
       setAllProducts(data[2]);
+      data[0] && setGlobalProductCounter(data[0].productCounter);
     }
   }, [data, bezirk]);
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return "Loading ...";
 
   return (
     <SessionProvider session={session}>

@@ -14,7 +14,7 @@ const usersSchema = new Schema({
   favorites: [{ id: { type: String }, org: { type: String } }],
   productCounter: [
     {
-      id: { type: String, ref: "Products" },
+      id: { type: String, ref: "Products", required: true },
       org: { type: String },
       count: { type: Number },
     },

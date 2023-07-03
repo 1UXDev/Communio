@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { useEffect } from "react";
 import Layout from "@/components/Layout/Layout";
-import { useSession, signIn, signOut } from "next-auth/react";
-import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
+
 //--- for the data editing // Patching
 import useSWRMutation from "swr/mutation";
 import EditForm from "@/components/Edit/EditForm";
@@ -105,7 +105,5 @@ export default function Profile() {
         </div>
       </Layout>
     );
-  } else {
-    router.push("/");
   }
 }

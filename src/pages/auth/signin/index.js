@@ -4,8 +4,6 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import styled from "styled-components";
 import TypeIt from "typeit-react";
 import { StyledButton } from "@/components/StyledButton/StyledButton";
-import { useState } from "react";
-import { roboto_condensed } from "@/styles/fonts";
 
 const AuthWrapper = styled.section`
   width: 100%;
@@ -54,7 +52,6 @@ const AuthWrapper = styled.section`
 
 // animate text later-on? https://tobiasahlin.com/moving-letters/#11
 export default function SignIn({ providers }) {
-  const [isUserOrOrganization, setIsUserOrOrganization] = useState("user");
   return (
     <AuthWrapper>
       <article className="hero">
@@ -80,61 +77,30 @@ export default function SignIn({ providers }) {
           }}
         />
       </article>
-      {isUserOrOrganization === "user" ? (
-        <article>
-          <p className="small">Sign-in to support your Kiez</p>
-          <br></br>
-          {Object.values(providers).map(
-            (provider, i) =>
-              provider.type !== "credentials" && (
-                <div key={provider.name}>
-                  <StyledButton
-                    onClick={() => signIn(provider.id)}
-                    className={i === 1 ? "inverse" : null}
-                  >
-                    Sign in with {provider.name}
-                  </StyledButton>
-                </div>
-              )
-          )}
-          <br></br>
-          <br></br>
-          <p
-            className="small"
-            onClick={() => {
-              setIsUserOrOrganization("organization");
-            }}
-          >
-            <u>Are you an Organization?</u>
-          </p>
-        </article>
-      ) : (
-        <article>
-          <h4>Sign-in to your Organization Account</h4>
-          <br></br>
-          {Object.values(providers).map(
-            (provider, i) =>
-              provider.type === "credentials" && (
-                <div key={provider.name}>
-                  <StyledButton
-                    onClick={() => signIn(provider.id)}
-                    className={i === 1 ? "inverse" : null}
-                  >
-                    Sign in with {provider.name}
-                  </StyledButton>
-                </div>
-              )
-          )}
-          <br></br>
-          <h6
-            onClick={() => {
-              setIsUserOrOrganization("user");
-            }}
-          >
-            <u>Are you a User?</u>
-          </h6>
-        </article>
-      )}
+      <article>
+        <p className="small">Sign-in to support your Kiez</p>
+        <br></br>
+        {Object.values(providers).map((provider, i) => (
+          <div key={provider.name}>
+            <StyledButton
+              onClick={() => signIn(provider.id)}
+              className={i === 1 ? "inverse" : null}
+            >
+              Sign in with {provider.name}
+            </StyledButton>
+          </div>
+        ))}
+        <br></br>
+        <br></br>
+        <p
+          className="small"
+          onClick={() => {
+            setIsUserOrOrganization("organization");
+          }}
+        >
+          {/* <u>Are you an Organization?</u> */}
+        </p>
+      </article>
     </AuthWrapper>
   );
 }

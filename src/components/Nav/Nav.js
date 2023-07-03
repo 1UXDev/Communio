@@ -3,6 +3,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import useStore from "@/pages/globalstores";
 import { useRouter } from "next/router";
+import useSWR from "swr";
 
 // Icons
 import Explore from "public/Explore.svg";
@@ -57,14 +58,12 @@ export default function Nav() {
   const [productAmount, setProductAmount] = useState();
 
   useEffect(() => {
-    globalProductCounter.length > 0
-      ? setProductAmount(
-          globalProductCounter.reduce(
-            (accumulator, product) => accumulator + product.count,
-            0
-          )
-        )
-      : "loading";
+    setProductAmount(
+      globalProductCounter.reduce(
+        (accumulator, product) => accumulator + product.count,
+        0
+      )
+    );
   }, [globalProductCounter]);
 
   const router = useRouter();
@@ -98,7 +97,9 @@ export default function Nav() {
           alt="Icon Cart"
         ></Image>
         <span>Cart</span>
-        {productAmount > 0 && <Badge>{productAmount}</Badge>}
+        {productAmount !== "Loading" && productAmount > 0 && (
+          <Badge>{productAmount}</Badge>
+        )}
       </Link>
       {/* <Link href="/search" alt="Link to Search">
         <Image
