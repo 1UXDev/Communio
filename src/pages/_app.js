@@ -33,7 +33,7 @@ export default function App({ Component, pageProps, session, status }) {
   const { data, error, isLoading } = useSWR("/api/", fetcher);
 
   useEffect(() => {
-    console.log(bezirk);
+    console.log("reloaded in app");
     if (data) {
       setUsersData(data[0]);
       setCurrentOrganizations(data[1]);
