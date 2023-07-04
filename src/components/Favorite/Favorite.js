@@ -14,6 +14,7 @@ export default function Favorite({ product, org }) {
   const favorites = useStore((state) => state.favorites) || [];
   const setFavorites = useStore((state) => state.setFavorites) || [];
 
+  // Anmierkung, die Implementierung mit dieser Funktion erzeugt extrem viel Load, außerdem kann das mit einer schmaleren API Route optimiert werden
   const { data, mutate } = useSWR("/api/users");
 
   async function updateFavoritesOnServer() {

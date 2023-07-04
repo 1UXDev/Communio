@@ -4,6 +4,7 @@ export const CardWrapper = styled.ul`
   display: flex;
   flex-flow: row;
   margin-right: -12px;
+  padding-right: 12px;
   list-style-type: none;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -13,8 +14,8 @@ export const CardWrapper = styled.ul`
     background: white;
   }
   & li.small {
-    flex: 0 0 38%;
-    max-width: 160px;
+    flex: 0 0 44%;
+    max-width: 180px;
   }
   & li.large {
     flex: 0 0 84%;
@@ -24,7 +25,7 @@ export const CardWrapper = styled.ul`
 
 export const IMGwrapper = styled.div`
   position: relative;
-  height: 160px;
+  height: 200px;
   & img {
     width: 100%;
     height: 100%;
@@ -37,6 +38,12 @@ export const TEXTwrapper = styled.div`
   padding: 6px;
   & span {
     color: grey;
+  }
+  & h3 {
+    font-size: 1.1em;
+  }
+  & p {
+    font-size: 0.9em;
   }
 `;
 

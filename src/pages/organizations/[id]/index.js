@@ -1,16 +1,34 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { IMGwrapper, IMGoverlay } from "@/components/CardBase/styledCardBase";
-import Link from "next/link";
+
 import CardCarousel from "@/components/CardCarousel/CardCarousel";
-import Image from "next/image";
+import styled from "styled-components";
 import Layout from "@/components/Layout/Layout";
 
-//--- for the data editing // Patching
-import useSWRMutation from "swr/mutation";
-import EditForm from "@/components/Edit/EditForm";
+const BackButton = styled.button`
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 4px 8px;
+  border-radius: 0px 6px 6px 6px;
+  margin: 8px;
+`;
 
-// --- end
+const OrganizationSection = styled.section`
+  display: flex;
+  flex-flow: column;
+  gap: 4px;
+  padding-top: 12px;
+`;
+
+const CardCarouselWrapper = styled.article`
+  padding-top: 24px;
+  margin: 0px -12px;
+`;
+
+const OrganizationDescription = styled.article`
+  padding: 8px;
+`;
 
 export default function OrgDetailPage() {
   const router = useRouter();
@@ -30,8 +48,8 @@ export default function OrgDetailPage() {
 
   return (
     <Layout>
-      <button onClick={() => router.back()}>← back</button>
-      <section>
+      <BackButton onClick={() => router.back()}>← back</BackButton>
+      <OrganizationSection>
         <IMGwrapper>
           <img src={organization.image} alt={organization.name} />
           <IMGoverlay className="hero">
@@ -39,13 +57,17 @@ export default function OrgDetailPage() {
             <h2>{organization.name}</h2>
           </IMGoverlay>
         </IMGwrapper>
-        <article>
+        <OrganizationDescription>
           <p>{organization.description}</p>
-        </article>
-        <article>
-          <CardCarousel organizations={[organization]}></CardCarousel>
-        </article>
-      </section>
+        </OrganizationDescription>
+        <CardCarouselWrapper>
+          {console.log(organization)}
+          <CardCarousel
+            currentOrganizations={[organization]}
+            showHeadline={false}
+          ></CardCarousel>
+        </CardCarouselWrapper>
+      </OrganizationSection>
     </Layout>
   );
 }

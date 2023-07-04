@@ -59,7 +59,7 @@ export default function Favorites() {
     isLoading,
     error,
     mutate,
-  } = useSWR(`/api/organizations`);
+  } = useSWR(`/api/organizations`, { refreshInterval: 1000 });
 
   const usersData = useStore((state) => state.usersData) || [];
 

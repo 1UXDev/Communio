@@ -5,14 +5,94 @@ import useSWR from "swr";
 import { useEffect } from "react";
 import Layout from "@/components/Layout/Layout";
 import { useSession, signOut } from "next-auth/react";
+import styled from "styled-components";
 
 //--- for the data editing // Patching
 import useSWRMutation from "swr/mutation";
 import EditForm from "@/components/Edit/EditForm";
 
-// -----------------------------------------------
-// !--- The Profile Page / Components does not work properly yet, its just a placeholder and Object to later development
-// -----------------------------------------------
+const ProfileWrapper = styled.section`
+display.flex;
+flex-direction:column;
+justify-content:center;
+`;
+
+const ProfileHero = styled.article`
+  display: flex;
+  flex-flow: row wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 12px 96px 12px;
+  margin: -12px -12px 24px -12px;
+  background-color: #5c4ad1;
+  background: linear-gradient(220deg, #43b4d8 25%, #7343d8 90%);
+  background-image: linear-gradient(
+    220deg,
+    rgb(67, 180, 216) 25%,
+    rgb(115, 67, 216) 90%
+  );
+
+  & img {
+    max-width: 200px;
+    border-radius: 100%;
+    padding: 12px;
+  }
+`;
+
+const ProfileHeroText = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  padding: 24px;
+  color: white;
+
+  & h2 {
+    font-size: 2.2em;
+    margin-bottom: 24px;
+  }
+
+  & span {
+    font-size: 0.8em;
+  }
+
+  & button {
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 2px solid white;
+    background: rgb(70, 180, 220);
+    color: white;
+    font-weight: bold;
+  }
+`;
+
+const Form = styled.form`
+  background: white;
+  border-radius: 25px 25px 0px 0px;
+  position: relative;
+  margin: -12px;
+  top: -50px;
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+  padding: 36px 24px;
+
+  & h2 {
+    text-align: center;
+    font-size: 1.5em;
+    padding-bottom: 24px;
+  }
+`;
+
+const ProfileDBItems = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  font-size: 1em;
+
+  & input {
+    border: none;
+  }
+`;
 
 export default function Profile() {
   //const usersData = useStore((state) => state.usersData) || [];
@@ -76,33 +156,82 @@ export default function Profile() {
     return <h1>Submitting your changes...</h1>;
   }
 
+  // Form
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    onEditFormSubmit(data, event);
+  }
+
   if (session) {
     return (
       <Layout>
-        <div className="ProfileWrapper">
-          <p>
-            <img
-              src={session.user.image}
-              style={{ width: "100px", borderRadius: "50%" }}
-              alt="your profile picture"
-            />
-            Signed in as {session.user.name}
-          </p>
-          <button onClick={signOut}>Sign out</button>
-          <h3>Dynamically generated Info about user:</h3>
-          <ul>
-            <li>Your Default Location: {data.bezirk}</li>
-          </ul>
+        <ProfileWrapper>
+          <ProfileHero>
+            <img src={session.user.image} alt="your profile picture" />
+            <ProfileHeroText>
+              <div>
+                <span>This is you! </span>
+                <h2>{session.user.name}</h2>
+              </div>
+              <button onClick={signOut}>Sign out</button>
+            </ProfileHeroText>
+          </ProfileHero>
+          <Form onSubmit={handleSubmit}>
+            <h2>Your Data</h2>
+            <ProfileDBItems>
+              <label>💁‍♀️ Your Name</label>
+              <input
+                id="name"
+                name="name"
+                placeholder="your name"
+                type={typeof data.name}
+                defaultValue={data.name}
+                key={uid()}
+              />
+            </ProfileDBItems>
+            <hr></hr>
+            <ProfileDBItems>
+              <label>💌 Your email</label>
+              <input
+                id="email"
+                name="email"
+                placeholder="your email"
+                type={typeof data.email}
+                defaultValue={data.email}
+                key={uid()}
+              />
+            </ProfileDBItems>
+            <hr></hr>
+            <ProfileDBItems>
+              <label>📸 Your picture</label>
+              <input
+                id="image"
+                name="imge"
+                placeholder="paste url to profile picture"
+                type={typeof data.image}
+                defaultValue={data.image}
+                key={uid()}
+              />
+            </ProfileDBItems>
+            <hr></hr>
+            <ProfileDBItems>
+              <label>📍 Your Homezone</label>
+              <input
+                id="bezirk"
+                name="bezirk"
+                placeholder="Your default location"
+                type={typeof data.bezirk}
+                defaultValue={data.bezirk}
+                key={uid()}
+              />
+            </ProfileDBItems>
 
-          <br />
-          <br />
-
-          <br></br>
-          <EditForm
-            object={data}
-            onEditFormSubmit={onEditFormSubmit}
-          ></EditForm>
-        </div>
+            <button type="Submit">Submit</button>
+          </Form>
+        </ProfileWrapper>
       </Layout>
     );
   }

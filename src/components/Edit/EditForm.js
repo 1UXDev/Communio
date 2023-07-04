@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import { uid } from "uid";
 
+const FormWrapper = styled.section`
+  display: flex;
+  flex-flow: column;
+  gap: 12px;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-flow: column;
@@ -19,10 +25,9 @@ export default function EditForm({ object, onEditFormSubmit }) {
   }
 
   return (
-    <>
-      <br></br>
-      <h3>Change Data!</h3>
-      <br></br>
+    <FormWrapper>
+      <h3>Change your Data</h3>
+      <hr></hr>
       <Form onSubmit={handleSubmit} key={uid()}>
         {objectArray.map((attribute) => {
           const [key, value] = attribute;
@@ -84,6 +89,6 @@ export default function EditForm({ object, onEditFormSubmit }) {
         })}
         <button type="submit">Submit Changes</button>
       </Form>
-    </>
+    </FormWrapper>
   );
 }
