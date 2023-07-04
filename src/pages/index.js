@@ -10,37 +10,49 @@ import CardCarousel from "@/components/CardCarousel/CardCarousel";
 import Editorial from "@/components/Editorial/Editorial";
 import Banner from "@/components/Banner/Banner";
 import Hello from "./hello";
+import Loader from "@/components/Loader/Loader";
 
 export default function Home() {
   const bezirk = useStore((state) => state.bezirk) || [];
   const currentOrganizations =
     useStore((state) => state.currentOrganizations) || [];
 
+  const session = useSession();
+  const router = useRouter();
+
   const {
     data: UserDataBezirk,
     error: UserError,
     isLoading: UserIsLoading,
-  } = useSWR(`/api/users/`, {
+  } = useSWR(`/api/users/bezirk`, {
     refreshInterval: 10000,
   });
 
-  if (UserIsLoading || UserError) {
-    return "is Loading";
+  if (UserIsLoading) {
+    return <Loader></Loader>;
+  }
+  if (UserError) {
+    console.log(UserError);
   }
 
-  if (UserDataBezirk) {
-    return (
-      <Layout>
-        <Header></Header>
-        <CardCarousel
-          currentOrganizations={currentOrganizations}
-          showHeadline={true}
-        ></CardCarousel>
-        <Banner></Banner>
-        <Editorial></Editorial>
-      </Layout>
-    );
+  if (!session) {
+    router.push("/auth/signin");
   } else {
-    return <Hello></Hello>;
+    if (UserDataBezirk) {
+      console.log("userdatabezirk", UserDataBezirk);
+      return (
+        <Layout>
+          <Header></Header>
+          <CardCarousel
+            currentOrganizations={currentOrganizations}
+            showHeadline={true}
+          ></CardCarousel>
+          <Banner></Banner>
+          <Editorial></Editorial>
+        </Layout>
+      );
+    } else {
+      return <Hello></Hello>;
+    }
   }
 }

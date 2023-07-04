@@ -5,6 +5,7 @@ import { StyledButton } from "@/components/StyledButton/StyledButton";
 import useStore from "@/pages/globalstores";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader/Loader";
+import { useEffect } from "react";
 
 const HelloWrapper = styled.section`
   display: flex;
@@ -62,6 +63,10 @@ export default function Hello() {
   function handleButtonClick() {
     console.log("I was clicked");
   }
+
+  useEffect(() => {
+    router.push("/");
+  }, [bezirk]);
 
   return (
     <HelloWrapper>

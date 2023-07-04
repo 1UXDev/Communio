@@ -43,7 +43,7 @@ export default function App({ Component, pageProps, session, status }) {
   }, [data, bezirk]);
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return "Loading ...";
+  if (isLoading) return <Loader />;
 
   return (
     <SessionProvider session={session}>
