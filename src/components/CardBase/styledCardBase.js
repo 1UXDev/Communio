@@ -14,8 +14,8 @@ export const CardWrapper = styled.ul`
     background: white;
   }
   & li.small {
-    flex: 0 0 38%;
-    max-width: 160px;
+    flex: 0 0 44%;
+    max-width: 180px;
   }
   & li.large {
     flex: 0 0 84%;

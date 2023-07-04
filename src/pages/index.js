@@ -34,6 +34,7 @@ export default function Home() {
         <Header></Header>
         <CardCarousel
           currentOrganizations={currentOrganizations}
+          showHeadline={true}
         ></CardCarousel>
         <Banner></Banner>
         <Editorial></Editorial>
