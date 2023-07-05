@@ -61,7 +61,6 @@ export default function OrgDetailPage() {
           <p>{organization.description}</p>
         </OrganizationDescription>
         <CardCarouselWrapper>
-          {console.log(organization)}
           <CardCarousel
             currentOrganizations={[organization]}
             showHeadline={false}

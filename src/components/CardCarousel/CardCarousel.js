@@ -9,18 +9,31 @@ import {
 import { uid } from "uid";
 import Counter from "../Counter/Counter";
 import Favorite from "../Favorite/Favorite";
-import { Suspense } from "react";
-import Loader from "@/components/Loader/Loader";
-import { current } from "immer";
+import useSWR from "swr";
+import { useEffect } from "react";
 
 const ExploreSection = styled.section``;
 
 export default function CardCarousel({ currentOrganizations, showHeadline }) {
-  const usersData = useStore((state) => state.usersData);
-  // ____ General Stuff _____
+  const {
+    data: favoritesOnServer,
+    error: favoritesOnServerError,
+    isLoading: favoritesOnServerIsLoading,
+    mutate,
+  } = useSWR(`/api/users/favorites`, {
+    refreshInterval: 10000,
+  });
 
-  if (!usersData || usersData.length < 1) {
-    return "Loading";
+  useEffect(() => {
+    console.log("favoritesOnServer fetched", favoritesOnServer);
+  }, [favoritesOnServer]);
+
+  if (favoritesOnServerError) {
+    console.log(favoritesOnServerError);
+  }
+
+  if (favoritesOnServerIsLoading) {
+    return "..fav";
   }
 
   return (
@@ -35,20 +48,13 @@ export default function CardCarousel({ currentOrganizations, showHeadline }) {
                 <IMGwrapper>
                   <img src={product.productImage} alt={product.name} />
                   <IMGoverlay>
-                    <Counter
-                      organizations={currentOrganizations}
-                      usersData={usersData}
-                      product={product}
-                      org={org}
-                    ></Counter>
+                    <Counter product={product} org={org}></Counter>
                     <div className="textContainer">
                       <h4>{org.name}</h4>
                       <Favorite
                         product={product}
                         org={org}
-                        usersData={usersData}
-                        organizations={currentOrganizations}
-                        favorites={usersData.favorites}
+                        favoritesOnServer={favoritesOnServer}
                       ></Favorite>
                     </div>
                   </IMGoverlay>

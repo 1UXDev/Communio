@@ -22,24 +22,24 @@ const StyledList = styled.ul`
   gap: 12px;
   flex-flow: row wrap;
   padding: 0;
-  margin: 0;
+  margin: 0px auto;
+  justify-content: center;
   a {
     text-decoration: underline;
   }
   a:hover {
     color: rgb(50, 160, 240);
   }
-`;
-
-const ListItems = styled.div`
-  width: 100%;
-  padding: 12px;
+  & li {
+    width: 45%;
+  }
 `;
 
 const EmptyCart = styled.div`
   margin: 48px;
   padding-top: 48px;
   text-align: center;
+  align-self: center;
 
   h1 {
     font-size: 1.2em;
@@ -86,7 +86,7 @@ export default function Favorites() {
                 </p>
               </EmptyCart>
             ) : (
-              <ListItems>
+              <>
                 {favorites.map((favorite) => {
                   let currentOrganizations = allOrganizations.find(
                     (org) => org.name === favorite.org
@@ -135,7 +135,7 @@ export default function Favorites() {
                     );
                   });
                 })}
-              </ListItems>
+              </>
             )}
           </StyledList>
         </article>
