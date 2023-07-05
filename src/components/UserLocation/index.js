@@ -10,12 +10,12 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  color: black;
 `;
 
 const Select = styled.select`
   max-width: 250px;
   font-weight: bold;
+  color:black
 
   border: none;
 

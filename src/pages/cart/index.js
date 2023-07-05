@@ -330,9 +330,6 @@ export default function Cart() {
   if (status === "authenticated") {
     return (
       <Layout>
-        <button onClick={createCheckOutSession} role="link">
-          --- Buy now ---
-        </button>
         <section className="CartWrapper">
           {/* <h1>What are you sharing today?</h1> */}
           <article>
@@ -425,7 +422,7 @@ export default function Cart() {
             accumulator + product.pricePerPieceEuro * selectedProduct.count,
           0
         ) !== 0 && (
-          <Link href="/checkout">
+          <Link onClick={createCheckOutSession} role="link">
             <FloatyCheckOut className={!combinedData && "invisible"}>
               <img
                 src="/give_white.svg"

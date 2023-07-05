@@ -17,7 +17,7 @@ const BackButton = styled.button`
 const OrganizationSection = styled.section`
   display: flex;
   flex-flow: column;
-  gap: 4px;
+  gap: 12px;
   padding-top: 12px;
 `;
 
@@ -28,6 +28,10 @@ const CardCarouselWrapper = styled.article`
 
 const OrganizationDescription = styled.article`
   padding: 8px;
+  & ul {
+    list-style-type: none;
+    padding-top: 12px;
+  }
 `;
 
 export default function OrgDetailPage() {
@@ -59,6 +63,18 @@ export default function OrgDetailPage() {
         </IMGwrapper>
         <OrganizationDescription>
           <p>{organization.description}</p>
+          <ul>
+            <li>
+              🏘 - {organization.street} {organization.streetNumber},{" "}
+              {organization.plz}
+            </li>
+            <li>📧 - {organization.email}</li>
+            <li> ☎️ - {organization.tel}</li>
+            <li>💸 - {organization.iban}</li>
+            <li>
+              🏦 - {organization.blz}, {organization.bankName}
+            </li>
+          </ul>
         </OrganizationDescription>
         <CardCarouselWrapper>
           <CardCarousel
