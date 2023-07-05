@@ -67,7 +67,7 @@ export default function Hello() {
   const router = useRouter();
 
   function handleButtonClick() {
-    console.log("I was clicked");
+    console.log("click again to navigate ;)");
     router.push("/");
   }
 

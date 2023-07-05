@@ -24,14 +24,6 @@ export default function CardCarousel({ currentOrganizations, showHeadline }) {
     refreshInterval: 10000,
   });
 
-  useEffect(() => {
-    console.log("favoritesOnServer fetched", favoritesOnServer);
-  }, [favoritesOnServer]);
-
-  if (favoritesOnServerError) {
-    console.log(favoritesOnServerError);
-  }
-
   if (favoritesOnServerIsLoading) {
     return "..fav";
   }
