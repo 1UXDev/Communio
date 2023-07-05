@@ -67,9 +67,11 @@ export default function Home() {
           <Editorial></Editorial>
         </Layout>
       );
-    } else {
+    } else if (session) {
       //return <Hello></Hello>;
       router.push("/hello");
+    } else {
+      return "There was an Error :(";
     }
   }
 }
