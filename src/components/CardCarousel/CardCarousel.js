@@ -17,7 +17,6 @@ const ExploreSection = styled.section``;
 
 export default function CardCarousel({ currentOrganizations, showHeadline }) {
   const usersData = useStore((state) => state.usersData);
-  console.log("currentOrg in CC", currentOrganizations);
   // ____ General Stuff _____
 
   if (!usersData || usersData.length < 1) {

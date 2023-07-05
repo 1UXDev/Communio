@@ -35,12 +35,11 @@ export default function Home() {
     data: OrganizationsBezirk,
     error: OrganizationsBezirkError,
     isLoading: OrganizationsBezirkIsLoading,
-  } = useSWR(`/api/organizations/bezirk/${UserDataBezirk}`, {
+  } = useSWR(UserDataBezirk && `/api/organizations/bezirk/${UserDataBezirk}`, {
     refreshInterval: 10000,
   });
 
   useEffect(() => {
-    console.log("OrganizationData loading");
     if (OrganizationsBezirk) {
       setCurrentOrganizations(OrganizationsBezirk);
     }
@@ -50,14 +49,13 @@ export default function Home() {
     return <Loader></Loader>;
   }
   if (UserError || OrganizationsBezirkError) {
-    console.log(UserError);
+    console.log(UserError || OrganizationsBezirkError);
   }
 
   if (!session) {
     router.push("/auth/signin");
   } else {
     if (UserDataBezirk) {
-      console.log("userdatabezirk", UserDataBezirk);
       return (
         <Layout>
           <Header></Header>
@@ -70,7 +68,8 @@ export default function Home() {
         </Layout>
       );
     } else {
-      return <Hello></Hello>;
+      //return <Hello></Hello>;
+      router.push("/hello");
     }
   }
 }

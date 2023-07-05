@@ -71,28 +71,34 @@ export default function Hello() {
     router.push("/");
   }
 
-  const { data, error, isLoading, mutate } = useSWR(
-    `/api/organizations/bezirk/${bezirk}`
-  );
+  // This function seems to trigger all the time without waiting for UserInput
+  // also index.js 43 is trying to load already
+  // // also: SyntaxError: Unexpected end of JSON input
+  //   at eval (_app.js:11:63)
+  //   at async eval (index.mjs:230:1)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      mutate("/api/organizations/bezirk");
-    }, 10000);
+  // const { data, error, isLoading, mutate } = useSWR(
+  //   `/api/organizations/bezirk/${bezirk}`
+  // );
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     mutate("/api/organizations/bezirk");
+  //   }, 10000);
 
-  data && setCurrentOrganizations(data);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-  if (error) {
-    console.log("error in hello", error);
-  }
+  // data && setCurrentOrganizations(data);
+
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
+  // if (error) {
+  //   console.log("error in hello", error);
+  //}
 
   return (
     <HelloWrapper>

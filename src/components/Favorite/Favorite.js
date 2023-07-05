@@ -13,7 +13,7 @@ const FavWrapper = styled.div`
 async function updateFavoritesOnServer(favorites) {
   try {
     const method = "PATCH";
-    const response = await fetch("/api/users", {
+    const response = await fetch("/api/users/favorites", {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +60,10 @@ export default function Favorite({ product, org }) {
     if (isLiked) {
       setFavorites(favorites.filter((likedProduct) => likedProduct.id !== id));
     } else {
-      setFavorites([...favorites, { id: id, org: org.name }]);
+      setFavorites([
+        ...favorites,
+        { id: id, org: org.name, bezirk: org.bezirk },
+      ]);
     }
   }
 

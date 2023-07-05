@@ -11,11 +11,14 @@ const usersSchema = new Schema({
   providerAccountId: { type: String },
   image: { type: String, required: false },
   isRecurring: { type: Boolean },
-  favorites: [{ id: { type: String }, org: { type: String } }],
+  favorites: [
+    { id: { type: String }, org: { type: String }, bezirk: { type: String } },
+  ],
   productCounter: [
     {
       id: { type: String, ref: "Products", required: true },
       org: { type: String },
+      bezirk: { type: String },
       count: { type: Number },
     },
   ],

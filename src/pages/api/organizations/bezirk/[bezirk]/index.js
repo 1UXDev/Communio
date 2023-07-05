@@ -9,7 +9,6 @@ export default async function handler(request, response) {
   if (!bezirk) {
     console.log("waiting for ID");
   }
-  console.log(bezirk);
 
   const bezirkToUppercase = bezirk.charAt(0).toUpperCase() + bezirk.slice(1);
 

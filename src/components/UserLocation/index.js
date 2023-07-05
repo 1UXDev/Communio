@@ -60,6 +60,7 @@ export default function UserLocation({
 
   // Since we do not always have a submit button for this component, the selection of an option triggers Submit
   function bezirkChange(event) {
+    console.log("The selected Bezirk is", event.target.value);
     setBezirk(event.target.value);
   }
 
