@@ -1,8 +1,4 @@
 import { create } from "zustand";
-import produce from "immer";
-
-// Globally Storing some Objects, this will be reduced once development progresses.
-// e.g. the usersData, which holds all users data is currently only needed for the User-Selection in the App-Settings Component
 
 const useStore = create((set) => ({
   // ---------- The current user ----------

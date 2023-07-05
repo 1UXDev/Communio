@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import useStore from "../globalstores";
+import useStore from "../../db/globalstore";
 import Link from "next/link";
 import { uid } from "uid";
 import styled from "styled-components";

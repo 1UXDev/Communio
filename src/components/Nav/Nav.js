@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
-import useStore from "@/pages/globalstores";
+import useStore from "@/db/globalstore";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
