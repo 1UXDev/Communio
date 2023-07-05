@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout/Layout";
-import useStore from "../globalstores";
+import useStore from "../../db/globalstore";
 import useSWR from "swr";
 import React, { useEffect, useState } from "react";
 import { uid } from "uid";

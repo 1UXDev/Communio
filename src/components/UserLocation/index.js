@@ -1,4 +1,4 @@
-import useStore from "@/pages/globalstores";
+import useStore from "@/db/globalstore";
 import { uid } from "uid";
 import { useRouter } from "next/router";
 import useSWRMutation from "swr/mutation";
@@ -25,16 +25,7 @@ const Select = styled.select`
   }
 `;
 
-// This component accepts
-
-// - button or not button
-// - the initially selected bezirk from the user
-// - a text which Bezirk you want to support, for the "hello" onboarding screen
-export default function UserLocation({
-  includeButton,
-  initialBezirk,
-  includeSupportText,
-}) {
+export default function UserLocation({ includeSupportText, defaultLocation }) {
   const bezirk = useStore((state) => state.bezirk);
   const setBezirk = useStore((state) => state.setBezirk);
   const router = useRouter();
@@ -108,7 +99,7 @@ export default function UserLocation({
             bezirkChange(event);
             handleSubmit(event);
           }}
-          value={!bezirk ? initialBezirk : bezirk}
+          value={!bezirk ? defaultLocation : bezirk}
           name="bezirk"
           id="bezirk"
           className={includeSupportText && "light"}

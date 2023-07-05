@@ -1,8 +1,8 @@
 import Language from "./HeaderComponents/Language";
 import Filter from "./HeaderComponents/Filter";
 import styled from "styled-components";
-import useStore from "@/pages/globalstores";
 import UserLocation from "../UserLocation";
+import useSWR from "swr";
 
 const HeaderSection = styled.section`
   display: flex;
@@ -16,23 +16,27 @@ const HeaderSettings = styled.div`
 `;
 
 export default function Header() {
-  const usersData = useStore((state) => state.usersData) || [];
+  const { data, error, isLoading } = useSWR(`/api/users/bezirk`, {
+    refreshInterval: 10000,
+  });
 
-  if (!usersData || usersData.length < 3) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return "Loading...";
+  }
+  if (error) {
+    console.log(error);
   }
 
   return (
     <HeaderSection>
       <HeaderSettings>
         <UserLocation
-          pushLinkLocation={null}
-          includeButton={false}
-          initialBezirk={usersData.bezirk}
+          includeSupportText={false}
+          defaultLocation={data}
         ></UserLocation>
-        <Language currentUser={usersData}></Language>
+        <Language></Language>
       </HeaderSettings>
-      <Filter currentUser={usersData}></Filter>
+      <Filter></Filter>
     </HeaderSection>
   );
 }

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useSession } from "next-auth/react";
 import UserLocation from "@/components/UserLocation";
 import { StyledButton } from "@/components/StyledButton/StyledButton";
-import useStore from "@/pages/globalstores";
+import useStore from "@/db/globalstore";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader/Loader";
 import { useEffect } from "react";
