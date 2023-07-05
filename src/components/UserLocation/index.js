@@ -47,25 +47,20 @@ export default function UserLocation({
     "Koepenick",
     "Kreuzberg",
     "Lichtenberg",
-    "Mariendorf",
     "Mitte",
-    "Moabit",
     "Neukoelln",
     "Pankow",
-    "PBerg",
     "Schoeneberg",
     "Steglitz",
     "Tempelhof",
-    "Tiergarten",
-    "Treptow",
     "Wedding",
     "Weissensee",
-    "Wilmersdorf",
     "Zehlendorf",
   ];
 
   // Since we do not always have a submit button for this component, the selection of an option triggers Submit
   function bezirkChange(event) {
+    console.log("The selected Bezirk is", event.target.value);
     setBezirk(event.target.value);
   }
 

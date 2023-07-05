@@ -5,11 +5,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(request, response) {
-  const session = await getServerSession(request, response, authOptions);
-  const id = session.user._id;
   // connect to DB
   await dbConnect();
-  //const { id } = request.query;
+
+  const session = await getServerSession(request, response, authOptions);
+  const id = session.user._id;
 
   if (!id) {
     console.log("waiting for ID");
@@ -22,17 +22,20 @@ export default async function handler(request, response) {
     if (!user) {
       return response.status(404).json({ error: "no request done" });
     }
+
+    const favorites = user.favorites;
     // successfully loaded?
-    return response.status(200).json(user);
+    console.log(favorites);
+    return response.status(200).json(favorites);
   }
 
   // --- Defining PATCH APIroute ---
   if (request.method === "PATCH") {
     // Update the corresponding user
-    const userUpdate = await Users.findByIdAndUpdate(id, {
+    const favoritesUpdate = await Users.findByIdAndUpdate(id, {
       $set: request.body,
     });
 
-    return response.status(200).json(userUpdate);
+    return response.status(200).json(favoritesUpdate);
   }
 }

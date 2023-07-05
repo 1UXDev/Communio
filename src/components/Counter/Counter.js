@@ -89,6 +89,7 @@ export default function Counter({ product, org }) {
       updatedProductCounter.push({
         id: product.productId + ";;" + org.name,
         org: org.name,
+        bezirk: org.bezirk,
         count: 1,
       });
     }

@@ -1,7 +1,8 @@
 // --- import the Schema & Connection Function---
 import dbConnect from "@/db/connect";
-import Users from "@/db/models/users";
-import { getServerSession } from "next-auth";
+import Products from "@/db/models/products";
+// authentication
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(request, response) {
@@ -11,31 +12,17 @@ export default async function handler(request, response) {
     // connect to DB
     await dbConnect();
 
-    const id = session.user._id;
-
-    if (!id) {
-      console.log("waiting for ID");
-    }
-
     // --- Defining GET APIroute  ---
     if (request.method === "GET") {
-      const user = await Users.findById(id);
+      const allProducts = await Products.find();
+
       // nothing loaded?
-      if (!user) {
+      if (!allProducts) {
         return response.status(404).json({ error: "no request done" });
       }
+
       // successfully loaded?
-      return response.status(200).json(user);
-    }
-
-    // --- Defining PATCH APIroute ---
-    if (request.method === "PATCH") {
-      // Update the corresponding user
-      const userUpdate = await Users.findByIdAndUpdate(id, {
-        $set: request.body,
-      });
-
-      return response.status(200).json(userUpdate);
+      return response.status(200).json(allProducts);
     }
   } else {
     response.send({

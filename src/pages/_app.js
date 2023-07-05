@@ -30,27 +30,36 @@ export default function App({ Component, pageProps, session, status }) {
     }
   }, []);
 
-  const { data, error, isLoading } = useSWR("/api/", fetcher);
+  const { data, error, isLoading } = useSWR("/api/users", fetcher);
 
   useEffect(() => {
     console.log("reloaded in app");
     if (data) {
-      setUsersData(data[0]);
-      setCurrentOrganizations(data[1]);
-      setAllProducts(data[2]);
-      data[0] && setGlobalProductCounter(data[0].productCounter);
+      setUsersData(data);
+      data && setGlobalProductCounter(data.productCounter);
     }
-  }, [data, bezirk]);
+  }, [data]);
+
+  // const { data, error, isLoading } = useSWR("/api/", fetcher);
+  // useEffect(() => {
+  //   console.log("reloaded in app");
+  //   if (data) {
+  //     setUsersData(data[0]);
+  //     setCurrentOrganizations(data[1]);
+  //     setAllProducts(data[2]);
+  //     data[0] && setGlobalProductCounter(data[0].productCounter);
+  //   }
+  // }, [data]);
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return "Loading ...";
+  if (isLoading) return <Loader />;
 
   return (
     <SessionProvider session={session}>
       <SWRConfig
         value={{
           fetcher,
-          refreshInterval: 1000,
+          refreshInterval: 10000,
         }}
       >
         <GlobalStyles />

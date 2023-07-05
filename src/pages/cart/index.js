@@ -135,6 +135,11 @@ export default function Cart() {
   // The whole solution of using swr + custom code again instead of a component is not ideal
   // this is just for the MVP, the iteration will have a more elegant solution ;)
   const { data, isLoading, error, mutate } = useSWR(`/api/users/`);
+  const {
+    data: ProductData,
+    isLoading: ProductDataIsLoading,
+    ProductDataError,
+  } = useSWR(`/api/products/`);
 
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -173,9 +178,9 @@ export default function Cart() {
       const selectedProductId = selectedProduct.id.split(";;")[0];
       const selectedProductOrg = selectedProduct.id.split(";;")[1];
 
-      const product = allProducts.find(
-        (product) => product._id === selectedProductId
-      );
+      const product =
+        ProductData &&
+        ProductData.find((product) => product._id === selectedProductId);
 
       if (product) {
         const updatedSelectedProduct = {
@@ -199,15 +204,14 @@ export default function Cart() {
     );
 
     setAmountToPay(totalSum.toFixed(2));
-  }, [globalProductCounter, allProducts]);
+  }, [globalProductCounter, ProductData]);
 
-  if (isLoading) {
-    return "Loading";
+  if (isLoading || ProductDataIsLoading) {
+    return "Loading"; //show light spinner here later
   }
   const productCounter = data.productCounter;
 
   function incrementCounter(clickedId) {
-    console.log("increment", productCounter);
     const updatedProductCounter = productCounter.map((item) => {
       if (item.id === clickedId) {
         return { ...item, count: item.count + 1 };

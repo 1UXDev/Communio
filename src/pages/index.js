@@ -10,37 +10,66 @@ import CardCarousel from "@/components/CardCarousel/CardCarousel";
 import Editorial from "@/components/Editorial/Editorial";
 import Banner from "@/components/Banner/Banner";
 import Hello from "./hello";
+import Loader from "@/components/Loader/Loader";
 
 export default function Home() {
   const bezirk = useStore((state) => state.bezirk) || [];
   const currentOrganizations =
     useStore((state) => state.currentOrganizations) || [];
+  const setCurrentOrganizations = useStore(
+    (state) => state.setCurrentOrganizations
+  );
+
+  const session = useSession();
+  const router = useRouter();
 
   const {
     data: UserDataBezirk,
     error: UserError,
     isLoading: UserIsLoading,
-  } = useSWR(`/api/users/`, {
+  } = useSWR(`/api/users/bezirk`, {
     refreshInterval: 10000,
   });
 
-  if (UserIsLoading || UserError) {
-    return "is Loading";
+  const {
+    data: OrganizationsBezirk,
+    error: OrganizationsBezirkError,
+    isLoading: OrganizationsBezirkIsLoading,
+  } = useSWR(UserDataBezirk && `/api/organizations/bezirk/${UserDataBezirk}`, {
+    refreshInterval: 10000,
+  });
+
+  useEffect(() => {
+    if (OrganizationsBezirk) {
+      setCurrentOrganizations(OrganizationsBezirk);
+    }
+  }, [OrganizationsBezirk, bezirk]);
+
+  if (UserIsLoading || OrganizationsBezirkIsLoading || !currentOrganizations) {
+    return <Loader></Loader>;
+  }
+  if (UserError || OrganizationsBezirkError) {
+    console.log(UserError || OrganizationsBezirkError);
   }
 
-  if (UserDataBezirk) {
-    return (
-      <Layout>
-        <Header></Header>
-        <CardCarousel
-          currentOrganizations={currentOrganizations}
-          showHeadline={true}
-        ></CardCarousel>
-        <Banner></Banner>
-        <Editorial></Editorial>
-      </Layout>
-    );
+  if (!session) {
+    router.push("/auth/signin");
   } else {
-    return <Hello></Hello>;
+    if (UserDataBezirk) {
+      return (
+        <Layout>
+          <Header></Header>
+          <CardCarousel
+            currentOrganizations={currentOrganizations}
+            showHeadline={true}
+          ></CardCarousel>
+          <Banner></Banner>
+          <Editorial></Editorial>
+        </Layout>
+      );
+    } else {
+      //return <Hello></Hello>;
+      router.push("/hello");
+    }
   }
 }
