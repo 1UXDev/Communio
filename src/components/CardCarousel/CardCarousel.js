@@ -10,9 +10,10 @@ import { uid } from "uid";
 import Counter from "../Counter/Counter";
 import Favorite from "../Favorite/Favorite";
 import useSWR from "swr";
-import { useEffect } from "react";
 
-const ExploreSection = styled.section``;
+const ExploreSection = styled.section`
+  overflow-x: hidden;
+`;
 
 export default function CardCarousel({ currentOrganizations, showHeadline }) {
   const {
@@ -23,14 +24,6 @@ export default function CardCarousel({ currentOrganizations, showHeadline }) {
   } = useSWR(`/api/users/favorites`, {
     refreshInterval: 10000,
   });
-
-  useEffect(() => {
-    console.log("favoritesOnServer fetched", favoritesOnServer);
-  }, [favoritesOnServer]);
-
-  if (favoritesOnServerError) {
-    console.log(favoritesOnServerError);
-  }
 
   if (favoritesOnServerIsLoading) {
     return "..fav";

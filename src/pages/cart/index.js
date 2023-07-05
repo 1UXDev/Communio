@@ -6,6 +6,12 @@ import { uid } from "uid";
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
 const StyledList = styled.ul`
   list-style-type: none;
@@ -206,6 +212,75 @@ export default function Cart() {
     setAmountToPay(totalSum.toFixed(2));
   }, [globalProductCounter, ProductData]);
 
+  // Payment stuf -------------------
+
+  const mapData = () => {
+    const orgMap = new Map();
+
+    combinedData.forEach((item) => {
+      const { selectedProductOrg, product } = item;
+      const { name, pricePerPieceEuro } = product;
+
+      if (orgMap.has(selectedProductOrg)) {
+        const orgProducts = orgMap.get(selectedProductOrg);
+        orgProducts.push(`${name} ${pricePerPieceEuro}`);
+      } else {
+        orgMap.set(selectedProductOrg, [`${name} ${pricePerPieceEuro}`]);
+      }
+    });
+
+    let output = "";
+    orgMap.forEach((products, organization) => {
+      output += `____________${organization}\n`;
+      output += `- ${products.join("\n- ")}\n\n`;
+    });
+
+    return output.trim();
+  };
+
+  //----------------------
+
+  const items = {
+    name: "Your donation for Weißensee",
+    description: mapData(),
+    images: [
+      "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+    ],
+    price: amountToPay * 100,
+    quantity: 1,
+  };
+
+  const createCheckOutSession = async () => {
+    const stripe = await stripePromise;
+
+    const checkoutSession = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: items,
+        email: "qwertz94@gmail.com",
+      }),
+    });
+
+    if (checkoutSession.ok) {
+      // Success
+      const sessionData = await checkoutSession.json();
+      // Handle the session data
+      const result = await stripe.redirectToCheckout({
+        sessionId: sessionData.id,
+      });
+
+      if (result.error) {
+        alert(result.error.message);
+      }
+    } else {
+      // Error handling
+      // You can check the response status and handle the error accordingly
+    }
+  };
+
   if (isLoading || ProductDataIsLoading) {
     return "Loading"; //show light spinner here later
   }
@@ -255,6 +330,9 @@ export default function Cart() {
   if (status === "authenticated") {
     return (
       <Layout>
+        <button onClick={createCheckOutSession} role="link">
+          --- Buy now ---
+        </button>
         <section className="CartWrapper">
           {/* <h1>What are you sharing today?</h1> */}
           <article>
@@ -347,11 +425,20 @@ export default function Cart() {
             accumulator + product.pricePerPieceEuro * selectedProduct.count,
           0
         ) !== 0 && (
-          <FloatyCheckOut className={!combinedData && "invisible"}>
-            <img src="/give_white.svg" alt="icon symbolizing a donation"></img>
-            <div className="amountToPay"> Checkout for {amountToPay}€</div>
-          </FloatyCheckOut>
+          <Link href="/checkout">
+            <FloatyCheckOut className={!combinedData && "invisible"}>
+              <img
+                src="/give_white.svg"
+                alt="icon symbolizing a donation"
+              ></img>
+              <div className="amountToPay"> Checkout for {amountToPay}€</div>
+            </FloatyCheckOut>
+          </Link>
         )}
+        {/* <Checkout
+          combinedData={combinedData}
+          amountToPay={amountToPay}
+        ></Checkout> */}
       </Layout>
     );
   } else {
