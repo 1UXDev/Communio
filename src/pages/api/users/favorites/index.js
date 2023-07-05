@@ -25,7 +25,7 @@ export default async function handler(request, response) {
 
     const favorites = user.favorites;
     // successfully loaded?
-    console.log(favorites);
+
     return response.status(200).json(favorites);
   }
 
