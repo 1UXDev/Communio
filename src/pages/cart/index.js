@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Checkout from "@/components/Checkout";
+
 import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -214,12 +214,39 @@ export default function Cart() {
 
   // Payment stuf -------------------
 
+  const mapData = () => {
+    const orgMap = new Map();
+
+    combinedData.forEach((item) => {
+      const { selectedProductOrg, product } = item;
+      const { name, pricePerPieceEuro } = product;
+
+      if (orgMap.has(selectedProductOrg)) {
+        const orgProducts = orgMap.get(selectedProductOrg);
+        orgProducts.push(`${name} ${pricePerPieceEuro}`);
+      } else {
+        orgMap.set(selectedProductOrg, [`${name} ${pricePerPieceEuro}`]);
+      }
+    });
+
+    let output = "";
+    orgMap.forEach((products, organization) => {
+      output += `____________${organization}\n`;
+      output += `- ${products.join("\n- ")}\n\n`;
+    });
+
+    return output.trim();
+  };
+
+  //----------------------
+
   const items = {
-    name: "Apple Macbook Pro",
-    description: "Apple M1 Chip with 8‑Core CPU and 8‑Core GPU 256GB Storage",
-    image:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mbp-spacegray-select-202011_GEO_IN?wid=904&hei=840&fmt=jpeg&qlt=80&.v=1613672874000",
-    price: 1200,
+    name: "Your donation for Weißensee",
+    description: mapData(),
+    images: [
+      "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
+    ],
+    price: amountToPay * 100,
     quantity: 1,
   };
 
@@ -233,7 +260,7 @@ export default function Cart() {
       },
       body: JSON.stringify({
         items: items,
-        email: "test@gmail.com",
+        email: "qwertz94@gmail.com",
       }),
     });
 

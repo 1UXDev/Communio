@@ -5,11 +5,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(request, response) {
+  const session = await getServerSession(request, response, authOptions);
   if (session) {
     // connect to DB
     await dbConnect();
 
-    const session = await getServerSession(request, response, authOptions);
     const id = session.user._id;
 
     if (!id) {

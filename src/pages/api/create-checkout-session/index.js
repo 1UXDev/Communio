@@ -6,7 +6,7 @@ export default async (req, res) => {
   const product = await stripe.products.create({
     name: items.name,
     description: items.description,
-    images: [`${items.image}`],
+    images: items.images,
   });
 
   const price = await stripe.prices.create({
@@ -24,8 +24,8 @@ export default async (req, res) => {
     ],
     mode: "payment",
     success_url:
-      "https://communio.vercel.app/success?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url: "https://communio.vercel.app/cancel",
+      "https://communio.vercel.app/cart/success?session_id={CHECKOUT_SESSION_ID}",
+    cancel_url: "https://communio.vercel.app/cart/cancel",
   });
 
   res.status(200).json({ id: session.id });
