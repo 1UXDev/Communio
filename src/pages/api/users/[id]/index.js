@@ -1,11 +1,15 @@
 // --- import the Schema & Connection Function---
 import dbConnect from "@/db/connect";
 import Users from "@/db/models/users";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(request, response) {
+  const session = await getServerSession(request, response, authOptions);
+  const id = session.user._id;
   // connect to DB
   await dbConnect();
-  const { id } = request.query;
+  //const { id } = request.query;
 
   if (!id) {
     console.log("waiting for ID");

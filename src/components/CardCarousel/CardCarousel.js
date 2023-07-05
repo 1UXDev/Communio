@@ -11,12 +11,13 @@ import Counter from "../Counter/Counter";
 import Favorite from "../Favorite/Favorite";
 import { Suspense } from "react";
 import Loader from "@/components/Loader/Loader";
+import { current } from "immer";
 
 const ExploreSection = styled.section``;
 
 export default function CardCarousel({ currentOrganizations, showHeadline }) {
   const usersData = useStore((state) => state.usersData);
-
+  console.log("currentOrg in CC", currentOrganizations);
   // ____ General Stuff _____
 
   if (!usersData || usersData.length < 1) {

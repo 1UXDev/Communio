@@ -16,6 +16,9 @@ export default function Home() {
   const bezirk = useStore((state) => state.bezirk) || [];
   const currentOrganizations =
     useStore((state) => state.currentOrganizations) || [];
+  const setCurrentOrganizations = useStore(
+    (state) => state.setCurrentOrganizations
+  );
 
   const session = useSession();
   const router = useRouter();
@@ -28,10 +31,25 @@ export default function Home() {
     refreshInterval: 10000,
   });
 
-  if (UserIsLoading) {
+  const {
+    data: OrganizationsBezirk,
+    error: OrganizationsBezirkError,
+    isLoading: OrganizationsBezirkIsLoading,
+  } = useSWR(`/api/organizations/bezirk/${UserDataBezirk}`, {
+    refreshInterval: 10000,
+  });
+
+  useEffect(() => {
+    console.log("OrganizationData loading");
+    if (OrganizationsBezirk) {
+      setCurrentOrganizations(OrganizationsBezirk);
+    }
+  }, [OrganizationsBezirk, bezirk]);
+
+  if (UserIsLoading || OrganizationsBezirkIsLoading || !currentOrganizations) {
     return <Loader></Loader>;
   }
-  if (UserError) {
+  if (UserError || OrganizationsBezirkError) {
     console.log(UserError);
   }
 

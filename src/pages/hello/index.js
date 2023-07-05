@@ -6,6 +6,7 @@ import useStore from "@/pages/globalstores";
 import { useRouter } from "next/router";
 import Loader from "@/components/Loader/Loader";
 import { useEffect } from "react";
+import useSWR from "swr";
 
 const HelloWrapper = styled.section`
   display: flex;
@@ -57,16 +58,41 @@ const HelloWrapper = styled.section`
 
 export default function Hello() {
   const bezirk = useStore((state) => state.bezirk);
+  const setBezirk = useStore((state) => state.setBezirk);
+
+  const setCurrentOrganizations = useStore(
+    (state) => state.setCurrentOrganizations
+  );
   const { data: session } = useSession();
   const router = useRouter();
 
   function handleButtonClick() {
     console.log("I was clicked");
+    router.push("/");
   }
 
+  const { data, error, isLoading, mutate } = useSWR(
+    `/api/organizations/bezirk/${bezirk}`
+  );
+
   useEffect(() => {
-    router.push("/");
-  }, [bezirk]);
+    const interval = setInterval(() => {
+      mutate("/api/organizations/bezirk");
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  data && setCurrentOrganizations(data);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (error) {
+    console.log("error in hello", error);
+  }
 
   return (
     <HelloWrapper>
