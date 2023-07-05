@@ -9,7 +9,6 @@ import Header from "@/components/Header/Header";
 import CardCarousel from "@/components/CardCarousel/CardCarousel";
 import Editorial from "@/components/Editorial/Editorial";
 import Banner from "@/components/Banner/Banner";
-import Hello from "./hello";
 import Loader from "@/components/Loader/Loader";
 
 export default function Home() {
