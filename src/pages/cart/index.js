@@ -6,6 +6,12 @@ import { uid } from "uid";
 import styled from "styled-components";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Checkout from "@/components/Checkout";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
 const StyledList = styled.ul`
   list-style-type: none;
@@ -206,6 +212,48 @@ export default function Cart() {
     setAmountToPay(totalSum.toFixed(2));
   }, [globalProductCounter, ProductData]);
 
+  // Payment stuf -------------------
+
+  const items = {
+    name: "Apple Macbook Pro",
+    description: "Apple M1 Chip with 8‑Core CPU and 8‑Core GPU 256GB Storage",
+    image:
+      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/mbp-spacegray-select-202011_GEO_IN?wid=904&hei=840&fmt=jpeg&qlt=80&.v=1613672874000",
+    price: 1200,
+    quantity: 1,
+  };
+
+  const createCheckOutSession = async () => {
+    const stripe = await stripePromise;
+
+    const checkoutSession = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: items,
+        email: "test@gmail.com",
+      }),
+    });
+
+    if (checkoutSession.ok) {
+      // Success
+      const sessionData = await checkoutSession.json();
+      // Handle the session data
+      const result = await stripe.redirectToCheckout({
+        sessionId: sessionData.id,
+      });
+
+      if (result.error) {
+        alert(result.error.message);
+      }
+    } else {
+      // Error handling
+      // You can check the response status and handle the error accordingly
+    }
+  };
+
   if (isLoading || ProductDataIsLoading) {
     return "Loading"; //show light spinner here later
   }
@@ -255,6 +303,9 @@ export default function Cart() {
   if (status === "authenticated") {
     return (
       <Layout>
+        <button onClick={createCheckOutSession} role="link">
+          --- Buy now ---
+        </button>
         <section className="CartWrapper">
           {/* <h1>What are you sharing today?</h1> */}
           <article>
@@ -347,11 +398,20 @@ export default function Cart() {
             accumulator + product.pricePerPieceEuro * selectedProduct.count,
           0
         ) !== 0 && (
-          <FloatyCheckOut className={!combinedData && "invisible"}>
-            <img src="/give_white.svg" alt="icon symbolizing a donation"></img>
-            <div className="amountToPay"> Checkout for {amountToPay}€</div>
-          </FloatyCheckOut>
+          <Link href="/checkout">
+            <FloatyCheckOut className={!combinedData && "invisible"}>
+              <img
+                src="/give_white.svg"
+                alt="icon symbolizing a donation"
+              ></img>
+              <div className="amountToPay"> Checkout for {amountToPay}€</div>
+            </FloatyCheckOut>
+          </Link>
         )}
+        {/* <Checkout
+          combinedData={combinedData}
+          amountToPay={amountToPay}
+        ></Checkout> */}
       </Layout>
     );
   } else {

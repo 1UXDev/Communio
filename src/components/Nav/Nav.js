@@ -91,7 +91,7 @@ export default function Nav() {
       </Link>
       <Link href="/cart" alt="Link to Cart">
         <Image
-          src={currentSite === "/cart" ? Cart_Active : Cart}
+          src={currentSite === "/cart" || "/checkout" ? Cart_Active : Cart}
           width="30"
           height="30"
           alt="Icon Cart"

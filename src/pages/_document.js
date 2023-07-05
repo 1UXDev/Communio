@@ -1,6 +1,4 @@
-// Code from Next.js GitRepo to use styled-components
-// refer to this article https://dev.to/rsanchezp/next-js-and-styled-components-style-loading-issue-3i68
-import Document from "next/document";
+import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {
@@ -28,5 +26,20 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          <meta name="description" content="Your meta description goes here" />
+          <link rel="icon" href="/communio.svg" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
   }
 }

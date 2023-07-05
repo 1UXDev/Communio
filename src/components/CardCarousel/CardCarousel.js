@@ -10,9 +10,10 @@ import { uid } from "uid";
 import Counter from "../Counter/Counter";
 import Favorite from "../Favorite/Favorite";
 import useSWR from "swr";
-import { useEffect } from "react";
 
-const ExploreSection = styled.section``;
+const ExploreSection = styled.section`
+  overflow-x: hidden;
+`;
 
 export default function CardCarousel({ currentOrganizations, showHeadline }) {
   const {
