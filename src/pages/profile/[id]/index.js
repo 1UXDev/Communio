@@ -159,12 +159,13 @@ export default function Profile() {
     }
   }
 
-  if (!data || data._id.length < 1) {
-    return <div>Loading...</div>;
-  }
+  // if (!data || data._id.length < 1) {
+  //   return <div>Loading...</div>;
+  // }
 
   // Loading States
-  if (!isReady || isLoading) return <LoaderLight></LoaderLight>;
+  if (!data || data._id.length < 1 || !isReady || isLoading)
+    return <LoaderLight></LoaderLight>;
   if (isMutating) {
     return (
       <LoaderLight loadingItem={"Submitting your changes..."}></LoaderLight>
