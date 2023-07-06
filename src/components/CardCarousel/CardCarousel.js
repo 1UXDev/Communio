@@ -29,7 +29,11 @@ const CounterWrapper = styled.div`
   padding: 8px;
 `;
 
-export default function CardCarousel({ currentOrganizations, showHeadline }) {
+export default function CardCarousel({
+  currentOrganizations,
+  showHeadline,
+  UserDataBezirk,
+}) {
   const {
     data: favoritesOnServer,
     error: favoritesOnServerError,
@@ -42,7 +46,7 @@ export default function CardCarousel({ currentOrganizations, showHeadline }) {
   if (favoritesOnServerIsLoading) {
     return (
       <ExploreSection>
-        {showHeadline && <h2>➡️ Discover All Donations</h2>}
+        {showHeadline && <h2>➡️ Discover Donations for YourLocation</h2>}
         <CardWrapper>
           <SkeletonCard key="interim" className="small" />
         </CardWrapper>
@@ -51,7 +55,7 @@ export default function CardCarousel({ currentOrganizations, showHeadline }) {
   } else {
     return (
       <ExploreSection>
-        {showHeadline && <h2>➡️ Discover All Donations</h2>}
+        {showHeadline && <h2>➡️ Discover Donations for {UserDataBezirk}</h2>}
 
         <CardWrapper>
           {currentOrganizations.map((org) => {

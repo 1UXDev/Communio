@@ -20,9 +20,8 @@ export default function Editorial() {
 
   return (
     <EditorialWrapper>
-      <Link href="/organizations">
-        <h2>➡️ Get to know the Organizations</h2>
-      </Link>
+      <h2>➡️ Meet Charity Organizations in {currentOrganizations[0].bezirk}</h2>
+
       <CardWrapper>
         {currentOrganizations.map((org) => {
           return (
