@@ -62,7 +62,7 @@ export const IMGoverlay = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   padding: 9px;
-  border-radius: 12px;
+  border-radius: 0px 0px 12px 12px;
   color: white;
 
   & h4 {

@@ -12,7 +12,10 @@ import Favorite from "../Favorite/Favorite";
 import useSWR from "swr";
 
 const ExploreSection = styled.section`
-  overflow-x: hidden;
+  margin: 12px 0px 12px 0px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SkeletonCard = styled.li`
