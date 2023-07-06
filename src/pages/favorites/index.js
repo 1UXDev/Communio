@@ -13,6 +13,7 @@ import {
 } from "@/components/CardBase/styledCardBase";
 import Counter from "@/components/Counter/Counter";
 import Favorite from "@/components/Favorite/Favorite";
+import LoaderLight from "@/components/Loader/LoaderLight";
 
 const StyledList = styled.ul`
   list-style-type: none;
@@ -76,7 +77,7 @@ export default function Favorites() {
   }, [favorites, setFavorites, userFavorites]);
 
   if (isLoading || userFavoritesIsLoading) {
-    return "Loading";
+    return <LoaderLight></LoaderLight>;
   }
 
   if (error || userFavoritesError) {
