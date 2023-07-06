@@ -5,6 +5,7 @@ import { IMGwrapper, IMGoverlay } from "@/components/CardBase/styledCardBase";
 import CardCarousel from "@/components/CardCarousel/CardCarousel";
 import styled from "styled-components";
 import Layout from "@/components/Layout/Layout";
+import LoaderLight from "@/components/Loader/LoaderLight";
 
 const BackButton = styled.button`
   background: rgba(0, 0, 0, 0.1);
@@ -48,7 +49,7 @@ export default function OrgDetailPage() {
   });
 
   // Loading States
-  if (!isReady || isLoading || error) return <h2>Loading...</h2>;
+  if (!isReady || isLoading || error) return <LoaderLight></LoaderLight>;
 
   return (
     <Layout>
