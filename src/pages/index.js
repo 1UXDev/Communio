@@ -61,6 +61,7 @@ export default function Home() {
           <CardCarousel
             currentOrganizations={currentOrganizations}
             showHeadline={true}
+            UserDataBezirk={UserDataBezirk}
           ></CardCarousel>
           <Banner></Banner>
           <Editorial></Editorial>

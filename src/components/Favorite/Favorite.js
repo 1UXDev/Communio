@@ -8,6 +8,14 @@ const FavWrapper = styled.div`
   flex-flow: row;
   justify-content: space-between;
   align-items: center;
+
+  & button {
+    background-color: white;
+    border-radius: 99px;
+    width: 24px;
+    height: 24px;
+    border: none;
+  }
 `;
 
 export default function Favorite({ product, org }) {

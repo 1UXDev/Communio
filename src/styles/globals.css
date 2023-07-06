@@ -21,10 +21,10 @@ section {
 }
 
 section h2:not(div > h2) {
-  text-align: right;
+  text-align: left;
   font-size: 1em;
   margin-block-start: unset;
-  margin-block-end: 6px;
+  margin-block-end: 12px;
 }
 /* 
 section h1 {

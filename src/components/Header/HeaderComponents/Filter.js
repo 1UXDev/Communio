@@ -25,12 +25,11 @@ const FilterWrapper = styled.div`
 export default function Filter() {
   return (
     <FilterWrapper>
-      <button>Tafel Weißensee</button>
-      <button>Obdachlosenhilfe</button>
-      <button>Tierheim Berlin</button>
-      <button>Tafel Heinersdorf</button>
-      <button>Frauenhaus Kreuzberg</button>
-      <button>Caritas Mitte</button>
+      <button>Foobank</button>
+      <button>Homeless Shelter & Aid</button>
+      <button>Animal Shelter</button>
+      <button>Frauenhaus</button>
+      <button>Caritas</button>
     </FilterWrapper>
   );
 }

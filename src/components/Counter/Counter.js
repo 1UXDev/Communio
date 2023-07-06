@@ -7,24 +7,31 @@ const ClickerWrapper = styled.div`
   display: flex;
   flex-flow: row;
   gap: 6px;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  width: 50%;
-  align-self: start;
+  width: 100%;
   transition: all 0.5s ease;
   & span {
     color: grey;
     font-weight: bold;
     background: white;
-    padding: 4px 12px;
+    padding: 4px 24px;
     font-size: 0.8em;
-    border-radius: 6px;
+    border-radius: 12px;
+    text-align: center;
+    flex: 3;
   }
   & img {
+    backdrop-filter: blur(12px);
     width: 30px;
     height: 30px;
     cursor: pointer;
+    border-radius: 100%;
   }
+  & * {
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.75);
+  }
+
   &:not(.expanded) img:first-child,
   &:not(.expanded) span {
     display: none;

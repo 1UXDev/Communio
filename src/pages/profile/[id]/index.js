@@ -81,6 +81,18 @@ const Form = styled.form`
     font-size: 1.5em;
     padding-bottom: 24px;
   }
+
+  & button {
+    margin-top: 24px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 2px solid white;
+    background: rgb(70, 180, 220);
+    color: white;
+    font-weight: bold;
+    width: 180px;
+    align-self: center;
+  }
 `;
 
 const ProfileDBItems = styled.div`
@@ -174,7 +186,7 @@ export default function Profile() {
             <ProfileHeroText>
               <div>
                 <span>This is you! </span>
-                <h2>{session.user.name}</h2>
+                <h2>{data.name}</h2>
               </div>
               <button onClick={signOut}>Sign out</button>
             </ProfileHeroText>

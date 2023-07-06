@@ -246,7 +246,7 @@ export default function Cart() {
     images: [
       "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
     ],
-    price: amountToPay * 100,
+    price: (amountToPay * 100).toFixed(0),
     quantity: 1,
   };
 
@@ -276,8 +276,7 @@ export default function Cart() {
         alert(result.error.message);
       }
     } else {
-      // Error handling
-      // You can check the response status and handle the error accordingly
+      console.log("an error occured :/");
     }
   };
 
@@ -330,9 +329,6 @@ export default function Cart() {
   if (status === "authenticated") {
     return (
       <Layout>
-        <button onClick={createCheckOutSession} role="link">
-          --- Buy now ---
-        </button>
         <section className="CartWrapper">
           {/* <h1>What are you sharing today?</h1> */}
           <article>
@@ -425,7 +421,7 @@ export default function Cart() {
             accumulator + product.pricePerPieceEuro * selectedProduct.count,
           0
         ) !== 0 && (
-          <Link href="/checkout">
+          <div onClick={createCheckOutSession} role="link">
             <FloatyCheckOut className={!combinedData && "invisible"}>
               <img
                 src="/give_white.svg"
@@ -433,7 +429,7 @@ export default function Cart() {
               ></img>
               <div className="amountToPay"> Checkout for {amountToPay}€</div>
             </FloatyCheckOut>
-          </Link>
+          </div>
         )}
         {/* <Checkout
           combinedData={combinedData}

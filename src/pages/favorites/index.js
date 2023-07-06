@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 import { uid } from "uid";
 import styled from "styled-components";
 import Link from "next/link";
-import CardCarousel from "@/components/CardCarousel/CardCarousel";
-import { current } from "immer";
 import {
   CardWrapper,
   IMGwrapper,
@@ -59,15 +57,30 @@ export default function Favorites() {
     isLoading,
     error,
     mutate,
-  } = useSWR(`/api/organizations`, { refreshInterval: 1000 });
+  } = useSWR(`/api/organizations`, { refreshInterval: 10000 });
+
+  const {
+    data: userFavorites,
+    idLoading: userFavoritesIsLoading,
+    error: userFavoritesError,
+  } = useSWR(`/api/users/favorites`, { refreshInterval: 10000 });
 
   const usersData = useStore((state) => state.usersData) || [];
 
   const favorites = useStore((state) => state.favorites) || [];
   const setFavorites = useStore((state) => state.setFavorites) || [];
+  useEffect(() => {
+    if (favorites.length === 0 && userFavorites?.length !== 0) {
+      setFavorites(userFavorites);
+    }
+  }, [favorites, setFavorites, userFavorites]);
 
-  if (isLoading) {
+  if (isLoading || userFavoritesIsLoading) {
     return "Loading";
+  }
+
+  if (error || userFavoritesError) {
+    console.log(error || userFavoritesError);
   }
 
   return (
