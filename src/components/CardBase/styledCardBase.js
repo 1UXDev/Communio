@@ -61,7 +61,7 @@ export const IMGoverlay = styled.div`
   flex-flow: column;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 8px;
+  padding: 9px;
   border-radius: 12px;
   color: white;
 
@@ -81,5 +81,6 @@ export const IMGoverlay = styled.div`
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    padding: 0px 2px;
   }
 `;
