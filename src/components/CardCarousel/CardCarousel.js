@@ -22,6 +22,13 @@ const SkeletonCard = styled.li`
   background-color: #f3f3f3;
 `;
 
+const CounterWrapper = styled.div`
+  position: absolute;
+  top: 4px;
+  width: 100%;
+  padding: 8px;
+`;
+
 export default function CardCarousel({ currentOrganizations, showHeadline }) {
   const {
     data: favoritesOnServer,
@@ -53,8 +60,10 @@ export default function CardCarousel({ currentOrganizations, showHeadline }) {
                 <li key={uid()} className="small">
                   <IMGwrapper>
                     <img src={product.productImage} alt={product.name} />
-                    <IMGoverlay>
+                    <CounterWrapper>
                       <Counter product={product} org={org}></Counter>
+                    </CounterWrapper>
+                    <IMGoverlay>
                       <div className="textContainer">
                         <h4>{org.name}</h4>
                         <Favorite

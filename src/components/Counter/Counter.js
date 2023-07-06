@@ -22,9 +22,14 @@ const ClickerWrapper = styled.div`
     flex: 3;
   }
   & img {
+    backdrop-filter: blur(12px);
     width: 30px;
     height: 30px;
     cursor: pointer;
+    border-radius: 100%;
+  }
+  & * {
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.75);
   }
 
   &:not(.expanded) img:first-child,
