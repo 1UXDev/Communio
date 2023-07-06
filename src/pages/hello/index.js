@@ -51,6 +51,12 @@ const HelloWrapper = styled.section`
     align-items: center;
     justify-content: center;
   }
+  & .invisibleBackupButton {
+    width: 50px;
+    height: 10px;
+    background: transparent;
+    color: transparent;
+  }
 `;
 
 export default function Hello() {
@@ -88,6 +94,9 @@ export default function Hello() {
           >
             <Link href="/">Let&apos;s go!</Link>
           </StyledButton>
+          <a className="invisibleBackupButton" href="/">
+            .
+          </a>
           <span id="hinttext" style={{ display: "none" }}>
             Please select a location from the dropdown first
           </span>{" "}

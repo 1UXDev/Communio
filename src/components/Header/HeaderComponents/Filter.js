@@ -26,7 +26,7 @@ export default function Filter() {
   return (
     <FilterWrapper>
       <button>Foobank</button>
-      <button>Homeless Shelter & Aid</button>
+      <button>Homeless Shelter</button>
       <button>Animal Shelter</button>
       <button>Frauenhaus</button>
       <button>Caritas</button>

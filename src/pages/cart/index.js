@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 import { loadStripe } from "@stripe/stripe-js";
+import LoaderLight from "@/components/Loader/LoaderLight";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
@@ -281,7 +282,7 @@ export default function Cart() {
   };
 
   if (isLoading || ProductDataIsLoading) {
-    return "Loading"; //show light spinner here later
+    return <LoaderLight></LoaderLight>;
   }
   const productCounter = data.productCounter;
 

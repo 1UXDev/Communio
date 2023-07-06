@@ -51,8 +51,7 @@ const Badge = styled.div`
   z-index: 99;
 `;
 
-export default function Nav() {
-  const usersData = useStore((state) => state.usersData);
+export default function Nav({ currentUser }) {
   const globalProductCounter = useStore((state) => state.globalProductCounter);
 
   const [productAmount, setProductAmount] = useState();
@@ -110,7 +109,7 @@ export default function Nav() {
         ></Image>
         <span>Search</span>
       </Link> */}
-      <Link href={`/profile/${usersData._id}`} alt="Link to your Profile">
+      <Link href={`/profile/user`} alt="Link to your Profile">
         <Image
           src={currentSite.includes("/profile/") ? Profile_Active : Profile}
           width="30"

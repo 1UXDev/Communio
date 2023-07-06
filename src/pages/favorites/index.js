@@ -13,6 +13,7 @@ import {
 } from "@/components/CardBase/styledCardBase";
 import Counter from "@/components/Counter/Counter";
 import Favorite from "@/components/Favorite/Favorite";
+import LoaderLight from "@/components/Loader/LoaderLight";
 
 const StyledList = styled.ul`
   list-style-type: none;
@@ -21,7 +22,7 @@ const StyledList = styled.ul`
   flex-flow: row wrap;
   padding: 0;
   margin: 0px auto;
-  justify-content: center;
+  justify-content: start;
   a {
     text-decoration: underline;
   }
@@ -29,7 +30,7 @@ const StyledList = styled.ul`
     color: rgb(50, 160, 240);
   }
   & li {
-    width: 45%;
+    width: 48%;
   }
 `;
 
@@ -47,6 +48,13 @@ const EmptyCart = styled.div`
   & * {
     margin-bottom: 12px;
   }
+`;
+
+const CounterWrapper = styled.div`
+  position: absolute;
+  top: 4px;
+  width: 100%;
+  padding: 8px;
 `;
 
 export default function Favorites() {
@@ -76,7 +84,7 @@ export default function Favorites() {
   }, [favorites, setFavorites, userFavorites]);
 
   if (isLoading || userFavoritesIsLoading) {
-    return "Loading";
+    return <LoaderLight></LoaderLight>;
   }
 
   if (error || userFavoritesError) {
@@ -113,13 +121,19 @@ export default function Favorites() {
                               src={product.productImage}
                               alt={product.name}
                             />
-                            <IMGoverlay>
+                            <CounterWrapper>
                               <Counter
+                                product={product}
+                                org={currentOrganizations}
+                              ></Counter>
+                            </CounterWrapper>
+                            <IMGoverlay>
+                              {/* <Counter
                                 organizations={currentOrganizations}
                                 usersData={usersData}
                                 product={product}
                                 org={currentOrganizations}
-                              ></Counter>
+                              ></Counter> */}
                               <div className="textContainer">
                                 <h4>{currentOrganizations.name}</h4>
                                 <Favorite

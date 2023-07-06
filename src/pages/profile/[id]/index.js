@@ -10,6 +10,7 @@ import styled from "styled-components";
 //--- for the data editing // Patching
 import useSWRMutation from "swr/mutation";
 import EditForm from "@/components/Edit/EditForm";
+import LoaderLight from "@/components/Loader/LoaderLight";
 
 const ProfileWrapper = styled.section`
 display.flex;
@@ -158,14 +159,20 @@ export default function Profile() {
     }
   }
 
-  if (!data || data._id.length < 1) {
-    return <div>Loading...</div>;
-  }
+  // if (!data || data._id.length < 1) {
+  //   return <div>Loading...</div>;
+  // }
 
   // Loading States
-  if (!isReady || isLoading || error) return <h2>Loading...</h2>;
+  if (!data || data._id.length < 1 || !isReady || isLoading)
+    return <LoaderLight></LoaderLight>;
   if (isMutating) {
-    return <h1>Submitting your changes...</h1>;
+    return (
+      <LoaderLight loadingItem={"Submitting your changes..."}></LoaderLight>
+    );
+  }
+  if (error) {
+    console.log(error);
   }
 
   // Form
