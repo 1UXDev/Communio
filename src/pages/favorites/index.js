@@ -35,8 +35,8 @@ const StyledList = styled.ul`
 `;
 
 const EmptyCart = styled.div`
-  margin: 48px;
-  padding-top: 48px;
+  margin: 0px auto;
+  padding: 96px 48px;
   text-align: center;
   align-self: center;
 
