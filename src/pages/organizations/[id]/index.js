@@ -49,7 +49,10 @@ export default function OrgDetailPage() {
   });
 
   // Loading States
-  if (!isReady || isLoading || error) return <LoaderLight></LoaderLight>;
+  if (!isReady || isLoading) return <LoaderLight></LoaderLight>;
+  if (error) {
+    console.log(error);
+  }
 
   return (
     <Layout>
