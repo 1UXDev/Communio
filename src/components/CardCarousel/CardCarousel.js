@@ -10,6 +10,7 @@ import { uid } from "uid";
 import Counter from "../Counter/Counter";
 import Favorite from "../Favorite/Favorite";
 import useSWR from "swr";
+import Image from "next/image";
 
 const ExploreSection = styled.section`
   margin: 12px 0px 12px 0px;
@@ -66,7 +67,13 @@ export default function CardCarousel({
               return (
                 <li key={uid()} className="small">
                   <IMGwrapper>
-                    <img src={product.productImage} alt={product.name} />
+                    <Image
+                      src={product.productImage}
+                      alt={product.name}
+                      width="200"
+                      height="300"
+                      priority={true}
+                    />
                     <CounterWrapper>
                       <Counter product={product} org={org}></Counter>
                     </CounterWrapper>
