@@ -50,6 +50,21 @@ const AuthWrapper = styled.section`
   }
 `;
 
+const Hinweis = styled.div`
+  background: white;
+  color: red;
+  padding: 6px;
+  font-size: 0.8em;
+  font-weight: bold;
+  position: fixed;
+  z-index: 99;
+  top: 12px;
+  width: 80%;
+  max-width: 600px;
+  margin: 0px auto;
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.2);
+`;
+
 // animate text later-on? https://tobiasahlin.com/moving-letters/#11
 export default function SignIn({ providers }) {
   return (
@@ -77,6 +92,12 @@ export default function SignIn({ providers }) {
           }}
         />
       </article>
+      <Hinweis>
+        Please Note that this Application is currently in Development and will
+        be buggy / not respond as you expect. If you still want to test, please
+        select "Weißensee" in the welcome-screen as your location, since it is
+        the only location with data at the moment.
+      </Hinweis>
       <article>
         <p className="small">Sign-in to support your Kiez</p>
         <br></br>
