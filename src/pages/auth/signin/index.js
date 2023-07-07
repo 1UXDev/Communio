@@ -95,8 +95,8 @@ export default function SignIn({ providers }) {
       <Hinweis>
         Please Note that this Application is currently in Development and will
         be buggy / not respond as you expect. If you still want to test, please
-        select "Weißensee" in the welcome-screen as your location, since it is
-        the only location with data at the moment.
+        select &quot;Weißensee&quot; in the welcome-screen as your location,
+        since it is the only location with data at the moment.
       </Hinweis>
       <article>
         <p className="small">Sign-in to support your Kiez</p>
